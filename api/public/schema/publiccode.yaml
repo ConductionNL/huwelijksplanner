@@ -1,13 +1,13 @@
 publiccodeYmlVersion: "0.2"
 
-name: stage-platform
+name: huwelijksplanner
 applicationSuite: commonground
-url: "https://github.com/ConductionNL/stage-platform"
-landingURL: "dev.stage-platform.com" 
+url: "https://github.com/ConductionNL/huwelijksplanner"
+landingURL: "www.zuid-drecht.nl" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V1.0"
 releaseDate: "2020-14-12"
-logo: www.stage-platform.com 
+logo: www.zuid-drecht.nl 
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -37,7 +37,7 @@ usedBy:
   - Gemeente Hoorn
   
 
-roadmap: "https://github.com/ConductionNL/stage-platform/blob/master/ROADMAP.md"
+roadmap: "https://github.com/ConductionNL/huwelijksplanner/blob/master/ROADMAP.md"
 
 developmentStatus: development
 
@@ -66,8 +66,8 @@ description:
 #          on multiple rows. You should note what the software
 #          is and why one should need it.
 
-    documentation: "https://github.com/ConductionNL/stage-platform/blob/master/README.md"
-    apiDocumentation: "dev.stage-platform.com"
+    documentation: "https://github.com/ConductionNL/huwelijksplanner/blob/master/README.md"
+    apiDocumentation: "www.zuid-drecht.nl"
 #
 #    features:
 #       - Very important feature
