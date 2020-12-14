@@ -36,6 +36,39 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @Route("/getuigen")
+     * @Template
+     */
+    public function getuigenAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/melding")
+     * @Template
+     */
+    public function meldingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/naamsgebruik")
+     * @Template
+     */
+    public function naamsgebruikAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+    /**
      * @Route("/ambtenaar")
      * @Template
      */
@@ -44,6 +77,20 @@ class DefaultController extends AbstractController
         $variables = [];
 
         $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])['hydra:member'];
+
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/locaties")
+     * @Template
+     */
+    public function locatiesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])['hydra:member'];
 
 
         return $variables;
