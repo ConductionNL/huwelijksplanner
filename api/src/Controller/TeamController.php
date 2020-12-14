@@ -33,7 +33,7 @@ class TeamController extends AbstractController
         //@TODO filter when filter arrays are possible
 
         // Get resource
-        $variables['teams'] = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'groups'], $variables['query'])['hydra:member'];
+        $variables['teams'] = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'groups'])['hydra:member']; //Do not use query here?!
         $variables['entries'] = $commonGroundService->getResourceList(['component' => 'chrc', 'type' => 'entries'], $variables['query'])['hydra:member'];
 
         return $variables;
@@ -52,6 +52,30 @@ class TeamController extends AbstractController
         $entries = $commonGroundService->getResourceList(['component' => 'chrc', 'type' => 'entries'], ['submitter' => $variables['team']['@id']]);
         $variables['entries'] = $entries['hydra:member'];
         $variables['numberOfEntries'] = $entries['hydra:totalItems'];
+
+        $variables['participants'] = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], [''])['hydra:member'];
+
+        if ($request->isMethod('POST') && $this->getUser()) {
+            $participant['person'] = $this->getUser()->getPerson();
+            $participant['participantGroup'] = '/groups/'.$variables['team']['id'];
+
+            if ($request->request->get('motivaton')) {
+                $participant['motiviation'] = $request->request->get('motivaton');
+            }
+            $participant['status'] = 'pending';
+
+            $commonGroundService->createResource($participant, ['component' => 'edu', 'type' => 'participants']);
+
+            return $this->redirect($this->generateUrl('app_team_team', ['id' => $id]));
+        }
+
+        if (isset($variables['team']['participants']) && count($variables['team']['participants']) > 0) {
+            foreach ($variables['team']['participants'] as $part) {
+                if ($part['person'] == $this->getUser()->getPerson()) {
+                    $variables['userIsInTeam'] = true;
+                }
+            }
+        }
 
         return $variables;
     }

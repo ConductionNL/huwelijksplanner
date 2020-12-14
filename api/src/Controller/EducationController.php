@@ -65,7 +65,7 @@ class EducationController extends AbstractController
 
         // Get other tutorials from this org
         if (isset($variables['tutorial']['organization'])) {
-            $tutorials = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'courses'], ['organization'=>$variables['tutorial']['organization']])['hydra:member'];
+            $tutorials = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'courses'], ['organization' => $variables['tutorial']['organization']])['hydra:member'];
             // Filter to prevent duplicate tutorial
             foreach ($tutorials as $tut) {
                 if ($variables['tutorial']['id'] != $tut['id']) {
@@ -99,6 +99,11 @@ class EducationController extends AbstractController
             // Create a participant
             $participant['person'] = $this->getUser()->getPerson();
             $participant['course'] = '/courses/'.$variables['tutorial']['id'];
+
+            $participant['status'] = 'pending';
+            if (isset($resource['motivation'])) {
+                $participant['motivation'] = $resource['motivation'];
+            }
 
             $commonGroundService->createResource($participant, ['component' => 'edu', 'type' => 'participants']);
 

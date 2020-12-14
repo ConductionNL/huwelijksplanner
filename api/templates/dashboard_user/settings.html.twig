@@ -20,7 +20,7 @@
     </div>
 
     <!-- Form -->
-    <form action="{{ path('app_dashboarduser_settings') }}" method="post">
+    <form action="{{ path('app_dashboarduser_settings') }}" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-12 col-xl-8">
                 <div class="card card-body bg-white border-light shadow-sm mb-4">
@@ -217,7 +217,7 @@
                                         <div class="d-flex justify-content-xl-center ml-xl-3">
                                             <div class="d-flex">
                                                 <span class="icon icon-md"><span class="fas fa-paperclip mr-3"></span></span>
-                                                <input type="file">
+                                               <input type="file" name="personalPhoto">
                                                 <div class="d-md-block text-left">
                                                     <div class="font-weight-normal text-dark mb-1">{{ 'Choose Image'|trans|capitalize }}</div>
                                                     <div class="text-gray small">{{ 'JPG, GIF or PNG. Max size of 800K'|trans|capitalize }}</div>

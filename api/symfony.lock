@@ -194,6 +194,9 @@
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
+    "laminas/laminas-escaper": {
+        "version": "2.6.1"
+    },
     "laminas/laminas-eventmanager": {
         "version": "3.3.0"
     },

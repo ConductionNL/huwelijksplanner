@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Service\MailingService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,7 @@ class InternshipController extends AbstractController
      */
     public function indexAction(CommonGroundService $commonGroundService, Request $request)
     {
+
         // On an index route we might want to filter based on user input
         $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
 
@@ -52,7 +54,7 @@ class InternshipController extends AbstractController
      * @Route("/{id}")
      * @Template
      */
-    public function positionAction(CommonGroundService $commonGroundService, Request $request, $id, ParameterBagInterface $params)
+    public function positionAction(CommonGroundService $commonGroundService, MailingService $mailingService, Request $request, $id, ParameterBagInterface $params)
     {
         $variables = [];
 
@@ -94,63 +96,27 @@ class InternshipController extends AbstractController
             // Update to the commonground component
             $variables['application'] = $commonGroundService->saveResource($resource, ['component' => 'mrc', 'type' => 'applications']);
 
-            //lets try and create dossier for application
-//            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
-//            $provider = $providers[0];
-//
-//            $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'];
-//            $user = $users[0];
-//
-//            $userUrl = $commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $user['id']]);
-//
-//            $authorizations = $commonGroundService->getResourceList(['component' => 'wac', 'type' => 'authorizations'], ['userUrl' => $userUrl, 'application' => '/applications/'.$provider['configuration']['app_id']])['hydra:member'];
-//
-//            if (count($authorizations) > 0) {
-//                $authorization = $authorizations[0];
-//
-//                $dossier = [];
-//                $dossier['name'] = 'application for '.$variables['internship']['name'];
-//                $dossier['description'] = 'applied for internship at '.$variables['internship']['name'];
-//                $dossier['sso'] = 'https://conduction.nl';
-//                $date = new \DateTime('now');
-//                $date->add(new \DateInterval('P2Y'));
-//                $dossier['expiryDate'] = $date->format('h:m Y-m-d');
-//                $dossier['goal'] = 'show application for internship';
-//                $dossier['authorization'] = '/authorizations/'.$authorization['id'];
-//
-//                $commonGroundService->createResource($dossier, ['component' => 'wac', 'type' => 'dossiers']);
-//            }
-
             // Send an email to organization of this jobPosting:
             // (Maybe this should be handled with the VSBE to send emails whenever an application is created?)
             if (isset($variables['internship']['hiringOrganization'])) {
-                // Create the email message
-                $message = [];
-                $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
-                $message['status'] = 'queued';
 
                 // Determine the receiver
                 $organization = $commonGroundService->getResource($variables['internship']['hiringOrganization']);
-                $message['reciever'] = $organization['contact']; // reciever = typo in BS, keep it like this for now
 
-                // lets use stage platform contact as sender (maybe use or get the sender in a different way?)
-                $message['sender'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'organizations', 'id' => 'faafee73-2b5a-4cd5-a339-c0c96ba0d7eb']);
-
-                // if we don't have that we are going to self send te message
-                if (!$commonGroundService->isResource($message['sender'])) {
-                    $message['sender'] = $message['reciever'];
+                if (isset($organization['administrationContact'])) {
+                    $receiver = $commonGroundService->getResource($organization['administrationContact'])['username'];
+                } else {
+                    //for excisting organization that still uses this. this is to prevent errors.
+                    $receiver = $organization['contact'];
                 }
-                $message['data'] = [
+
+                $data = [
                     'student'   => $commonGroundService->getResource($personUrl),
                     'internship'=> $variables['internship'],
-                    'sender'    => $commonGroundService->getResource($message['sender']),
-                    'receiver'  => $commonGroundService->getResource($message['reciever']),
-                ];
-                // Email template in wrc:
-                $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'c1e5e409-63d5-4590-ba35-415aa002384b']);
 
-                // Send the email to this contact
-                $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
+                ];
+
+                $mailingService->sendMail('mails/internship_application.html.twig', 'no-reply@conduction.academy', $receiver, 'stage inschrijving', $data);
             }
         }
 

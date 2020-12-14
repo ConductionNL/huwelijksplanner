@@ -219,7 +219,7 @@
                             {% if internship.educationRequirements is defined and internship.educationRequirements is not empty %}
                                 {% for educationRequirement in  internship.educationRequirements %}
                                     <input
-                                        class="form-control"
+                                        class="form-control mb-2"
                                         id="educationRequirements[]"
                                         type="text"
                                         value="{{ educationRequirement }}"
@@ -264,7 +264,9 @@
                                     class="form-control"
                                     id="jobStartDate"
                                     type="datetime-local"
-                                    min="{{ "now"|date("Y-m-d\\TH:i") }}"
+                                    {% if internship.jobStartDate is not defined %}
+                                        min="{{ "now"|date("Y-m-d\\TH:i") }}"
+                                    {% endif %}
                                     {% if internship.jobStartDate is defined and internship.jobStartDate is not empty %}
                                         value="{{ internship.jobStartDate|date("Y-m-d\\TH:i") }}"
                                     {% else %}
@@ -449,7 +451,7 @@
             const input = document.createElement('input');
 
             input.setAttribute('type', 'text');
-            input.setAttribute('class', "form-control");
+            input.setAttribute('class', "form-control mb-2");
             input.setAttribute('name', 'educationRequirements[]');
             input.setAttribute('id', 'educationRequirements[]');
             input.setAttribute('placeholder', "Nieuwe voorwaarden");

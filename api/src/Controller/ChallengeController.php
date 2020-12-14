@@ -26,6 +26,7 @@ class ChallengeController extends AbstractController
      */
     public function indexAction(Request $request, CommonGroundService $commonGroundService)
     {
+
         // On an index route we might want to filter based on user input
         $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
 

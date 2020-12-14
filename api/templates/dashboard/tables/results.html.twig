@@ -14,34 +14,38 @@
         </div>
     </div>
     {% if results is  defined and results|length > 0 %}
-    <div class="table-responsive">
-        <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for result in results|slice(0, 10) %}
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+                <thead class="thead-light">
                 <tr>
-                    <td>{{ result.name|capitalize }}</td>
-                    <td class="float-right">
-                        {% if editPath is  defined %}
-                            <a href="{{ path(editPath, {'id':tutorial.id }) }}" class="btn btn-primary">{{ 'edit'|trans|capitalize }}</a>
-                        {% endif %}
-                    </td>
+                    <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                    <th scope="col"></th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% for result in results|slice(0, 10) %}
-        {% include 'dashboard/modals/result.html.twig' with {
-            'id': result.id,
-            'result':result
-        }%}
-    {% endfor %}
+                </thead>
+                <tbody>
+                {% for result in results %}
+                    {% if result is not empty %}
+                        <tr>
+                            <td>{{ result.name|capitalize }}</td>
+                            <td class="float-right">
+                                {% if editPath is  defined %}
+                                    <a href="{{ path(editPath, {'id':tutorial.id }) }}" class="btn btn-primary">{{ 'edit'|trans|capitalize }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% for result in results %}
+            {% if result is not empty %}
+                {% include 'dashboard/modals/result.html.twig' with {
+                    'id': result.id,
+                    'result':result
+                }%}
+            {% endif %}
+        {% endfor %}
     {% else %}
 
     {% include 'dashboard/modals/result.html.twig' with {'id': 'new'}%}
