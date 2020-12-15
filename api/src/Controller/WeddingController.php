@@ -159,12 +159,14 @@ class WeddingController extends AbstractController
     }
 
     /**
-     * @Route("/ambtenaar")
+     * @Route("/ambtenaren")
      * @Template
      */
-    public function ambtenaarAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function ambtenarenAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        $variables['request'] = $session->get('currentRequest');
 
         $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])['hydra:member'];
 
