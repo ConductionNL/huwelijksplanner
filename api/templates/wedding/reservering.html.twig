@@ -1,0 +1,462 @@
+{# templates/home/index.html.twig #}
+
+{# id template: ba71c65e-7a82-449e-af15-947613ca6caa #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% set contact = commonground_resource(request.submitters[0].person) %}
+    <!-- .row -->
+    <div class="row animation" data-animation="animation-fade-in"
+         data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{% else %}200{% endif %}">
+
+        <div class="d-none d-md-block col-md-4 col-md-offset-0 hidden-xs hidden-sm">
+            <figure class="margin-bottom40 animation animated animation-fade-in-left"
+                    data-animation="animation-fade-in-left">
+                <img src="images/content/elements/Gellukig.png" alt="Image">
+            </figure>
+        </div>
+
+        <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-0">
+            <div class="col-text20 margin-bottom20">
+                <div class="post-heading-left">
+                    <h2>Wat is er al gedaan en wat moet er nog gebeuren?</h2>
+                    <p>We kunnen ons goed voorstellen dat er nogal wat op jullie afkomt bij het plannen, daarom hebben
+                        we alles op een rij gezet voor jullie. Een handig overzicht van wat er moet gebeuren, maar ook
+                        wat er al is gedaan.</p>
+
+                    {% if request.reference is defined and request.reference is not empty %}
+                        <br>
+                    <h4 style="color: #7C7C7C">Uw referentie: {{ request.reference }}</h4>
+                    {% endif %}
+                    <p><b>Legenda</b><br>
+                        <i style="color: red" class="fa fa-exclamation-triangle"></i> Nog te doen <br>
+                        <i class="fa fas fa-check"></i> Gedaan
+                    </p>
+                </div><!-- /.post-heading-left -->
+                <div class="list-row">
+                    <div class="list-col">
+                        <b>Gedaan:</b>
+                        <ul class="list-icon">
+
+                            {% if request.properties.type is defined and request.properties.type is not empty %}
+                                <li><b>Ceremonie</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i class="fa fas fa-check"></i>{{ request.properties.type }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request.properties.plechtigheid is defined and request.properties.plechtigheid is not empty %}
+                                <li><b>Plechtigheid</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i class="fa fas fa-check"></i>{{ commonground_resource(request.properties.plechtigheid).name }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request.properties.datum is defined and request.properties.datum is not empty %}
+                                <li><b>Trouwdatum</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i class="fa fas fa-check"></i> {{ request.properties.datum|date("d-m-Y H:i", "Europe/Paris") }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request.properties.ambtenaar is defined and request.properties.ambtenaar is not empty %}
+                                <li><b>Ambtenaar</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Ambtenaar -->
+                                            <i class="fa fas fa-check"></i>{{ commonground_resource(request.properties.ambtenaar).name }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request.properties.locatie is defined and request.properties.locatie is not empty %}
+                                <li><b>Locatie</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Locatie -->
+                                            <i class="fa fas fa-check"></i>{{ commonground_resource(request.properties.locatie).name }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {% if request.properties.melding is defined and request.properties.melding is not empty %}
+                                <li><b>Melding</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i class="fa fas fa-check"></i>
+                                            {% set  melding = commonground_resource(request.properties.melding)  %}
+                                            {% if melding.reference is defined and melding.reference is not empty %}
+                                                {{ melding.reference }}
+                                            {% else %}
+                                                {{ melding.name }}
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+
+                            {% if request.properties.partners is defined and request.properties.partners is not empty %}
+                                {% for partner in request.properties.partners %}
+                                    <li>
+                                        {% set assent = commonground_resource(partner) %}
+                                        {% set contact = commonground_resource(assent.contact) %}
+                                        <b>Partner: {{ contact.formalName }}</b>
+                                        <ul class="list-icon">
+                                            <li>
+                                                <!-- Partner -->
+                                                <i class="fa {% if assent.status == "granted" %}fas fa-check{% else %}fa-exclamation-triangle{% endif %}"></i>Status: {{ assent.status|trans }}
+                                            <li>
+                                            <li>
+                                                <!--  Trouwdatum -->
+                                                <i class="fa fas fa-check"></i>Leeftijd is gecontroleerd
+                                            <li>
+                                            <li>
+                                                <!--  Trouwdatum -->
+                                                <i class="fa fas fa-check"></i>Staat niet onder curatele
+                                            <li>
+                                            {% if request.properties.partners[0] is not defined or request.properties.partners[0] is empty or request.properties.partners[1] is not defined or request.properties.partners[1] is empty %}
+                                            <li>
+                                                <!--  Trouwdatum -->
+                                                <i class="fa fa-exclamation-triangle"></i> Er zijn nog geen twee partners opgegeven
+                                            <li>
+                                            {% else %}
+                                            <li>
+                                                <!--  Trouwdatum -->
+                                                <i class="fa fas fa-check"></i> Is geen famillie van andere partner
+                                            <li>
+                                            <li>
+                                                <!--  Trouwdatum -->
+                                                <i class="fa fas fa-check"></i> Heeft op dit moment geen partner
+                                            <li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+{#                            {% if request.properties.partners[1] is defined and request.properties.partners[1] is not empty %}#}
+{#                                <li>#}
+{#                                    {% set assent2 = commonground_resource(request.properties.partners[1]) %}#}
+{#                                    {% set contact2 = commonground_resource(assent2.contact) %}#}
+{#                                    <b>Partner: {{ contact2.formalName }}</b>#}
+{#                                    <ul class="list-icon">#}
+{#                                        <li>#}
+{#                                            <!-- Partner -->#}
+{#                                            <i class="fa {% if assent2.status == "granted" %}fas fa-check{% else %}fa-exclamation-triangle{% endif %}"></i>Status: {{ assent2.status|trans }}#}
+{#                                        <li>#}
+{#                                        <li>#}
+{#                                            <i class="fa fas fa-check"></i>Leeftijd is gecontroleerd#}
+{#                                        <li>#}
+{#                                        <li>#}
+{#                                            <i class="fa fas fa-check"></i>Staat niet onder curatele#}
+{#                                        <li>#}
+{#                                            {% if request.properties.partners[0] is not defined and request.properties.partners[0] is empty %}#}
+{#                                        <li>#}
+{#                                            <i style="color: red" class="fa fa-exclamation-triangle"></i>Heeft op dit#}
+{#                                            moment geen partner#}
+{#                                        <li>#}
+{#                                            {% else %}#}
+{#                                        <li>#}
+{#                                            <i class="fa fas fa-check"></i>Partner is geen familie in de eerste graad#}
+{#                                        <li>#}
+{#                                            {% endif %}#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% endif %}#}
+                            {% if request.properties.getuigen is defined and request.properties.getuigen is not empty %}
+                                <li>
+                                    <b>Getuigen</b>
+                                    <ul class="list-icon">
+                                        {% for getuige in request.properties.getuigen %}
+                                        {% set assent = commonground_resource(getuige) %}
+                                        {% set contact = commonground_resource(assent.contact) %}
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i class="fa {% if assent.status == "granted" %}fas fa-check{% else %}fa-exclamation-triangle{% endif %}"></i>{{ contact.formalName }} {% if assent.status == "granted" %}heeft ingestemd{% else %}heeft (nog) niet ingestemd{% endif %}
+                                        <li>
+                                            {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request is defined and request and request.properties.invoice is defined and request.properties.invoice is not empty %}
+                                {% set invoice = commonground_resource(request.properties.invoice) %}
+                                <li>
+                                    <b>Betalen</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            {% if invoice.paid == true %}
+                                            <i class="fa fas fa-check"></i>{{ "U heeft betaald" }}
+                                            {% elseif invoice.paid == false %}
+                                            <i class="fa fa-exclamation-triangle"></i>{{ "U moet nog betalen" }}
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {#
+                            <li>
+
+                                <i class="fa fas fa-check"></i>{{ huwelijk.type|capitalize }} datum: {{ huwelijk.datum |date("d-m-Y") }}
+                                {% if huwelijk is not empty and huwelijk.datum is defined and huwelijk.datum is not empty  %}
+                                <i class="fa fas fa-check"></i>{{ huwelijk.type|capitalize }} datum: {{ huwelijk.datum |date("d-m-Y") }}
+                                {% else %}
+                                <i class="fa far "></i> Kies <a href="{{ path('app_datum_index') }}" >hier</a> uw boogde  datum
+                                {% endif %}
+                               </li>
+                            <!--  Type -->
+                            <li>
+                                <i class="fa fas" ></i>
+                                {% if huwelijk is defined and huwelijk.type is defined and huwelijk.type is not empty%}
+                                <i class="fa fas fa-check"></i> Type plechtigheid: {{ huwelijk.type }}<i class="fa fas fa-check"></i>
+                                {% else %}
+                                <i class="fa far fa-square"></i> Kies <a href="{{ path('app_huwelijk_index') }}">hier</a> uw type huwelijk of partnerschap
+                                {% endif %}
+
+                            </li>
+                            <!-- Product -->
+                            <li>
+                                {% if ceremonie is defined and ceremonie  is not empty %}
+                                <i class="fa fas fa-check"></i>Plechtigheid: {{ ceremonie.naam }}
+                                {% else %}
+                                <i class="fa far fa-square"></i> Kies <a href="{{ path('app_huwelijk_index') }}" >hier</a> uw plechtigheid door
+                                {% endif %}
+                            </li>
+                            <!-- Partners -->
+                            <li>
+                                {% if partners|length >= 2 %}
+                                <i class="fa fas fa-check"></i>Partners: {{ partners[0].naam.voornamen }} {{ partners[0].naam.geslachtsnaam}} & {{ partners[1].naam.voornamen }} {{ partners[1].naam.geslachtsnaam}}
+                                {% else %}
+                                <i class="fa far fa-square" ></i> Nodig <a href="{{ path('app_partner_index') }}">hier</a> uw partner uit
+                                {% endif %}
+                            </li>
+                            #}
+                            {#
+                            <!-- locatie -->
+                            <li>
+                                {% if  locatie is not empty %}
+                                <i class="fa fas fa-check"></i> Locatie: {{ locatie.naam }}
+                                {% else %}
+                                <i class="fa far fa-square"></i> U heeft nog  geen locatie doorgegeven, doe dat <a href="{{ path('app_locatie_index') }}">hier</a>
+                                {% endif %}
+                            </li>
+                            <!-- Trouw Ambtenaar -->
+                            <li>
+                                {% if ambtenaar is not empty %}
+                                <i class="fa fas fa-check"></i> Ambtenaar: {{  ambtenaar.persoon.naam.voornamen }} {{ambtenaar.persoon.naam.geslachtsnaam }}
+                                {% else %}
+                                <i class="fa far fa-square"></i> U heeft nog  geen ambtenaar doorgegeven, doe dat <a href="{{ path('app_ambtenaar_index') }}">hier</a>
+                                {% endif %}
+                            </li>
+                            #}
+                        </ul>
+                    </div><!-- /.list-col -->
+                    <div class="list-col">
+                        <b>Nog te doen:</b>
+                        <ul class="list-icon">
+
+                            {% if request.properties.type is not defined or request.properties.type is empty %}
+                                <li><b>Ceremonies</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen
+                                            Ceremonie, u
+                                            kunt deze <a
+                                                href="{{ path('app_default_slug',{'slug':'ceremonie'}) }}">hier</a>
+                                            toevoegen.
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {% if request.properties.melding is not defined or request.properties.melding is empty %}
+                                <li><b>Melding</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen melding, u
+                                            kunt deze <a
+                                                href="{{ path('app_default_slug',{'slug':'melding'}) }}">hier</a>
+                                            toevoegen.
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {% if request.properties.plechtigheid is not defined or request.properties.plechtigheid is empty %}
+                                <li><b>Plechtigheid</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen
+                                            Plechtigheid, u kunt deze <a
+                                                href="{{ path('app_default_slug',{'slug':'plechtigheid'}) }}">hier</a>
+                                            toevoegen.
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {% if request.properties.datum is not defined or request.properties.datum is empty %}
+                                <li><b>Trouwdatum</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen datum, u
+                                            kunt deze <a href="{{ path('app_default_slug',{'slug':'datum'}) }}">hier</a>
+                                            toevoegen.
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request.properties.ambtenaar is not defined or request.properties.ambtenaar is empty %}
+                                <li><b>Ambtenaar</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen
+                                            ambtenaar, u
+                                            kunt deze <a
+                                                href="{{ path('app_default_slug',{'slug':'ambtenaar'}) }}">hier</a>
+                                            toevoegen.
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request.properties.locatie is not defined or request.properties.locatie is empty %}
+                                <li><b>Locatie</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Nog geen
+                                            locatie,
+                                            u kunt deze <a
+                                                href="{{ path('app_default_slug',{'slug':'locatie'}) }}">hier</a>
+                                            toevoegen.
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if (request.properties.partners is defined and request.properties.partners|length < 2) or request.properties.partners is not defined %}
+                                <li><b>Partners</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> U heeft nog
+                                            geen
+                                            partner toegewezen, u kunt deze <a
+                                                href="{{ path('app_default_slug',{'slug':'partner'}) }}">hier</a>
+                                            toevoegen.
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if (request.properties.getuigen is defined and request.properties.getuigen|length < 2) or request.properties.getuigen is not defined %}
+                                <li><b>Getuigen</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Te weinig
+                                            getuigen, u kunt deze <a
+                                                href="{{ path('app_default_slug',{'slug':'getuige'}) }}">hier</a>
+                                            toevoegen.
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request is defined and request.properties.invoice is defined and request.properties.invoice is not empty %}
+                                {% set invoice = commonground_resource(request.properties.invoice) %}
+                            {% endif %}
+                            {% if invoice is defined and invoice.paid == false %}
+                                <li><b>betalen</b>
+                                    <ul class="list-icon">
+                                        <li>
+                                            <!--  Trouwdatum -->
+                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> U heeft nog niet betaald, u kunt hier <a
+                                                href="{{ path('app_default_slug',{'slug':'betalen'}) }}">betalen</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {#
+                            {% if huwelijk is not empty and huwelijk.aanvraag  is not empty   %}
+                            <li>
+                                <i class="fa fas fa-check"></i> Uw reservering is bij ons bekend onder nummer: {{ huwelijk.aanvraag }}
+                            </li>
+                            <li>
+                                <i class="fas fa-exclamation"></i><u>Uw reservering is nog xx dagen geldig</u>
+                            </li>
+                            {% else %}
+                            <li>
+                                <i class="fa far fa-square"></i> U heeft nog  geen reservering gedaan
+                            </li>
+                            {% endif %}
+                                   #}
+
+
+                            {% if request is not empty and request.status is defined and request.status != "submitted" and contact.emails[0] is defined and contact.emails[0].email is not empty %}
+                                <a style="margin-left: 12.5% !important; margin-bottom: 5px;"
+                                   href="{{ path('app_default_submitrequest') }}"
+                                   class="btn btn-primary btn-icon col-md-8">
+                                    <i class="fas fa-share-square"></i>
+                                    {% if request.properties.ceremonie is defined %}{{ request.properties.ceremonie|capitalize }}{% else %}Aanvraag{% endif %}
+                                    indienen
+                                </a>
+                            {% endif %}
+                            <a style="margin-left: 12.5% !important;" href="#annuleerVerzoek" data-toggle="modal"
+                               data-target="#annuleerVerzoek"
+                               class="btn btn-danger btn-icon col-md-8">
+                                <i class="fas fa-share-square"></i>
+                                Annuleer {% if request.properties.ceremonie is defined %}{{ request.properties.ceremonie }}{% else %}aanvraag{% endif %}
+                            </a>
+                        </ul>
+                    </div><!-- /.list-col -->
+                </div>
+            </div>
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+
+    {# Modals #}
+
+    <div class="modal fade" style="text-align: center" id="annuleerVerzoek" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Verzoek annuleren</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <form method="post" action="">
+                        <p><b>Weet u zeker dat u uw verzoek wilt annuleren?</b></p>
+                        <p style="color:lightgray">Niet ingediende verzoeken worden definitief verwijderd.</p>
+                        <button type="submit" class="btn btn-danger mx-auto m-4">
+                            Annuleren
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

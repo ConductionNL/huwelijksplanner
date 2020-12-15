@@ -37,17 +37,8 @@
     "composer/xdebug-handler": {
         "version": "1.4.4"
     },
-    "conduction/balancebundle": {
-        "version": "dev-master"
-    },
     "conduction/commongroundbundle": {
         "version": "dev-symfony51"
-    },
-    "conduction/idvaultbundle": {
-        "version": "dev-master"
-    },
-    "conduction/rocketbundle": {
-        "version": "dev-main"
     },
     "dasprid/enum": {
         "version": "1.0.3"

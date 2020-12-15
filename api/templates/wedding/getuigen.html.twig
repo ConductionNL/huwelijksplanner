@@ -1,0 +1,103 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+            <!-- .row -->
+            <div class="row animation" data-animation="animation-fade-in" data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{%else%}200{% endif %}" >
+                <div class="post-heading-center">
+                	<h2>Uw Getuigen</h2>
+                    <p>Voor een huwelijk zijn er getuigen nodig, minimaal 1 en maximaal 2 per partner.</p>
+                </div>
+                <div class="
+            	{% if getuigen is defined and getuigen|length >= 4
+            	 %}	col-sm-12{% else %}col-md-8{% endif %}">
+		            <div class="row">
+                        {% if getuigen is defined and getuigen is not empty %}
+                            {% for getuige in getuigen  %}
+                                {% set assent = commonground_resource(getuige) %}
+                                {% set contact = commonground_resource(assent.contact) %}
+                                <div style="margin-bottom: 20px" class="col-md-6"> <!-- 1 -->
+                                    <div class="affa-team-profile">
+                                        <div class="team-profile-name">
+                                            <h4>
+                                                {{ contact.name }}
+                                            </h4>
+                                            <div style="text-align: left;" class="col-md-offset-2">
+                                                {% if assent.status is defined %}
+                                                <p><b>Status: </b>{{ assent.status|trans }}</p>
+                                                {% endif %}
+
+                                                {% if contact.emails is defined %}
+                                                    <p><b>Email:</b> {{ contact.emails[0].email }}</p>
+                                                {% endif %}
+                                                {% if contact.telephones is defined and contact.telephones is not empty and contact.telephones[0].telephone != '' %}
+                                                    <p><b>Telefoon</b></b> {{ contact.telephones[0].telephone }}</p>
+                                                {% endif %}
+
+                                            </div>
+
+                                            </p>
+                                        </div><!-- /.team-profile-name -->
+                                    </div><!-- /.affa-team-profile -->
+                                </div><!-- /.col-md-6 -->
+                            {% endfor %}
+                        {% endif %}
+		            </div><!-- /.row -->
+            	</div>
+            	{# We are onlygoing to display this form if we do not yet already have 4 witnesses #}
+            	{# if (huwelijk is defined and  huwelijk.getuigen is defined and huwelijk.getuigen|length < 4) or !huwelijk.getuigen #}
+            	{% if getuigen is defined and getuigen|length < 4
+            	 %}
+                <div class="col-sm-4">
+                	<form method="post" action="{{ path('app_wedding_getuigen')}}" class="affa-form-contact">
+                    	<h3>Toevoegen</h3>
+                        <br/>
+                    	<label for="getuige_voornamen">Voor partner</label>
+                        <select ng-disabled="loading"  name="partner" id="partner">
+                        	{% if request['properties']['getuigenPartner1'] is not defined or(request['properties']['getuigenPartner1'] is  defined and request['properties']['getuigenPartner1']|length < 2) %}
+                          <option value="getuigenPartner1">partner1</option>
+                           {% endif %}
+                        	{% if request['properties']['getuigenPartner2'] is not defined or (request['properties']['getuigenPartner1'] is  defined and request['properties']['getuigenPartner2']|length < 2)  %}
+                          	<option value="getuigenPartner2">partner2</option>
+                           {% endif %}
+                        </select>
+                        <label for="getuige_oornamen">Voornaam(en)</label>
+                        <input type="text" name="givenName" placeholder="John" ng-disabled="loading"/>
+                        <label for="getuige_geslachtsnaam">Achternaam</label>
+                        <input type="text" name="familyName" placeholder="Do" ng-disabled="loading"/>
+                        <label for="getuige_email">Email Adres <span class="required">*</span></label>
+                        <input type="text" name="email"placeholder="john@do.nl" ng-disabled="loading"/>
+                       	<label for="getuige_telefoonnummer">Telefoon nummer <span class="required">*</span></label>
+                        <input type="text" name="telephone" placeholder="+31 6 12345678" ng-disabled="loading"/>
+
+
+
+                       	<button type="submit" class="btn btn-success btn-lg btn-block  btn-icon" />
+							<i class="far fa-envelope"></i>
+							Uitnodigen
+						</button>
+                        <br/>
+                    	<p>Uw getuige ontvangt een email met daarin een bevestigingslink. <br /> Via die link kan uw getuige aangeven of hij voor u wilt/gaat getuigen.</p>
+
+                        <br/>
+                         <a href="{{ path('app_wedding_extra') }}" class="btn btn-primary btn-block btn-icon" >
+                        	<i class="far fa-calendar-times"></i>
+                         	Ga door naar extras
+                         </a>
+               		</form>
+            	</div>
+                {% endif %}
+            </div><!-- /.row -->
+            {% if request['properties']['getuigenPartner1'] is  defined and request['properties']['getuigenPartner2'] is defined %}
+            <div class="row animation" data-animation="animation-fade-in" data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{%else%}200{% endif %}" >
+                <div class="col-sm-12">
+                         <a href="{{ path('app_extra_index') }}" class="btn btn-primary btn-block btn-icon" >
+                        	<i class="far fa-calendar-times"></i>
+                         	Ga door naar extras
+                         </a>
+            	</div>
+            </div><!-- /.row -->
+            {% endif %}
+
+{% endblock %}

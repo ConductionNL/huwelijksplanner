@@ -1,0 +1,46 @@
+{# templates/betalen/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+            <!-- .row -->
+            <div class="row animation" data-animation="animation-fade-in" data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{%else%}200{% endif %}" >
+
+                <div class="col-sm-4"> <!-- 1 -->
+                	<div class="affa-feature-img">
+                    	<img src="images/thumbs/betalen.png" alt="Icon">
+                    </div>
+                </div>
+
+                <div class="col-sm-8"> <!-- 2 -->
+                    {% if request is defined and request and request.properties.invoice is defined and request.properties.invoice is not empty %}
+                        {% set invoice = commonground_resource(request.properties.invoice) %}
+                    {% endif %}
+                    {% if invoice is defined and invoice is not empty and invoice.paid == true %}
+                        <h4>U heeft de opties van uw verzoek reeds betaald.</h4>
+                    {% elseif (request is defined and request and request.properties.order is defined and request.properties.order is not empty)
+                        or (invoice is defined and invoice is not empty and invoice.paid == false) %}
+                 	<h4>{# commonground_resource(request.properties.order).priceCurrency }} {{ commonground_resource(request.properties.order).price #}</h4>
+              		<p>U heeft een huwelijk of opties gekozen waar kosten aan zijn verbonden. U dient deze kosten 6 weken voor aanvang van huwelijk te voldoen</p>
+              		<p><a href="" class="btn btn-login btn-large" >
+						<i class="fas fa-money-bill-wave" ></i>
+			       		Betaal uw verzoek
+		        	</a></p>
+		        	{% else %}
+                 	<h4>U verzoek kan op dit moment niet worden omgezet naar een order</h4>
+		        	{% endif %}
+                </div>
+
+            </div>
+            <!-- .row end -->
+            <!-- .row -->
+            <div class="row animation" {% if app.session.flashbag.peekAll|length > 0 %}data-animation="animation-fade-in" data-delay="3400"{% endif %}>
+                <div class="col-sm-10 col-md-7 col-lg-6 col-sm-offset-0 col-md-offset-0 col-lg-offset-1">
+        			<a href="{{ path('app_wedding_melding') }}" class="btn btn-primary btn-icon" >
+        				<i class="fas fa-share-square"></i>
+        			 	Doorgaan naar melding
+        		    </a>
+                </div><!-- /.col -->
+            </div>
+            <!-- .row end -->
+{% endblock %}

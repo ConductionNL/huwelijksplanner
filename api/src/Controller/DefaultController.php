@@ -39,7 +39,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/getuigen")
+     * @Route("/getuigeninfo")
      * @Template
      */
     public function getuigenInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')

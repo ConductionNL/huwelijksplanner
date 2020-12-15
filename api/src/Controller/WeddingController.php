@@ -152,7 +152,7 @@ class WeddingController extends AbstractController
             $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
             $session->set('currentRequest', $currentRequest);
 
-            return $this->redirect($this->generateUrl('app_wedding_ambtenaar'));
+            return $this->redirect($this->generateUrl('app_wedding_ambtenaren'));
         }
 
         return $variables;
@@ -167,8 +167,19 @@ class WeddingController extends AbstractController
         $variables = [];
 
         $variables['request'] = $session->get('currentRequest');
-
         $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])['hydra:member'];
+
+        if ($request->isMethod('POST')) {
+            $currentRequest = $session->get('currentRequest');
+
+            $currentRequest['properties']['ambtenaar'] = $request->get('ambtenaar');
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $session->set('currentRequest', $currentRequest);
+
+            return $this->redirect($this->generateUrl('app_wedding_locatie'));
+        }
 
         return $variables;
     }
@@ -180,6 +191,21 @@ class WeddingController extends AbstractController
     public function locatieAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        $variables['request'] = $session->get('currentRequest');
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])['hydra:member'];
+
+        if ($request->isMethod('POST')) {
+            $currentRequest = $session->get('currentRequest');
+
+            $currentRequest['properties']['locatie'] = $request->get('locatie');
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $session->set('currentRequest', $currentRequest);
+
+            return $this->redirect($this->generateUrl('app_wedding_datum'));
+        }
 
         return $variables;
     }
@@ -193,17 +219,21 @@ class WeddingController extends AbstractController
     public function datumAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+        $variables['request'] = $session->get('currentRequest');
 
-        return $variables;
-    }
+        if ($request->isMethod('POST')) {
+            $currentRequest = $session->get('currentRequest');
 
-    /**
-     * @Route("/reservering")
-     * @Template
-     */
-    public function reserveringAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
+            $date = $request->get('datum');
+
+            $currentRequest['properties']['datum'] = str_replace('(Central European Standard Time)', '', $date);
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $session->set('currentRequest', $currentRequest);
+
+            return $this->redirect($this->generateUrl('app_wedding_getuigen'));
+        }
 
         return $variables;
     }
@@ -216,6 +246,41 @@ class WeddingController extends AbstractController
     {
         $variables = [];
 
+        if ($request->isMethod('POST')) {
+            $currentRequest = $session->get('currentRequest');
+
+            if (isset($currentRequest['properties']['getuigen']) && count($currentRequest['properties']['getuigen']) == 4) {
+                $this->addFlash('warning', 'u heeft al 4 getuigen opgegeven');
+            } else {
+                if (isset($currentRequest['properties']['getuigen'])) {
+                    $index = count($currentRequest['properties']['getuigen']) + 1;
+                } else {
+                    $index = 1;
+                }
+                $currentRequest['properties']['getuigen'][$index]['contact']['emails'][]['email'] = $request->get('email');
+                $currentRequest['properties']['getuigen'][$index]['contact']['telephones'][]['telephone'] = $request->get('telephone');
+                $currentRequest['properties']['getuigen'][$index]['contact']['givenName'] = $request->get('givenName');
+                $currentRequest['properties']['getuigen'][$index]['contact']['familyName'] = $request->get('familyName');
+                $currentRequest['properties']['getuigen'][$index]['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
+                $currentRequest['properties']['getuigen'][$index]['description'] = 'U heeft een instemmingsverzoek ontvangen als getuigen voor een Huwelijk/ Partnerschap.';
+                $currentRequest['properties']['getuigen'][$index]['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $currentRequest['id']]);
+                $currentRequest['properties']['getuigen'][$index]['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+
+                $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+
+                $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+                $session->set('currentRequest', $currentRequest);
+            }
+        }
+
+        $variables['request'] = $session->get('currentRequest');
+
+        if (isset($variables['request']['properties']['getuigen'])) {
+            $variables['getuigen'] = $variables['request']['properties']['getuigen'];
+        } else {
+            $variables['getuigen'] = [];
+        }
+
         return $variables;
     }
 
@@ -226,6 +291,18 @@ class WeddingController extends AbstractController
     public function extraAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => 'f8298a12-91eb-46d0-b8a9-e7095f81be6f'])['hydra:member'];
+
+        if ($request->isMethod('POST')) {
+            $currentRequest = $session->get('currentRequest');
+            $currentRequest['properties']['extras'][] = $request->get('extra');
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $session->set('currentRequest', $currentRequest);
+        }
+
+        $variables['request'] = $session->get('currentRequest');
 
         return $variables;
     }
@@ -237,17 +314,31 @@ class WeddingController extends AbstractController
     public function betalenAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+        $variables['request'] = $session->get('currentRequest');
 
         return $variables;
     }
 
     /**
-     * @Route("/checklist")
+     * @Route("/melding")
      * @Template
      */
-    public function checklistAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function meldingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+        $variables['request'] = $session->get('currentRequest');
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/reservering")
+     * @Template
+     */
+    public function reserveringAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['request'] = $session->get('currentRequest');
 
         return $variables;
     }

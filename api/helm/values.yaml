@@ -4,7 +4,7 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pan
+  projectName: huwelijksplanner
   name: huwelijksplanner
   title: huwelijksplanner
   version: V1.0
