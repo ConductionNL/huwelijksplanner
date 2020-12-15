@@ -122,7 +122,7 @@
                             </li>
                             <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'reservering' in request.properties|keys %} class="completed"{% endif %}>
                                 <a href="{{ path('app_wedding_reservering') }}">
-                                    <i class="fas fa-calendar-check fa-3x"></i>
+                                    <i {% if app.request.pathinfo == '/reservering' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-calendar-check fa-3x"></i>
                                     <p style="color: white">
                                         Reservering
                                     </p>
@@ -136,7 +136,7 @@
                     </div><!-- .col end -->
                 {% else %}
                     <div style="margin-bottom: 20px" class="col-md-12 text-center">
-                        <a href="" class="btn btn-login btn-lg"><span class="fas fa-sign-in-alt"></span> Mijn verzoeken</a>
+                        <a href="{{ path('app_wedding_requests') }}" class="btn btn-login btn-lg"><span class="fas fa-sign-in-alt"></span> Mijn verzoeken</a>
                     </div><!-- .col end -->
                     <div class="col-md-12 text-center">
                         <a href="{{ path('app_wedding_huwelijk') }}" class="btn btn-login btn-lg"><span class="fas fa-sign-in-alt"></span> Verzoek starten</a>

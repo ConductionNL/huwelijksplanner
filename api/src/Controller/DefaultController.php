@@ -50,7 +50,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/melding")
+     * @Route("/meldinginfo")
      * @Template
      */
     public function meldingInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')

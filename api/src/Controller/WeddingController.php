@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Service\MailingService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use http\Client;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -36,12 +37,17 @@ class WeddingController extends AbstractController
     }
 
     /**
-     * @Route("/huwelijk")
+     * @Route("/huwelijk/{id}")
      * @Template
      */
-    public function huwelijkAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function huwelijkAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home', $id = null)
     {
         $variables = [];
+
+        if ($id !== null) {
+            $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id]);
+            $session->set('currentRequest', $currentRequest);
+        }
 
         if ($session->get('currentRequest')) {
             $variables['request'] = $session->get('currentRequest');
@@ -54,7 +60,9 @@ class WeddingController extends AbstractController
             $variables['request']['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
             $variables['request']['requestType'] = $commonGroundService->cleanUrl(['component' => 'vtc', 'type' => 'request_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
 
-            $session->set('currentRequest', $variables['request']);
+            $currentRequest = $commonGroundService->createResource($variables['request'], ['component' => 'vrc', 'type' => 'requests']);
+
+            $session->set('currentRequest', $currentRequest);
         }
 
         if ($request->isMethod('POST')) {
@@ -122,6 +130,9 @@ class WeddingController extends AbstractController
             $currentRequest['properties']['partners'][1]['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $variables['request']['id']]);
             $currentRequest['properties']['partners'][1]['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
 
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
             $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
             $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
             $session->set('currentRequest', $currentRequest);
@@ -148,6 +159,9 @@ class WeddingController extends AbstractController
 
             $currentRequest['properties']['plechtigheid'] = $request->get('ceremonie');
 
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
             $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
             $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
             $session->set('currentRequest', $currentRequest);
@@ -174,6 +188,10 @@ class WeddingController extends AbstractController
 
             $currentRequest['properties']['ambtenaar'] = $request->get('ambtenaar');
 
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
+
             $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
             $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
             $session->set('currentRequest', $currentRequest);
@@ -199,6 +217,10 @@ class WeddingController extends AbstractController
             $currentRequest = $session->get('currentRequest');
 
             $currentRequest['properties']['locatie'] = $request->get('locatie');
+
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
 
             $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
             $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
@@ -227,6 +249,10 @@ class WeddingController extends AbstractController
             $date = $request->get('datum');
 
             $currentRequest['properties']['datum'] = str_replace('(Central European Standard Time)', '', $date);
+
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
 
             $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
             $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
@@ -266,6 +292,10 @@ class WeddingController extends AbstractController
                 $currentRequest['properties']['getuigen'][$index]['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $currentRequest['id']]);
                 $currentRequest['properties']['getuigen'][$index]['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
 
+                if (!empty($currentRequest['children'])) {
+                    $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+                }
+
                 $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
 
                 $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
@@ -296,6 +326,11 @@ class WeddingController extends AbstractController
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
             $currentRequest['properties']['extras'][] = $request->get('extra');
+
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
+
             $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
 
             $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
@@ -314,6 +349,63 @@ class WeddingController extends AbstractController
     public function betalenAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if ($session->get('mollieId')) {
+
+        }
+
+        if ($request->isMethod('POST')) {
+            $currentRequest = $session->get('currentRequest');
+            $order = $commonGroundService->getResource($currentRequest['order']);
+            var_dump($order);
+            die;
+            $post = ['url'=>$currentRequest['order']];
+
+            if (key_exists('invoice', $currentRequest['properties']) && $currentRequest['properties']['invoice'] != null) {
+                $invoice = $commonGroundService->getResource($currentRequest['properties']['invoice']);
+                if ($invoice['dateCreated'] < $order['dateModified']) {
+                    $commonGroundService->deleteResource($invoice);
+                    unset($invoice);
+                }
+            }
+            if (!isset($invoice)) {
+                $body = [
+                    'amount'      => [
+                        'currency' => 'EUR',
+                        'value'    => $order['price'],
+                    ],
+                    'description' => 'huwelijk',
+                    'redirectUrl' => $request->getUri(),
+                    'locale'      => 'en_US',
+                ];
+
+                $headers = [
+                    'Authorization' => 'Bearer test_H8PeFq62HpNFPQmer4GuEUWupMwSqQ',
+                    'Accept'        => 'application/json',
+                ];
+
+                $client = new \GuzzleHttp\Client([
+                    // Base URI is used with relative requests
+                    'base_uri' => 'https://api.mollie.com',
+                    // You can set any number of default request options.
+                    'timeout'  => 2.0,
+                ]);
+
+                $response = $client->request('POST', '/v2/payments', [
+                    'form_params'  => $body,
+                    'content_type' => 'application/x-www-form-urlencoded',
+                    'headers'      => $headers,
+                ]);
+
+                $response = json_decode($response->getBody()->getContents(), true);
+
+                $session->set('mollieId', $response['id']);
+
+                return $this->redirect($response['_links']['checkout']['href']);
+            }
+
+        }
+
         $variables['request'] = $session->get('currentRequest');
 
         return $variables;
@@ -328,6 +420,38 @@ class WeddingController extends AbstractController
         $variables = [];
         $variables['request'] = $session->get('currentRequest');
 
+        if ($request->isMethod('POST')) {
+            $currentRequest = $session->get('currentRequest');
+
+            $melding['status'] = 'incomplete';
+            $melding['submitters'][0]['brp'] = $this->getUser()->getPerson();
+            $melding['properties'] = [];
+            $melding['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+            $melding['requestType'] = $commonGroundService->cleanUrl(['component' => 'vtc', 'type' => 'request_types', 'id' => '146cb7c8-46b9-4911-8ad9-3238bab4313e']);
+            $melding['parent'] = '/requests/'.$currentRequest['id'];
+
+            if (isset($currentRequest['properties']['partners'])) {
+                $melding['properties']['partner-melding'] = $currentRequest['properties']['partners'];
+            }
+
+            $melding['properties']['datum-melding'] = new \DateTime('now');
+
+            if (isset($currentRequest['properties']['getuigen'])) {
+                $melding['properties']['getuige-melding'] = $currentRequest['properties']['getuigen'];
+            }
+            $melding = $commonGroundService->saveResource($melding, ['component' => 'vrc', 'type' => 'requests']);
+
+            $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $currentRequest['id']]);
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+            $currentRequest['properties']['melding'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $melding['id']]);
+            $currentRequest['children'][0] = '/requests/'.$melding['id'];
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $session->set('currentRequest', $currentRequest);
+
+            return $this->redirect($this->generateUrl('app_wedding_reservering'));
+        }
+
         return $variables;
     }
 
@@ -339,6 +463,48 @@ class WeddingController extends AbstractController
     {
         $variables = [];
         $variables['request'] = $session->get('currentRequest');
+
+        if ($request->isMethod('POST') && $request->get('submit')) {
+            $currentRequest = $session->get('currentRequest');
+            $currentRequest['status'] = 'submitted';
+
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $this->addFlash('success', 'Uw verzoek is ingediend');
+            return $this->redirect($this->generateUrl('app_wedding_requests'));
+
+        } elseif ($request->isMethod('POST') && $request->get('cancel')) {
+            $currentRequest = $session->get('currentRequest');
+            $currentRequest['status'] = 'cancelled';
+
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $this->addFlash('warning', 'Uw verzoek is gecancelled');
+            return $this->redirect($this->generateUrl('app_wedding_requests'));
+        }
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/requests")
+     * @Template
+     */
+    public function requestsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+
+        $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['submitters.brp' => $this->getUser()->getPerson()])['hydra:member'];
 
         return $variables;
     }

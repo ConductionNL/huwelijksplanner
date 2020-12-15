@@ -18,14 +18,17 @@
                     {% endif %}
                     {% if invoice is defined and invoice is not empty and invoice.paid == true %}
                         <h4>U heeft de opties van uw verzoek reeds betaald.</h4>
-                    {% elseif (request is defined and request and request.properties.order is defined and request.properties.order is not empty)
+                    {% elseif (request is defined and request and request.order is defined and request.order is not empty)
                         or (invoice is defined and invoice is not empty and invoice.paid == false) %}
                  	<h4>{# commonground_resource(request.properties.order).priceCurrency }} {{ commonground_resource(request.properties.order).price #}</h4>
               		<p>U heeft een huwelijk of opties gekozen waar kosten aan zijn verbonden. U dient deze kosten 6 weken voor aanvang van huwelijk te voldoen</p>
-              		<p><a href="" class="btn btn-login btn-large" >
-						<i class="fas fa-money-bill-wave" ></i>
-			       		Betaal uw verzoek
-		        	</a></p>
+              		<p>
+                        <form action="{{ path('app_wedding_betalen') }}" method="post">
+                            <button class="btn btn-login btn-large">
+                                <i class="fas fa-money-bill-wave"></i>Betaal uw verzoek
+                            </button>
+                        </form>
+                    </p>
 		        	{% else %}
                  	<h4>U verzoek kan op dit moment niet worden omgezet naar een order</h4>
 		        	{% endif %}

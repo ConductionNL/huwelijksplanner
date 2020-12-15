@@ -20,26 +20,13 @@
 
         <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-0">
             <div class="col-text20 margin-bottom20">
-                <div class="post-heading-left">
-                    <h2>Wat is er al gedaan en wat moet er nog gebeuren?</h2>
-                    <p>We kunnen ons goed voorstellen dat er nogal wat op jullie afkomt bij het plannen, daarom hebben
-                        we alles op een rij gezet voor jullie. Een handig overzicht van wat er moet gebeuren, maar ook
-                        wat er al is gedaan.</p>
-
-                    {% if request.reference is defined and request.reference is not empty %}
-                        <br>
-                    <h4 style="color: #7C7C7C">Uw referentie: {{ request.reference }}</h4>
-                    {% endif %}
-                    <p><b>Legenda</b><br>
-                        <i style="color: red" class="fa fa-exclamation-triangle"></i> Nog te doen <br>
-                        <i class="fa fas fa-check"></i> Gedaan
-                    </p>
+                <div class="">
+                    <h2>Wilt u alvast een melding van uw huwelijk doen?</h2>
+                    <p>Dit zijn momenteen de bekende gegevens:</p>
                 </div><!-- /.post-heading-left -->
                 <div class="list-row">
                     <div class="list-col">
-                        <b>Gedaan:</b>
-                        <ul class="list-icon">
-
+                        <ul class="list-icon" style="margin-top: 0;">
                             {% if request.properties.type is defined and request.properties.type is not empty %}
                                 <li><b>Ceremonie</b>
                                     <ul class="list-icon">
@@ -266,165 +253,30 @@
                         </ul>
                     </div><!-- /.list-col -->
                     <div class="list-col">
-                        <b>Nog te doen:</b>
-                        <ul class="list-icon">
-
-                            {% if request.properties.type is not defined or request.properties.type is empty %}
-                                <li><b>Ceremonies</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen
-                                            Ceremonie, u
-                                            kunt deze <a
-                                                href="{{ path('app_wedding_huwelijk') }}">hier</a>
-                                            toevoegen.
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-
-                            {% if request.properties.melding is not defined or request.properties.melding is empty %}
-                                <li><b>Melding</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen melding, u
-                                            kunt deze <a
-                                                href="{{ path('app_wedding_melding') }}">hier</a>
-                                            toevoegen.
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-
-                            {% if request.properties.plechtigheid is not defined or request.properties.plechtigheid is empty %}
-                                <li><b>Plechtigheid</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen
-                                            Plechtigheid, u kunt deze <a
-                                                href="{{ path('app_wedding_ceremonie') }}">hier</a>
-                                            toevoegen.
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-
-                            {% if request.properties.datum is not defined or request.properties.datum is empty %}
-                                <li><b>Trouwdatum</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen datum, u
-                                            kunt deze <a href="{{ path('app_wedding_datum') }}">hier</a>
-                                            toevoegen.
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                            {% if request.properties.ambtenaar is not defined or request.properties.ambtenaar is empty %}
-                                <li><b>Ambtenaar</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Geen
-                                            ambtenaar, u
-                                            kunt deze <a
-                                                href="{{ path('app_wedding_ambtenaren') }}">hier</a>
-                                            toevoegen.
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                            {% if request.properties.locatie is not defined or request.properties.locatie is empty %}
-                                <li><b>Locatie</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Nog geen
-                                            locatie,
-                                            u kunt deze <a
-                                                href="{{ path('app_wedding_locatie') }}">hier</a>
-                                            toevoegen.
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                            {% if (request.properties.partners is defined and request.properties.partners|length < 2) or request.properties.partners is not defined %}
-                                <li><b>Partners</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> U heeft nog
-                                            geen
-                                            partner toegewezen, u kunt deze <a
-                                                href="{{ path('app_wedding_partners') }}">hier</a>
-                                            toevoegen.
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                            {% if (request.properties.getuigen is defined and request.properties.getuigen|length < 2) or request.properties.getuigen is not defined %}
-                                <li><b>Getuigen</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> Te weinig
-                                            getuigen, u kunt deze <a
-                                                href="{{ path('app_wedding_getuigen') }}">hier</a>
-                                            toevoegen.
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                            {% if request is defined and request.properties.invoice is defined and request.properties.invoice is not empty %}
-                                {% set invoice = commonground_resource(request.properties.invoice) %}
-                            {% endif %}
-                            {% if invoice is defined and invoice.paid == false %}
-                                <li><b>betalen</b>
-                                    <ul class="list-icon">
-                                        <li>
-                                            <!--  Trouwdatum -->
-                                            <i style="color: red" class="fas fa-exclamation-triangle"></i> U heeft nog niet betaald, u kunt hier <a
-                                                href="{{ path('app_wedding_betalen') }}">betalen</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                            {#
-                            {% if huwelijk is not empty and huwelijk.aanvraag  is not empty   %}
-                            <li>
-                                <i class="fa fas fa-check"></i> Uw reservering is bij ons bekend onder nummer: {{ huwelijk.aanvraag }}
-                            </li>
-                            <li>
-                                <i class="fas fa-exclamation"></i><u>Uw reservering is nog xx dagen geldig</u>
-                            </li>
-                            {% else %}
-                            <li>
-                                <i class="fa far fa-square"></i> U heeft nog  geen reservering gedaan
-                            </li>
-                            {% endif %}
-                                   #}
-
-                            <form action="{{ path('app_wedding_reservering') }}" method="post">
-                            {% if request is not empty and request.status is defined and request.status != "submitted" and contact.emails[0] is defined and contact.emails[0].email is not empty %}
+                        {% if request.properties.melding is defined %}
+                            <p>U heeft al een melding van uw huwelijk gedaan.</p>
+                            <a style="margin-left: 12.5% !important; margin-bottom: 5px;"
+                               href="{{ 'app_wedding_reservering' }}"
+                               class="btn btn-primary btn-icon col-md-8">
+                                <i class="fas fa-share-square"></i>
+                                Doorgaan
+                            </a>
+                        {% else %}
+                            <form action="{{ path('app_wedding_melding') }}" method="post">
                                 <button style="margin-left: 12.5% !important; margin-bottom: 5px;"
-                                   name="submit" value="true"
-                                   class="btn btn-primary btn-icon col-md-8">
+                                        class="btn btn-primary btn-icon col-md-8">
                                     <i class="fas fa-share-square"></i>
-                                    {% if request.properties.type is defined %}{{ request.properties.type|capitalize }}{% else %}Aanvraag{% endif %}
-                                    indienen
+                                    Melding doen
                                 </button>
-                            {% endif %}
                             </form>
-                            <a style="margin-left: 12.5% !important;" href="#annuleerVerzoek" data-toggle="modal"
-                               data-target="#annuleerVerzoek"
+                            <a style="margin-left: 12.5% !important; margin-bottom: 5px;"
+                               href="{{ 'app_wedding_reservering' }}"
                                class="btn btn-danger btn-icon col-md-8">
                                 <i class="fas fa-share-square"></i>
-                                Annuleer {% if request.properties.ceremonie is defined %}{{ request.properties.ceremonie }}{% else %}aanvraag{% endif %}
+                                Overslaan
                             </a>
+                        {% endif %}
+
                         </ul>
                     </div><!-- /.list-col -->
                 </div>
@@ -448,10 +300,10 @@
                     </button>
                 </div>
                 <div class="modal-body p-4">
-                    <form method="post" action="{{ path('app_wedding_reservering') }}">
+                    <form method="post" action="">
                         <p><b>Weet u zeker dat u uw verzoek wilt annuleren?</b></p>
                         <p style="color:lightgray">Niet ingediende verzoeken worden definitief verwijderd.</p>
-                        <button type="submit" name="cancel" value="true" class="btn btn-danger mx-auto m-4">
+                        <button type="submit" class="btn btn-danger mx-auto m-4">
                             Annuleren
                         </button>
                     </form>
