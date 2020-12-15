@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Service\MailingService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use http\Client;
+use Ramsey\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -358,13 +359,65 @@ class WeddingController extends AbstractController
         $variables = [];
 
         if ($session->get('mollieId')) {
+            $currentRequest = $session->get('currentRequest');
+            $requestUrl = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'organizations', 'id' => $currentRequest['id']]);
+            $id = $session->get('mollieId');
+            $session->remove('mollieId');
+            $headers = [
+                'Authorization' => 'Bearer test_WaWzFksV6TDFC9k228jguK9xgzVQkt',
+                'Accept'        => 'application/json',
+            ];
+
+            $client = new \GuzzleHttp\Client([
+                // Base URI is used with relative requests
+                'base_uri' => 'https://api.mollie.com',
+                // You can set any number of default request options.
+                'timeout'  => 2.0,
+            ]);
+
+            $response = $client->request('GET', '/v2/payments/'.$id, [
+                'headers' => $headers,
+            ]);
+
+            $response = json_decode($response->getBody()->getContents(), true);
+
+            $item = [];
+            $item['name'] = 'betaling';
+            $item['description'] = 'betaling';
+            $item['quantity'] = 1;
+            $item['price'] = strval($response['amount']['value']);
+            $item['priceCurrency'] = 'EUR';
+
+            $invoice = [];
+            $invoice['customer'] = $requestUrl;
+            $invoice['name'] = 'betaling';
+            $invoice['items'][] = $item;
+            $invoice['targetOrganization'] = $requestUrl;
+            $invoice['price'] = strval($response['amount']['value']);
+            $invoice['priceCurrency'] = 'EUR';
+            $invoice['paid'] = true;
+            $invoice['reference'] = Uuid::uuid4();
+
+            $invoice = $commonGroundService->createResource($invoice, ['component' => 'bc', 'type' => 'invoices']);
+            $invoiceUrl = $commonGroundService->cleanUrl(['component' => 'bc', 'type' => 'invoices', 'id' => $invoice['id']]);
+
+            $currentRequest['properties']['invoice'] = $invoiceUrl;
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $session->set('currentRequest', $currentRequest);
+
+            return $this->redirect($this->generateUrl('app_wedding_reservering'));
 
         }
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
             $order = $commonGroundService->getResource($currentRequest['order']);
-            $post = ['url'=>$currentRequest['order']];
 
             if (key_exists('invoice', $currentRequest['properties']) && $currentRequest['properties']['invoice'] != null) {
                 $invoice = $commonGroundService->getResource($currentRequest['properties']['invoice']);
@@ -385,7 +438,7 @@ class WeddingController extends AbstractController
                 ];
 
                 $headers = [
-                    'Authorization' => 'Bearer test_H8PeFq62HpNFPQmer4GuEUWupMwSqQ',
+                    'Authorization' => 'Bearer test_WaWzFksV6TDFC9k228jguK9xgzVQkt',
                     'Accept'        => 'application/json',
                 ];
 

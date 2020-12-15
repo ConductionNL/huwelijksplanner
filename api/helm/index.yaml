@@ -3,10 +3,10 @@ entries:
   huwelijksplanner:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2020-12-15T12:44:21.2149977Z"
+    created: "2020-12-15T16:02:49.4152035Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: c64aa086a3d155f2388711ce12cc85a8b60443039fac789895a7163022316669
+    digest: 11c7b0290b01424ce05d51f3507e9206c21be774e6cbed838df523c45f29bf9f
     home: www.zuid-drecht.nl
     icon: www.zuid-drecht.nl
     name: huwelijksplanner
@@ -16,7 +16,7 @@ entries:
   stage-platform:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2020-12-15T12:44:21.2205026Z"
+    created: "2020-12-15T16:02:49.4211392Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
     digest: e077ad04650acd3cf4f063061e0290903e350d30411626935d3340fca6cde626
@@ -26,4 +26,4 @@ entries:
     urls:
     - stage-platform-0.1.0.tgz
     version: 0.1.0
-generated: "2020-12-15T12:44:21.2075363Z"
+generated: "2020-12-15T16:02:49.4092357Z"
