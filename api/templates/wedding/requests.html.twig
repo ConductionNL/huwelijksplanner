@@ -30,7 +30,7 @@
                       <th scope="row">{{ loop.index }}</th>
                       <td>{{ request.reference }}</td>
                       <td>{{ commonground_resource(request.requestType).name }}</td>
-                      <td>{{ request.dateCreated}} </td>
+                      <td>{{ request.dateCreated|date("H:i:s d-m-Y", "Europe/Paris")}} </td>
                       <td>{{ request.status|trans }}</td>
                       <td>{% if request.status == 'incomplete' %}<a href="{{ path('app_wedding_huwelijk', {id: request.id}) }}" class="btn btn-success" role="button">Verder gaan</a>{% endif %}</td>
                     </tr>

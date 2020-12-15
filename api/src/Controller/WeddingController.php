@@ -481,7 +481,7 @@ class WeddingController extends AbstractController
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
 
-            $melding['status'] = 'incomplete';
+            $melding['status'] = 'submitted';
             $melding['submitters'][0]['brp'] = $this->getUser()->getPerson();
             $melding['properties'] = [];
             $melding['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
