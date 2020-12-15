@@ -1,0 +1,162 @@
+{# templates/partners/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+            <!-- .row-custom -->
+            <div class="row-custom animation" data-animation="animation-fade-in" data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{%else%}200{% endif %}" >
+                <div class="post-heading-center">
+                	<h2>Uw partner</h2>
+                </div>
+
+                <div class="col-left">
+                	<div class="affa-feature-icon"> <!-- 1 -->
+                    	<i class="fas fa-user" ></i>
+                        <div class="feature-text">
+                        	<h4>
+	                            {% if partner1.naam is defined and partner1.naam.voornamen is defined  %}
+                        	    {{ partner1.naam.voornamen }}
+                        	    {% endif %}
+                                {% if partner1.naam is defined and partner1.naam.geslachtsnaam is defined  %}
+                                {{ partner1.naam.geslachtsnaam }}</h4>
+                                {% endif %}
+                            <p>
+                                {% if partner1.status is defined %}
+	                                Status: {{ partner1.status }}
+                                {% endif %}
+
+                                {# partner is contact #}
+	                            {% if partner1.naam is defined %}
+                        	    <br><b>Voornaam:</b> {{ partner1.naam.voornamen }}
+                                <br><b>Achternaam:</b> {{ partner1.naam.geslachtsnaam }}
+                                {% endif %}
+
+                                {# partner is person #}
+	                            {% if partner1.contactObject is defined and partner1.contactObject._embedded.emails is defined  %}
+                        	    <br><b>Email:</b> {{ partner1.contactObject._embedded.emails[0].email }}
+                        	    {% endif %}
+                                {% if partner1.contactObject is defined and  partner1.contactObject._embedded.telephones is defined  %}
+                                <br><b>Telefoon</b></b> {{ partner1.contactObject._embedded.telephones[0].telephone }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="affa-feature-icon"> <!-- 2 -->
+                    	<i class="fas fa-home " ></i>
+                        <div class="feature-text">
+                        	<h4>Adres</h4>
+                            <p>
+                                {% if partner1.verblijfplaats is defined and partner1.verblijfplaats.straatnaam is defined  %}
+                                    {{ partner1.verblijfplaats.straatnaam }}
+                                {% endif %}
+                                {% if partner1.verblijfplaats is defined and partner1.verblijfplaats.huisnummer is defined  %}
+                                    {{  partner1.verblijfplaats.huisnummer }}
+                                {% endif %}<br />
+                                {% if partner1.verblijfplaats is defined and partner1.verblijfplaats.postcode is defined  %}
+                                    {{ partner1.verblijfplaats.postcode }}
+                                {% endif %}
+
+                             <br />
+                            </p>
+                         </div>
+                    </div>
+
+                    {% if partner1Submitted is not defined %}
+                        <!-- Uitnodigen partner 2 -->
+                        <div class="affa-feature-icon">
+                            <i class="fas fa-envelope"></i>
+                            <div class="feature-text">
+                                <h4>Uw contact gegevens</h4>
+                                <p>We willen graag nog een paar dingen van u weten</p>
+                                <br/>
+                                <form method="post" action="{{ path('app_wedding_partner') }}" class="affa-form-contact">
+                                    <div class="submit-status"></div>
+
+                                    <label for="partner_email">Email Adres <span class="required">*</span></label>
+                                    <input type="text" name="email" placeholder="john@do.nl" value="{% if partner1.contactObject is defined and partner1.contactObject._embedded.emails is defined  %}{{ partner1.contactObject._embedded.emails[0].email }}{% endif %}" required/>
+                                    <label for="partner_telefoonnummer">Telefoonnummer</label>
+                                    <input type="text" name="telephone" placeholder="+31 6 12345678" value="{% if partner1.contactObject is defined and  partner1.contactObject._embedded.telephones is defined  %}{{ partner1.contactObject._embedded.telephones[0].telephone }}{% endif %}"/>
+                                    <input type="hidden" name="givenName" value="{{ partner1.naam.voornamen }}">
+                                    <input type="hidden" name="familyName" value="{{ partner1.naam.geslachtsnaam }}">
+                                    <button type="submit" name="partner1" value="true" class="btn btn-success btn-lg btn-block btn-icon"><i class="far fa-envelope"></i> Opslaan</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-center">
+                	<figure class="margin-bottom40 " >
+                    	<img src="images/content/elements/MakeItKnown.png"/>
+                    </figure>
+                </div>
+
+                <div class="col-right">
+					<!-- NAW gegevens partner 2 -->
+            	    {% if partner2 is defined and partner2 is not empty %}
+                	<div class="affa-feature-icon">
+                    	<i class="fas fa-user " ></i>
+                        <div class="feature-text">
+                        	<h4>U heeft uw partner reeds uitgenodigd</h4>
+                            <p>
+	                            Status: {{ partner2.status }}
+
+                                {# partner is contact #}
+                                {% set person = commonground_resource(partner2.contact) %}
+	                            {% if person is defined and person is not empty %}
+                        	    <br><b>Voornaam:</b> {{ person.givenName }}
+                                <br><b>Achternaam:</b> {{ person.familyName }}
+                                {% endif %}
+
+                                {# partner is person #}
+	                            {% if person.emails[0].email is defined %}
+                        	    <br><b>Email:</b> {{ person.emails[0].email }}
+                        	    {% endif %}
+                                {% if person.teleptones[0].telephone is defined  %}
+                                <br><b>Telefoon</b></b> {{ person.telephones[0].telephone }}
+                                {% endif %}
+
+                            </p>
+                        </div>
+                    </div>
+
+					<!-- Overige gegevens partner 2 -->
+                    <div class="affa-feature-icon" > <!-- 5 -->
+							{% if partner2.status == 'requested'  %}
+							<a href="" class="btn btn-danger btn-icon btn-block"><i class="far fa-rings-wedding"></i> Partner Verwijderen</a>
+							{% endif %}
+     						<a href="{{ path('app_wedding_ceremonie') }}" class="btn btn-primary btn-icon btn-block"><i class="far fa-rings-wedding"></i> Ga door naar ceremonie</a>
+                    </div>
+                    {% elseif partner2Submitted is not defined  %}
+					<!-- Uitnodigen partner 2 -->
+                    <div class="affa-feature-icon"> <!-- 6 -->
+                    	<i class="fas fa-envelope"></i>
+                        <div class="feature-text">
+                        	<h4>{% if request.properties.type is defined  %}Vraag uw partner ten  {{ request.properties.type|capitalize }}{% else %}Nodig uw partner uit{% endif %}.</h4>
+                            <p>Want dit doet u natuurlijk samen</p>
+                            <br/>
+		                	<form method="post" action="{{ path('app_wedding_partner') }}" class="affa-form-contact">
+		                    	<div class="submit-status"></div> <!-- submit status -->
+
+								<label for="partner_voornamen" >Voornaam(en) <span class="required">*</span></label>
+                                <input type="text" name="givenName" placeholder="John" required/>
+                                <label for="partner_geslachtsnaam">Achternaam <span class="required">*</span></label>
+                                <input type="text" name="familyName" placeholder="Do" required/>
+                                <label for="partner_email">Email Adres <span class="required">*</span></label>
+                                <input type="text" name="email" placeholder="john@do.nl" required/>
+                                <label for="partner_telefoonnummer">Telefoonnummer</label>
+                                <input type="text" name="telephone" placeholder="+31 6 12345678"/>
+
+ 								<button type="submit" name="partner2" value="true" class="btn btn-success btn-lg btn-block btn-icon"><i class="far fa-envelope"></i> Per bericht Uitnodigen</button>
+
+		                    </form>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+            <!-- .row-custom end -->
+{% endblock %}

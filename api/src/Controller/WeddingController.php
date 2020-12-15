@@ -43,11 +43,30 @@ class WeddingController extends AbstractController
     {
         $variables = [];
 
-        $variables['processType'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
-        $variables['request']['processType'] = $commonGroundService->cleanUrl(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
-        $variables['request']['status'] = 'incomplete';
-        $variables['request']['properties'] = [];
-        $variables['request']['requestType'] = $commonGroundService->cleanUrl(['component' => 'vtc', 'type' => 'request_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+        if ($session->get('currentRequest')) {
+            $variables['request'] = $session->get('currentRequest');
+        } else {
+            $variables['processType'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+            $variables['request']['processType'] = $commonGroundService->cleanUrl(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+            $variables['request']['status'] = 'incomplete';
+            $variables['request']['submitters'][0]['brp'] = $this->getUser()->getPerson();
+            $variables['request']['properties'] = [];
+            $variables['request']['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+            $variables['request']['requestType'] = $commonGroundService->cleanUrl(['component' => 'vtc', 'type' => 'request_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+
+            $session->set('currentRequest', $variables['request']);
+        }
+
+        if ($request->isMethod('POST')) {
+
+            $currentRequest = $session->get('currentRequest');
+            $currentRequest['properties']['type'] = $request->get('type');
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+
+            $session->set('currentRequest', $currentRequest);
+
+            return $this->redirect($this->generateUrl('app_wedding_partner'));
+        }
 
         return $variables;
     }
@@ -60,16 +79,81 @@ class WeddingController extends AbstractController
     {
         $variables = [];
 
+        $variables['request'] = $session->get('currentRequest');
+
+        if (isset($variables['request']['properties']['partners'])) {
+            $variables['partner2'] = $commonGroundService->getResource($variables['request']['properties']['partners'][1]);
+            $variables['partner1Submitted'] = true;
+        }
+
+        $variables['partner1'] = $commonGroundService->getResource($this->getUser()->getPerson());
+
+        if ($request->isMethod('POST') && $request->get('partner1') && !$session->get('partners')) {
+            $variables['partner1Submitted'] = true;
+            $partner['contact']['emails'][]['email'] = $request->get('email');
+            $partner['contact']['telephones'][]['telephone'] = $request->get('telephone');
+            $partner['contact']['givenName'] = $request->get('givenName');
+            $partner['contact']['familyName'] = $request->get('familyName');
+            $partner['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
+            $partner['description'] = 'U heeft een instemmingsverzoek ontvangen als partners voor een Huwelijk/ Partnerschap.';
+            $partner['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $variables['request']['id']]);
+            $partner['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+            $session->set('partners', $partner);
+        } elseif ($request->isMethod('POST') && $request->get('partner2') && !$session->get('partners')) {
+            $variables['partner2Submitted'] = true;
+            $partner['contact']['emails'][]['email'] = $request->get('email');
+            $partner['contact']['telephones'][]['telephone'] = $request->get('telephone');
+            $partner['contact']['givenName'] = $request->get('givenName');
+            $partner['contact']['familyName'] = $request->get('familyName');
+            $partner['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
+            $partner['description'] = 'U heeft een instemmingsverzoek ontvangen als partners voor een Huwelijk/ Partnerschap.';
+            $partner['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $variables['request']['id']]);
+            $partner['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+            $session->set('partners', $partner);
+        } elseif ($request->isMethod('POST') && $session->get('partners')) {
+            $currentRequest = $session->get('currentRequest');
+            $currentRequest['properties']['partners'][0] = $session->get('partners');
+            $currentRequest['properties']['partners'][1]['contact']['emails'][]['email'] = $request->get('email');
+            $currentRequest['properties']['partners'][1]['contact']['telephones'][]['telephone'] = $request->get('telephone');
+            $currentRequest['properties']['partners'][1]['contact']['givenName'] = $request->get('givenName');
+            $currentRequest['properties']['partners'][1]['contact']['familyName'] = $request->get('familyName');
+            $currentRequest['properties']['partners'][1]['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
+            $currentRequest['properties']['partners'][1]['description'] = 'U heeft een instemmingsverzoek ontvangen als partners voor een Huwelijk/ Partnerschap.';
+            $currentRequest['properties']['partners'][1]['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $variables['request']['id']]);
+            $currentRequest['properties']['partners'][1]['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $session->set('currentRequest', $currentRequest);
+
+            return $this->redirect($this->generateUrl('app_wedding_ceremonie'));
+        }
+
         return $variables;
     }
 
     /**
-     * @Route("/locatie")
+     * @Route("/ceremonie")
      * @Template
      */
-    public function locatieAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function ceremonieAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        $variables['request'] = $session->get('currentRequest');
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])['hydra:member'];
+
+        if ($request->isMethod('POST')) {
+            $currentRequest = $session->get('currentRequest');
+
+            $currentRequest['properties']['plechtigheid'] = $request->get('ceremonie');
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+            $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
+            $session->set('currentRequest', $currentRequest);
+
+            return $this->redirect($this->generateUrl('app_wedding_ambtenaar'));
+        }
 
         return $variables;
     }
@@ -86,6 +170,19 @@ class WeddingController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * @Route("/locatie")
+     * @Template
+     */
+    public function locatieAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+
+        return $variables;
+    }
+
+
 
     /**
      * @Route("/datum")

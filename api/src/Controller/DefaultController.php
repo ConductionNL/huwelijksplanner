@@ -32,6 +32,9 @@ class DefaultController extends AbstractController
     {
         $variables = [];
 
+        $session->remove('currentRequest');
+        $session->remove('partners');
+
         return $variables;
     }
 
@@ -39,7 +42,7 @@ class DefaultController extends AbstractController
      * @Route("/getuigen")
      * @Template
      */
-    public function getuigenAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function getuigenInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
 
@@ -50,7 +53,7 @@ class DefaultController extends AbstractController
      * @Route("/melding")
      * @Template
      */
-    public function meldingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function meldingInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
 
@@ -61,7 +64,7 @@ class DefaultController extends AbstractController
      * @Route("/naamsgebruik")
      * @Template
      */
-    public function naamsgebruikAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function naamsgebruikInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
 
@@ -72,7 +75,7 @@ class DefaultController extends AbstractController
      * @Route("/ambtenaar")
      * @Template
      */
-    public function ambtenaarAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function ambtenaarInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
 
@@ -86,7 +89,7 @@ class DefaultController extends AbstractController
      * @Route("/locaties")
      * @Template
      */
-    public function locatiesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function locatiesInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
 
