@@ -69,6 +69,13 @@ class WeddingController extends AbstractController
 
             $currentRequest = $session->get('currentRequest');
             $currentRequest['properties']['type'] = $request->get('type');
+
+            if (!empty($currentRequest['children'])) {
+                $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
+            }
+
+            $currentRequest['submitters'][0] = '/submitters/'.$currentRequest['submitters'][0]['id'];
+
             $currentRequest = $commonGroundService->saveResource($currentRequest, ['component' => 'vrc', 'type' => 'requests']);
 
             $session->set('currentRequest', $currentRequest);
@@ -357,8 +364,6 @@ class WeddingController extends AbstractController
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
             $order = $commonGroundService->getResource($currentRequest['order']);
-            var_dump($order);
-            die;
             $post = ['url'=>$currentRequest['order']];
 
             if (key_exists('invoice', $currentRequest['properties']) && $currentRequest['properties']['invoice'] != null) {
