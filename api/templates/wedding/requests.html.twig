@@ -32,7 +32,7 @@
                       <td>{{ commonground_resource(request.requestType).name }}</td>
                       <td>{{ request.dateCreated|date("H:i:s d-m-Y", "Europe/Paris")}} </td>
                       <td>{{ request.status|trans }}</td>
-                      <td>{% if request.status == 'incomplete' %}<a href="{{ path('app_wedding_huwelijk', {id: request.id}) }}" class="btn btn-success" role="button">Verder gaan</a>{% endif %}</td>
+                      <td>{% if request.status == 'incomplete' %}<a href="{{ path('app_wedding_index', {id: request.id}) }}" class="btn btn-success" role="button">Verder gaan</a>{% endif %}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -41,7 +41,7 @@
             </div>
             <div class="row animation" data-animation="animation-fade-in" data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{%else%}200{% endif %}" >
                 <div class="col-md-6"> <!-- 4 -->
-     				<a href="{{ path('app_wedding_huwelijk') }}" class="btn btn-primary btn-icon btn-block btn-lg"><i class="far fa-rings-wedding"></i> Start huwelijks verzoek</a>
+     				<a href="{{ path('app_wedding_index') }}" class="btn btn-primary btn-icon btn-block btn-lg"><i class="far fa-rings-wedding"></i> Start huwelijks verzoek</a>
                 </div>
             </div>
             <!-- /.row -->

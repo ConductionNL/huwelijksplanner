@@ -27,12 +27,37 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class WeddingController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/start/{id}")
      * @Template
      */
-    public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id = null, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        if ($id !== null) {
+            $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id]);
+            $session->set('currentRequest', $currentRequest);
+        }
+
+        if ($session->get('currentRequest')) {
+            $variables['request'] = $session->get('currentRequest');
+        } else {
+            $variables['processType'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+            $variables['request']['processType'] = $commonGroundService->cleanUrl(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+            $variables['request']['status'] = 'incomplete';
+            $variables['request']['submitters'][0]['brp'] = $this->getUser()->getPerson();
+            $variables['request']['properties'] = [];
+            $variables['request']['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+            $variables['request']['requestType'] = $commonGroundService->cleanUrl(['component' => 'vtc', 'type' => 'request_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+
+            $currentRequest = $commonGroundService->createResource($variables['request'], ['component' => 'vrc', 'type' => 'requests']);
+
+            $session->set('currentRequest', $currentRequest);
+        }
 
         return $variables;
     }
