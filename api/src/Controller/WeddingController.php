@@ -45,6 +45,10 @@ class WeddingController extends AbstractController
     {
         $variables = [];
 
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
         if ($id !== null) {
             $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id]);
             $session->set('currentRequest', $currentRequest);
@@ -94,6 +98,10 @@ class WeddingController extends AbstractController
     public function partnerAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
 
         $variables['request'] = $session->get('currentRequest');
 
@@ -159,6 +167,10 @@ class WeddingController extends AbstractController
     {
         $variables = [];
 
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
         $variables['request'] = $session->get('currentRequest');
         $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])['hydra:member'];
 
@@ -187,6 +199,10 @@ class WeddingController extends AbstractController
     public function ambtenarenAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
 
         $variables['request'] = $session->get('currentRequest');
         $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])['hydra:member'];
@@ -217,6 +233,10 @@ class WeddingController extends AbstractController
     public function locatieAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
 
         $variables['request'] = $session->get('currentRequest');
         $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])['hydra:member'];
@@ -249,6 +269,11 @@ class WeddingController extends AbstractController
     public function datumAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
         $variables['request'] = $session->get('currentRequest');
 
         if ($request->isMethod('POST')) {
@@ -279,6 +304,10 @@ class WeddingController extends AbstractController
     public function getuigenAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -329,6 +358,11 @@ class WeddingController extends AbstractController
     public function extraAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
         $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => 'f8298a12-91eb-46d0-b8a9-e7095f81be6f'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
@@ -357,6 +391,10 @@ class WeddingController extends AbstractController
     public function betalenAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
 
         if ($session->get('mollieId')) {
             $currentRequest = $session->get('currentRequest');
@@ -476,6 +514,11 @@ class WeddingController extends AbstractController
     public function meldingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
         $variables['request'] = $session->get('currentRequest');
 
         if ($request->isMethod('POST')) {
@@ -520,6 +563,11 @@ class WeddingController extends AbstractController
     public function reserveringAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
         $variables['request'] = $session->get('currentRequest');
 
         if ($request->isMethod('POST') && $request->get('submit')) {
@@ -561,6 +609,10 @@ class WeddingController extends AbstractController
     public function requestsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
+
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
 
         $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['submitters.brp' => $this->getUser()->getPerson()])['hydra:member'];
 
