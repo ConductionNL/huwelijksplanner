@@ -140,13 +140,13 @@
 		                    	<div class="submit-status"></div> <!-- submit status -->
 
 								<label for="partner_voornamen" >Voornaam(en) <span class="required">*</span></label>
-                                <input type="text" name="givenName" placeholder="John" required/>
+                                <input type="text" minlength="2" name="givenName" placeholder="John" required/>
                                 <label for="partner_geslachtsnaam">Achternaam <span class="required">*</span></label>
-                                <input type="text" name="familyName" placeholder="Do" required/>
+                                <input type="text" minlength="2" name="familyName" placeholder="Do" required/>
                                 <label for="partner_email">Email Adres <span class="required">*</span></label>
-                                <input type="text" name="email" placeholder="john@do.nl" required/>
+                                <input type="email" name="email" placeholder="john@do.nl" required/>
                                 <label for="partner_telefoonnummer">Telefoonnummer</label>
-                                <input type="text" name="telephone" placeholder="+31 6 12345678"/>
+                                <input type="text" name="telephone" pattern="[0-9]{12}" placeholder="31 6 12345678"/>
 
  								<button type="submit" name="partner2" value="true" class="btn btn-success btn-lg btn-block btn-icon"><i class="far fa-envelope"></i> Per bericht Uitnodigen</button>
 

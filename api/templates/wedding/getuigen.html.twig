@@ -63,13 +63,13 @@
                            {% endif %}
                         </select>
                         <label for="getuige_oornamen">Voornaam(en)</label>
-                        <input type="text" name="givenName" placeholder="John" ng-disabled="loading"/>
+                        <input type="text" minlength="2" name="givenName" placeholder="John" ng-disabled="loading"/>
                         <label for="getuige_geslachtsnaam">Achternaam</label>
-                        <input type="text" name="familyName" placeholder="Do" ng-disabled="loading"/>
+                        <input type="text" minlength="2" name="familyName" placeholder="Do" ng-disabled="loading"/>
                         <label for="getuige_email">Email Adres <span class="required">*</span></label>
-                        <input type="text" name="email"placeholder="john@do.nl" ng-disabled="loading"/>
+                        <input type="email" name="email"placeholder="john@do.nl" ng-disabled="loading"/>
                        	<label for="getuige_telefoonnummer">Telefoon nummer</label>
-                        <input type="text" name="telephone" placeholder="+31 6 12345678" ng-disabled="loading"/>
+                        <input type="text" name="telephone" pattern="[0-9]{12}" placeholder="31 6 12345678" ng-disabled="loading"/>
 
 
 
