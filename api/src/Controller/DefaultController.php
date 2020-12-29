@@ -98,4 +98,17 @@ class DefaultController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * @Route("/ceremonie-info")
+     * @Template
+     */
+    public function ceremonieInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+
+
+
+        return $variables;
+    }
 }
