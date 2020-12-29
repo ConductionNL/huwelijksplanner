@@ -191,6 +191,18 @@
                                     </ul>
                                 </li>
                             {% endif %}
+                            {% if request.properties.extras is defined and request.properties.extras is not empty %}
+                                <li>
+                                    <b>Extras</b>
+                                    <ul class="list-icon">
+                                        {% for extra in request.properties.extras %}
+                                        <li>
+                                            <i class="fa fas fa-check"></i>{{ commonground_resource(extra).name }}
+                                        <li>
+                                            {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
                             {% if request is defined and request and request.properties.invoice is defined and request.properties.invoice is not empty %}
                                 {% set invoice = commonground_resource(request.properties.invoice) %}
                                 <li>
