@@ -2,11 +2,11 @@
 
 Description
 ----
-Welcome to the the VNG Common Ground proto component!
+Wedding planner is a tool that makes wedding planning easier.
 
-This "proto" component provides a plug and play solution for component generation on Common Ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does all that for you!
+A report is immediately made, and checks are carried out immediately. So that you know there are no objections.
 
-For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects, without compromising extensibility and flexibility.
+The file, including notification, is submitted for processing in the BRP and BS.
 
 Additional Information
 ----
