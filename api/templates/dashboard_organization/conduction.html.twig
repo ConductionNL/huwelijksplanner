@@ -1,0 +1,87 @@
+{% extends "dashboard/base.html.twig" %}
+
+{% block content %}
+    <!-- breadcrumbs -->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div class="d-block mb-4 mb-md-0">
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item"><a href="{{ path('app_default_index') }}"><span
+                                class="fas fa-home"></span></a></li>
+                    <li class="breadcrumb-item"><a
+                            href="{{ path('app_dashboard_index') }}">{{ 'Dashboard'|trans|capitalize }}</a></li>
+                    <li class="breadcrumb-item active">{{ 'conduction'|trans|capitalize }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-8 mb-4">
+            <div class="card border-light">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <h2>Challenges</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table">
+                                <thead>
+                                <th>{{ 'name'|trans|capitalize }}</th>
+                                <th>{{ 'date created'|trans|capitalize }}</th>
+                                </thead>
+                                <tbody>
+                                {% for challenge in challenges %}
+                                    {% if challenge.entries is empty or challenge.entries is not defined %}
+                                        <tr>
+                                            <td>{{ challenge.name }}</td>
+                                            <td>{{ challenge.created|date("H:i:s d-m-Y", "Europe/Paris") }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-8 mb-4">
+            <div class="card border-light">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <h2>Stages</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table">
+                                <thead>
+                                <th>{{ 'name'|trans|capitalize }}</th>
+                                <th>{{ 'date created'|trans|capitalize }}</th>
+                                </thead>
+                                <tbody>
+                                {% for stage in stages %}
+                                    {% if stage.appliedFor == false %}
+                                        <tr>
+                                            <td>{{ stage.name }}</td>
+                                            <td>{{ stage.dateCreated|date("H:i:s d-m-Y", "Europe/Paris") }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

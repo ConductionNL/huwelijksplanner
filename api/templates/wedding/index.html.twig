@@ -1,0 +1,287 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!-- .row -->
+<div class="row animation" data-animation="animation-fade-in"
+     data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{% else %}200{% endif %}">
+
+    <div class="col-sm-12 col-md-8 col-sm-offset-1 col-md-offset-0 text-center-sm text-center-xs"
+         style="padding-left: 30px" ng-hide="locatie">
+        <div class="margin-bottom40">
+            <div class="post-heading-left text-center-sm text-center-xs" ng-hide="locatie">
+                <h2>Wat moet je regelen?</h2>
+            </div>
+
+            <p>Als je gaat trouwen moet je veel regelen. Om je wat overzicht te geven hebben we hieronder een
+                lijstje gemaakt van alles wat je met de Gemeente moet regelen. We leggen het ook uit in een
+                filmpje.</p>
+
+            <p>Alles wat je al gedaan hebt staat rechtsboven op deze pagina. Er staat ook een uitgebreider overzicht
+                op de <a href="{{ path('app_wedding_reservering') }}">checklist-pagina</a>.</p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-ring" style="margin-right: 10px"></i>Huwelijk of
+                Geregistreerd Partnerschap</h3>
+
+            <p>Jullie moeten een keuze maken of jullie een huwelijk of een geregistreerd partnerschap willen
+                afsluiten. Als je nog niet weet welke keuze je moet maken kan je op de site van de <a
+                    href="https://www.rijksoverheid.nl/onderwerpen/trouwen-samenlevingscontract-en-geregistreerd-partnerschap/vraag-en-antwoord/wat-is-het-verschil-tussen-een-huwelijk-geregistreerd-partnerschap-en-samenlevingscontract">Rijksoverheid</a>
+                lezen waar je rekening mee moet houden.</p>
+
+            <p><a href="{{ path('app_wedding_huwelijk') }}">> Maak keuze voor type huwelijk.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-user-friends" style="margin-right: 10px"></i>Informatie
+                van beide partners doorgeven</h3>
+
+            <p>We hebben gegevens nodig van beide partners om het huwelijk of het partnerschap te registreren. </p>
+
+            <p><a href="{{ path('app_wedding_partner') }}">> Vul partnerinfo in.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-glass-cheers" style="margin-right: 10px"></i>Gratis,
+                eenvoudig of ceremonieel trouwen</h3>
+
+            <p>Als jullie gaan trouwen zijn moet je kiezen tussen gratis, eenvoudig en ceremonieel trouwen. Dit
+                bepaalt hoeveel keuze je hebt bij het kiezen van je locatie, trouwdatum en trouwambtenaren. </p>
+
+            <p><a href="{{ path('app_wedding_ceremonie') }}">> Maak keuze van het trouwen.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-calendar-day" style="margin-right: 10px"></i>Trouwdatum
+                kiezen</h3>
+
+            <p>Jullie moeten kiezen wanneer je bij de Gemeente de plechtigheid wil laten voltrekken. De beschikbare
+                data zijn afhankelijk van het type ceremonie (gratis, eenvoudig of ceremonieel).</p>
+
+            <p><a href="{{ path('app_wedding_datum') }}">> Kies trouwdatum.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-building" style="margin-right: 10px"></i>Trouwlocatie
+                kiezen</h3>
+
+            <p>De keuze in trouwlocatie is afhankelijk van het type huwelijk (gratis, eenvoudig of ceremonieel). Als
+                het type huwelijk de mogelijkheid biedt om een locatie te kiezen, is het nodig dat jullie aangeven
+                waar jullie het huwelijk willen laten voltrekken.</p>
+
+            <p><a href="{{ path('app_wedding_locatie') }}">> Kies trouwlocatie.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-user-tie" style="margin-right: 10px"></i>Trouwambtenaar
+                kiezen</h3>
+
+            <p>De trouwambtenaar is degene die het huwelijk met jullie gaat voltrekken. De keuze in trouwambtenaar
+                is afhankelijk van het type huwelijk (gratis, eenvoudig of ceremonieel). Als het type huwelijk de
+                mogelijkheid biedt om een trouwambtenaar te kiezen, is het nodig dat jullie aangeven welke
+                trouwambtenaar jullie willen voor jullie ceremonie. Je kan hier ook lezen wat je moet doen om een
+                vriend of vriendin ambtenaar voor een dag te laten zijn.</p>
+
+            <p><a href="{{ path('app_wedding_ambtenaren') }}">> Kies trouwambtenaar.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-users" style="margin-right: 10px"></i>Getuigen aanmelden
+            </h3>
+
+            <p>Bij het trouwen of geregistreerde partnerschap is het wettelijk verplicht dat er minimaal twee
+                getuigen aanwezig zijn, één voor elke partner. Er zijn maximaal
+                4 getuigen toegestaan bij Gemeente Utrecht.
+            </p>
+
+            <p><a href="{{ path('app_wedding_getuigen') }}">> Kies getuigen.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-gift" style="margin-right: 10px"></i>Extra’s kiezen
+            </h3>
+
+            <p>Het is mogelijk om extra opties te kiezen om je ceremonie extra feestelijk te maken, zoals
+                bijvoorbeeld een trouwboekje als aandenken aan het huwelijk.
+            </p>
+
+            <p><a href="{{ path('app_wedding_extra') }}">> Kies extra's.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-envelope" style="margin-right: 10px"></i>Melding
+                voorgenomen
+                huwelijk
+            </h3>
+
+            <p>Voordat je gaat trouwen of een geregistreerd partnerschap aangaat is het wettelijk verplicht een
+                melding voorgenomen huwelijk te gaan doen. Dit moet minimaal
+                14 dagen voordat de ceremonie voltrokken wordt.
+            </p>
+
+            <p><a href="{{ path('app_wedding_melding') }}">> Melding voorgenomen huwelijk doen.</a></p>
+
+            <h3 style="margin-top: 20px"><i class="fas fa-cash-register" style="margin-right: 10px"></i>Betaling
+                doen
+            </h3>
+
+            <p>Tenzij je voor een gratis huwelijk hebt gekozen moet je betalen voor je huwelijk. De kosten zijn
+                afhankelijk van het type huwelijk wat je kiest.
+            </p>
+
+            <p><a href="{{ path('app_wedding_betalen') }}">> Doe de betaling.</a></p>
+
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-sm-offset-1 col-md-offset-0 text-center-sm text-center-xs" ng-show="locatie">
+        <h2>Checklist</h2>
+        <ul style="margin-left: 20px" class="list-icon">
+            <li><h5>{% if request.properties.type is not defined or request.properties.type is empty %}<i
+                style="color: red; margin-left: -30px; padding-right: 10px" class="fas fa-exclamation-triangle"></i>{% else %}<i
+                class="fa fas fa-check"></i>{% endif %}Ceremonie</h5>
+                {% if request.properties.type is defined and request.properties.type is not empty %}
+                <ul style="margin-left: -40px !important;" class="list">
+                    <li><i class="fa fas fa-check"></i> {{ request.properties.type|capitalize }}</li>
+                </ul>
+                {% endif %}
+            </li>
+
+            {% if request.properties.partners[0] is defined and request.properties.partners[0] is not empty %}
+            {% set assent1 = commonground_resource(request.properties.partners[0]) %}
+            {% set contact1 = commonground_resource(assent1.contact) %}
+            <li><h5><i class="fa {% if assent1.status == "granted" %} fas fa-check{% else %}fa-exclamation-triangle{% endif %}"></i>Partner: {{ contact1.formalName }}</h5>
+                <ul style="padding-left: 0" class="list">
+                    <li>
+                        <!-- Partner -->
+                        <i class="fa {% if assent1.status == "granted" %}fas fa-check{% else %}fa-exclamation-triangle{% endif %}"></i>Status: {{ assent1.status|trans }}
+                    </li>
+                    <li>
+                        <!--  Trouwdatum -->
+                        <i class="fa fas fa-check"></i>Leeftijd is gecontroleerd
+                    </li>
+                    <li>
+                        <!--  Trouwdatum -->
+                        <i class="fa fas fa-check"></i>Staat niet onder curatele
+                    </li>
+                    <li>
+                        <!--  Trouwdatum -->
+                        <i class="fa fas fa-check"></i>Is geen famillie in de eerste graad
+                    </li>
+                    <li>
+                        <!--  Trouwdatum -->
+                        <i class="fa fas fa-check"></i>Heeft op dit moment geen partner
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if request.properties.partners is defined and request.properties.partners|length == 2 and request.properties.partners[1] is not empty %}
+            {% set assent1 = commonground_resource(request.properties.partners[0]) %}
+            {% set contact1 = commonground_resource(assent1.contact) %}
+            <li><h5><i class="fa {% if assent1.status == "granted" %} fas fa-check{% else %}fa-exclamation-triangle{% endif %}"></i>Partner: {{ contact1.formalName }}</h5>
+                <ul style="padding-left: 0" class="list">
+                    <li>
+                        <!--  Trouwdatum -->
+                        <i class="fa fas fa-check"></i>Leeftijd is gecontroleerd
+                    </li>
+                    <li>
+                        <!--  Trouwdatum -->
+                        <i class="fa fas fa-check"></i>Staat niet onder curatele
+                    </li>
+                    {% if request.properties.partners|length < 2 or request.properties.partners[1] is empty %}
+                    <li>
+                        <i style="color: red" class="fa fa-exclamation-triangle"></i>U hebt nog een partner uitgenodigd
+                    <li>
+                        {% else %}
+                    <li>
+                        <i class="fa fas fa-check"></i>Partner is geen familie in de eerste graad
+                    <li>
+                        {% endif %}
+                </ul>
+            </li>
+            {% endif %}
+            <li><h5>{% if request.properties.plechtigheid is not defined or request.properties.plechtigheid is empty %}<i
+                style="color: red; margin-left: -30px; padding-right: 10px" class="fas fa-exclamation-triangle"></i>{% else %}<i
+                class="fa fas fa-check"></i>{% endif %}Plechtigheid</h5>
+                {% if request.properties.plechtigheid is defined and request.properties.plechtigheid is not empty %}
+                <ul style="margin-left: -40px !important;" class="list">
+                    <li>
+                        <i class="fa fas fa-check"></i> {{ commonground_resource(request.properties.plechtigheid).name|capitalize }}
+                    </li>
+                </ul>
+                {% endif %}
+            </li>
+            <li><h5>{% if request.properties.datum is not defined or request.properties.datum is empty %}<i
+                style="color: red; margin-left: -30px; padding-right: 10px" class="fas fa-exclamation-triangle"></i>{% else %}<i
+                class="fa fas fa-check"></i>{% endif %}Datum</h5>
+                {% if request.properties.datum is defined and request.properties.datum is not empty %}
+                <ul style="margin-left: -40px !important;" class="list">
+                    <li>
+                        <i class="fa fas fa-check"></i> {{ request.properties.datum|date("d-m-Y H:i", "Europe/Paris") }}
+                    </li>
+                </ul>
+                {% endif %}
+            </li>
+            <li><h5>{% if request.properties.locatie is not defined or request.properties.locatie is empty %}<i
+                style="color: red; margin-left: -30px; padding-right: 10px" class="fas fa-exclamation-triangle"></i>{% else %}<i
+                class="fa fas fa-check"></i>{% endif %}Locatie</h5>
+                {% if request.properties.locatie is defined and request.properties.locatie is not empty %}
+                <ul style="margin-left: -40px !important;" class="list">
+                    <li>
+                        <i class="fa fas fa-check"></i> {{ commonground_resource(request.properties.locatie).name }}
+                    </li>
+                </ul>
+                {% endif %}
+            </li>
+            <li><h5>{% if request.properties.ambtenaar is not defined or request.properties.ambtenaar is empty %}<i
+                style="color: red; margin-left: -30px; padding-right: 10px" class="fas fa-exclamation-triangle"></i>{% else %}<i
+                class="fa fas fa-check"></i>{% endif %}Trouwambtenaar</h5>
+                {% if request.properties.ambtenaar is defined and request.properties.ambtenaar is not empty %}
+                <ul style="margin-left: -40px !important;" class="list">
+                    <li>
+                        <i class="fa fas fa-check"></i> {{ commonground_resource(request.properties.ambtenaar).name }}
+                    </li>
+                </ul>
+                {% endif %}
+            </li>
+
+            <li>
+                <h5>{% if request.properties.getuigen is not defined or request.properties.getuigen |length < 2 %}<i
+                    style="color: red; margin-left: -30px; padding-right: 10px" class="fas fa-exclamation-triangle"></i>{% else %}<i
+                    class="fa fas fa-check"></i>{% endif %}Getuigen</h5>
+                {% if request.properties.getuigen is defined and request.properties.getuigen is not empty %}
+                <ul style="padding-left: 0" class="list">
+                    {% for getuige in request.properties.getuigen %}
+                    {% set assent = commonground_resource(getuige) %}
+                    {% set contact = commonground_resource(assent.contact) %}
+                    <li>
+                        <i class="fa {% if assent.status == "granted" %}fas fa-check{% else %}fa-exclamation-triangle{% endif %}"></i>{{ contact.formalName }} {% if assent.status == "granted" %}heeft ingestemd{% else %}heeft (nog) niet ingestemd{% endif %}
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-6 col-sm-offset-3">
+                <a href="{{ path('app_wedding_huwelijk') }}" class="btn btn-primary btn-icon btn-block">Start hier uw huwelijksverzoek</a>
+            </div>
+            <div class="col-sm-12">
+                <img src="images/content/elements/Scooter.png" alt="Image" width="100%">
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- .row end -->
+
+<!-- .row -->
+<div class="row animation" class="row animation"
+     {% if app.session.flashbag.peekAll|length > 0 %}data-animation="animation-fade-in"
+    data-delay="3400"{% endif %}>
+
+    <div class="col-sm-10 col-md-6 col-lg-5 col-sm-offset-1 col-md-offset-0">
+        <figure class="margin-bottom40 animation" data-animation="animation-fade-in-left">
+            {#                        <iframe width="560" height="315" frameborder="0" allowfullscreen="" ng-src="{{locatie.film.url}}"></iframe>#}
+        </figure>
+    </div>
+
+    <div class="col-sm-10 col-md-6 col-sm-offset-1 col-md-offset-0 col-lg-offset-1">
+        <div class="col-text20 margin-bottom20" ng-bind-html="locatie.beschrijving">
+        </div>
+    </div>
+
+</div>
+<!-- .row end -->
+
+
+{% endblock %}

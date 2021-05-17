@@ -1,726 +1,646 @@
-{% set application = commonground_application() %}
 <!DOCTYPE html>
-<html lang="nl-NL">
+<!--[if lt IE 7]>
+<html class="ie ie6" lang="en"><![endif]-->
+<!--[if IE 7]>
+<html class="ie ie7" lang="en"><![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en"><![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="en"><![endif]-->
+<!--[if (gte IE 10)|!(IE)]><!-->
+<html lang="en"><!--<![endif]-->
+
 <head>
+    <!-- Your Basic Site Informations -->
+    <title>{% block title %}Utrecht | Trouwplanner {% endblock %}</title>
 
-    {% if application['defaultConfiguration']['configuration']['googleTagId'] is defined and application['defaultConfiguration']['configuration']['googleTagId'] is not empty %}
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async
-                src="https://www.googletagmanager.com/gtag/js?id={{ application['defaultConfiguration']['configuration']['googleTagId'] }}"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description"
+          content="Flatland is a premium flat landing page that built-in professional responsive design, colorful and have a slew of features.">
+    <meta name="keywords"
+          content="Landing Page, One Page Template, Responsive, Flat Design, Premium, Creative, Colorful, Portfolio, PSD, HTML5, CSS3, jQuery">
+    <meta name="author" content="Affapress">
 
-            function gtag() {
-                dataLayer.push(arguments);
-            }
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-            gtag('js', new Date());
-
-            gtag('config', '{{ application['defaultConfiguration']['configuration']['googleTagId'] }}');
-        </script>
-    {% endif %}
-    {% if app.user is defined and app.user is not empty %}
-        <script>
-            setTimeout(function () {
-                window.location.href = '/login/loggedOut';
-            }, 910000);
-        </script>
-    {% endif %}
-
-    <meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-
-    <title> {% if application is not empty %}
-            {% if slug is defined and slug is not empty %}
-                {{ slug|capitalize }} |
-            {% endif %}
-            {{ application['name'] }}{% else %} Applicatie{% endif %}</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    {% if application['style']['favicon']['base64'] is defined and application['style']['favicon']['base64'] is not empty %}
-        <link rel="icon" href="{{ application['style']['favicon']['base64']|raw }}">
-    {% else %}
-        <link rel="icon" href="/uno/components/favicon/ro-favicon-wit-0xffffff.png">
-    {% endif %}
-    <link rel="stylesheet" href="/uno/core/base.css">
-    <link rel="stylesheet" href="/uno/core/grid.css">
-    <link rel="stylesheet" href="/uno/core/animations.css">
-    <link rel="stylesheet" href="/uno/components/lists/lists.css">
-    <link rel="stylesheet" href="/uno/components/header/header.css">
-    <link rel="stylesheet" href="/uno/components/collapse/collapse.css">
-    <link rel="stylesheet" href="/uno/components/navigation/breadcrumbs.css">
-    <link rel="stylesheet" href="/uno/components/navigation/backlink.css">
-    <link rel="stylesheet" href="/uno/components/navigation/sidenav.css">
-    <link rel="stylesheet" href="/uno/components/form/form.css">
-    <link rel="stylesheet" href="/uno/components/form/input.css">
-    <link rel="stylesheet" href="/uno/components/button/button.css">
-    <link rel="stylesheet" href="/uno/components/skiplink/skiplink.css">
-    <link rel="stylesheet" href="/uno/components/tabs/tabs.css">
-    <link rel="stylesheet" href="/uno/components/footer/footer.css">
-    <link rel="stylesheet" href="/uno/components/navigation/navigation.css">
-    <link rel="stylesheet" href="/uno/components/donut-chart/donut-chart.css">
-    <link rel="stylesheet" href="/uno/components/spinner/spinner.css">
-    <!--<link rel="stylesheet" href="/uno/components/memo/memo.css">-->
-    <link rel="stylesheet" href="/uno/components/modal/modal.css">
-    <link rel="stylesheet" href="/uno/components/tooltip/tooltip.css">
-    <link rel="stylesheet" href="/css/main.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
 
-    <link rel="stylesheet" href="/css/challange.css">
-    <link rel="stylesheet" href="/css/processen.css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.2/css/all.css"
+          integrity="sha384-zrnmn8R8KkWl12rAZFt4yKjxplaDaT7/EUkKm7AovijfrQItFWR7O/JJn4DAa/gx" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/slick-theme.css">
+    <link rel="stylesheet" href="/css/jquery.fancybox.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 
-    <link rel="stylesheet" href="/uno/components/button/button.css">
-    <link rel="stylesheet" href="/uno/components/card/card.css">
-    <link rel="stylesheet" href="/uno/components/collapse/collapse.css">
-    <link rel="stylesheet" href="/uno/components/form/checkbox.css">
-    <link rel="stylesheet" href="/uno/components/form/filter.css">
-    <link rel="stylesheet" href="/uno/components/form/form.css">
-    <link rel="stylesheet" href="/uno/components/form/file.css">
-    <link rel="stylesheet" href="/uno/components/form/input.css">
-    <link rel="stylesheet" href="/uno/components/form/radio.css">
-    <link rel="stylesheet" href="/uno/components/hint/hint.css">
-    <link rel="stylesheet" href="/uno/components/label/label.css">
-    <link rel="stylesheet" href="/uno/components/list/definition-list.css">
-    <link rel="stylesheet" href="/uno/components/list/list-card.css">
-    <link rel="stylesheet" href="/uno/components/list/list-grid.css">
-    <link rel="stylesheet" href="/uno/components/list/list-files.css">
-    <link rel="stylesheet" href="/uno/components/list/list-notification.css">
-    <link rel="stylesheet" href="/uno/components/list/list-subject.css">
-    <link rel="stylesheet" href="/uno/components/list/list-search.css">
-    <link rel="stylesheet" href="/uno/components/list/list-timeline.css">
-    <link rel="stylesheet" href="/uno/components/list/list-filter.css">
-    <link rel="stylesheet" href="/uno/components/meta/meta.css">
-    <link rel="stylesheet" href="/uno/components/navigation/inpage.css">
-    <link rel="stylesheet" href="/uno/components/notification/notification.css">
-    <link rel="stylesheet" href="/uno/components/pagination/pagination.css">
-    <link rel="stylesheet" href="/uno/components/quote/quote.css">
-    <link rel="stylesheet" href="/uno/components/section/edit-section.css">
-    <link rel="stylesheet" href="/uno/components/section/inner-section.css">
-    <link rel="stylesheet" href="/uno/components/table/table.css">
+    <!-- Custom Colors -->
+    <!--<link rel="stylesheet" href="css/colors/green.css">-->
+    <!--<link rel="stylesheet" href="css/colors/orange.css">-->
+    <!--<link rel="stylesheet" href="css/colors/pink.css">-->
+    <!--<link rel="stylesheet" href="css/colors/purple.css">-->
+    <!--<link rel="stylesheet" href="css/colors/yellow.css">-->
 
-    {#  Image Slider  #}
-    <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
-    {# Add the new slick-theme.css if you want the default styling #}
-    <link rel="stylesheet" type="text/css" href="/slick/slick-theme.css"/>
+    <!--[if lt IE 9]>
+    <script src="js/html5.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
 
-    <script src="/uno/vendor/js/Promise.min.js"></script>
-    <script src="/uno/vendor/js/system.js"></script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvjuY_QquUy3abazKUJJEMh8DFvpKKRBI&callback=initMap"></script>
-    <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
-    <script
-        src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-        crossorigin="anonymous"></script>
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="css/ie-older.css">
+    <![endif]-->
 
-    <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
-    <!--<script src="/uno/components/memo/memo.js"></script>-->
-    <script src="/uno/components/tooltip/tooltip.js"></script>
-
-    {#  Google fonts     #}
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.14/angular-material.css">
 
 
-    {#  Slick image slider  #}
-    <script type="text/javascript" src="/slick/slick.min.js"></script>
+    <noscript>
+        <link rel="stylesheet" href="css/no-js.css">
+    </noscript>
 
-    <script>
-        System.config({
-            packages: {
-                '/': {
-                    defaultExtension: 'js'
-                }
-            }
-        });
-    </script>
+    <!-- Favicons -->
+    <link rel="shortcut icon" type="image/png" href="images/favicon.ico">
+    <!-- Apple Touch Icons -->
 
-    {#  QR Code  #}
-    <script src="/js/html5-qrcode.min.js"></script>
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/icons/apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/icons/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/icons/apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/icons/apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/icons/apple-touch-icon-60x60.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/icons/apple-touch-icon-120x120.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/icons/apple-touch-icon-76x76.png"/>
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/icons/apple-touch-icon-152x152.png"/>
 
-    <style>
-        /* deafult values for root variables */
-        :root {
-            --color: #2b2b2b;
-            --background: #DEDEDE;
-            --primary: #0047BB;
-            --primary-color: white;
-            --secondary: #0047BB;
-            --secondary-color: #0047BB;
+    <!-- Windows 8 Tile Icons -->
+    <meta name="msapplication-square70x70logo" content="/images/icons/smalltile.png"/>
+    <meta name="msapplication-square150x150logo" content="/images/icons/mediumtile.png"/>
+    <meta name="msapplication-wide310x150logo" content="/images/icons/widetile.png"/>
+    <meta name="msapplication-square310x310logo" content="/images/icons/largetile.png"/>
 
-            --header: white;
-            --menu: #0047BB;
-            --menu-over: #3669A5;
-            --menu-color: white;
-            --footer: #0047BB;
-            --footer-color: white;
+    <!-- Bootstrap Date-Picker Plugin -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+    <!-- basefallback url  -->
+    <base href="/">
+
+
+    <!-- even wat snelle style sheet overwrites  -->
+    <style type="text/css">
+        .fa-times {
+            color: #F9522C !important;
         }
 
-        /* general overwrites and addons to nl-design system */
-
-        .nav--input {
-            margin-top: 10px;
-            margin-bottom: 10px !important;
+        .fa-check {
+            color: #addfad !important;
         }
 
-        .nav--input__control-group {
-            width: 200px;
+        .fa-circle-notch {
+            color: #50A2F6 !important;
         }
 
-        .header-logo a:before {
-            background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iw5HDq8Ouw6lfMSIgZGF0YS1uYW1lPSLDkcOrw67DqSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MzkuNTcgMTA5OC44OSI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNjMDA7fS5jbHMtMntmaWxsOiMzNjY5YTU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT56dWlkIERyZWNodCBOb3BheW9mZjwvdGl0bGU+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTc2LDk2Ny4xMWMtNTYsNDEuMzktMTAxLjQzLDY2LjA1LTExMSw3MS4xMWE0LDQsMCwwLDEtMy43MiwwYy0yNS41Ny0xMy41LTMwNy40OC0xNjctMzYxLjM3LTQwNmE0LDQsMCwwLDEsNy4zOC0yLjgxYzM4LjU0LDY4LjkzLDEyNS4zNywxMTkuMjYsMTg3LjUxLDE1Mi42OSw1Mi41LDI4LjIzLDExMy42Miw1MC4yMSwxNjguMzQsODAuMzZDNTA4LjIyLDg4Ny4yOSw1NDksOTE3LjY5LDU3Nyw5NjEuNzVBNCw0LDAsMCwxLDU3Niw5NjcuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODM0LjcxLDIxNS44NFYxMDEuNjVhOC45LDguOSwwLDAsMC04LjktOC45MWgtMjczQTE0LjU5LDE0LjU5LDAsMCwwLDUzOS40MywxMDNsLTE5LDcwLjI4YTE0LjU4LDE0LjU4LDAsMCwxLTEzLjM1LDEwLjIxSDM4M1YxNDcuMTJjMzYuODQtMS4zNCw2Mi40Mi03LjQ1LDgwLjE2LTE1LjEsMjkuNDktMTIuNzQsMzcuMzUtMjkuNzgsMzkuMzYtMzYuNDRhMi4yMiwyLjIyLDAsMCwwLTIuMTMtMi44NEgzMzQuNjFjLTMzLjg4LDAtNjcuOTEsOS4yLTg2LjA4LDQwLjEtMTkuMzgsMzIuOTQtMTguMjQsNzguMDctMTYuNDksMTE0Ljg5LDAsMC01MC02Ni4yMi00MC43Ni0xNDguODdhNS41MSw1LjUxLDAsMCwwLTUuNDgtNi4xMkgxMDAuMzJhOC43OSw4Ljc5LDAsMCwwLTguNzgsOC43OVYxMjRjNC44Niw3OS4yNiw0OS4xNCwyODguNTcsMzcxLjU4LDM4NS40QzczNSw1OTEuMDYsNzc1LjQyLDcxNi4zLDc4My4zMiw3MzguMjRhMS4zOCwxLjM4LDAsMCwwLDIuNTMuMTdjNzUuMy0xNDMuOS04MS40OS0yNDcuNTItODEuNDktMjQ3LjUyLDMxLjMzLDAsNzkuMjMsMTcuOTQsMTE4LDM5Ljc5YTguMjgsOC4yOCwwLDAsMCwxMi4zNy03LjIxVjM2My44M2ExNC42LDE0LjYsMCwwLDAtMTguMTUtMTQuMTdjLTEzLjUsMy4zOS0zMCw2LjY4LTMyLjg3LDcuMjMtMzkuNDYsNy43Ny04NC43NSwxMS4xNS0xMjItOC43M3MtNDcuMjYtNjYuMjctMTguMzMtOTguMjNjMjUuMy0yOCw2NS41My0zNy41LDEwMi4yOS0zNSwyMy41NiwxLjYyLDU1LjE4LDcuNTksNzMuNzEsMTIuNjNBMTIuMTYsMTIuMTYsMCwwLDAsODM0LjcxLDIxNS44NFoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik02NTQuODcsOTAxLjVhNCw0LDAsMCwxLTYtLjExYy0xMy41Ni0xNi4yNS03NS40Ni04Ni0xODUuNzMtMTQ2LjQyQTc1Ni40NCw3NTYuNDQsMCwwLDAsMzgzLDcxN2MtMTczLjUzLTcwLjE3LTI4Mi42OS0xNDMuMy0yOTEuNDItMzM4LjF2LTYuMjJhNCw0LDAsMCwxLDcuMjEtMi4zNGM2My42MSw4NywxNDQuNjksMTM3LjksMjQzLjE2LDE4Ni43Nyw0MC4yOCwyMCw4MS4xNywzNi4zMiwxMjEuMjEsNTMuMjUsNjYuMTUsMjgsMTMwLDU3LjU0LDE4NC43MywxMDcuOCwxNi4xOCwxNC44NSwyOS4wOSwyOS4xNSwzNi44MSw1MEM2OTUuNzUsNzk4LjEzLDcwMi41NSw4NDkuMTcsNjU0Ljg3LDkwMS41WiIvPjwvc3ZnPg==") no-repeat bottom;
-            background-size: 120%;
+        .btn {
+            font-family: Montserrat, Arial, sans-serif;
+            color: #FFF !important;
+            font-size: 15px;
+            border-radius: 3px;
+            font-weight: 700;
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding: 16px 30px 14px;
+            border: 0px;
+            transition: background-color .2s ease, color .2s ease, border .2s ease;
         }
 
-        .header-logo a:before {
-            background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iw5HDq8Ouw6lfMSIgZGF0YS1uYW1lPSLDkcOrw67DqSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MzkuNTcgMTA5OC44OSI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNjMDA7fS5jbHMtMntmaWxsOiMzNjY5YTU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT56dWlkIERyZWNodCBOb3BheW9mZjwvdGl0bGU+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTc2LDk2Ny4xMWMtNTYsNDEuMzktMTAxLjQzLDY2LjA1LTExMSw3MS4xMWE0LDQsMCwwLDEtMy43MiwwYy0yNS41Ny0xMy41LTMwNy40OC0xNjctMzYxLjM3LTQwNmE0LDQsMCwwLDEsNy4zOC0yLjgxYzM4LjU0LDY4LjkzLDEyNS4zNywxMTkuMjYsMTg3LjUxLDE1Mi42OSw1Mi41LDI4LjIzLDExMy42Miw1MC4yMSwxNjguMzQsODAuMzZDNTA4LjIyLDg4Ny4yOSw1NDksOTE3LjY5LDU3Nyw5NjEuNzVBNCw0LDAsMCwxLDU3Niw5NjcuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODM0LjcxLDIxNS44NFYxMDEuNjVhOC45LDguOSwwLDAsMC04LjktOC45MWgtMjczQTE0LjU5LDE0LjU5LDAsMCwwLDUzOS40MywxMDNsLTE5LDcwLjI4YTE0LjU4LDE0LjU4LDAsMCwxLTEzLjM1LDEwLjIxSDM4M1YxNDcuMTJjMzYuODQtMS4zNCw2Mi40Mi03LjQ1LDgwLjE2LTE1LjEsMjkuNDktMTIuNzQsMzcuMzUtMjkuNzgsMzkuMzYtMzYuNDRhMi4yMiwyLjIyLDAsMCwwLTIuMTMtMi44NEgzMzQuNjFjLTMzLjg4LDAtNjcuOTEsOS4yLTg2LjA4LDQwLjEtMTkuMzgsMzIuOTQtMTguMjQsNzguMDctMTYuNDksMTE0Ljg5LDAsMC01MC02Ni4yMi00MC43Ni0xNDguODdhNS41MSw1LjUxLDAsMCwwLTUuNDgtNi4xMkgxMDAuMzJhOC43OSw4Ljc5LDAsMCwwLTguNzgsOC43OVYxMjRjNC44Niw3OS4yNiw0OS4xNCwyODguNTcsMzcxLjU4LDM4NS40QzczNSw1OTEuMDYsNzc1LjQyLDcxNi4zLDc4My4zMiw3MzguMjRhMS4zOCwxLjM4LDAsMCwwLDIuNTMuMTdjNzUuMy0xNDMuOS04MS40OS0yNDcuNTItODEuNDktMjQ3LjUyLDMxLjMzLDAsNzkuMjMsMTcuOTQsMTE4LDM5Ljc5YTguMjgsOC4yOCwwLDAsMCwxMi4zNy03LjIxVjM2My44M2ExNC42LDE0LjYsMCwwLDAtMTguMTUtMTQuMTdjLTEzLjUsMy4zOS0zMCw2LjY4LTMyLjg3LDcuMjMtMzkuNDYsNy43Ny04NC43NSwxMS4xNS0xMjItOC43M3MtNDcuMjYtNjYuMjctMTguMzMtOTguMjNjMjUuMy0yOCw2NS41My0zNy41LDEwMi4yOS0zNSwyMy41NiwxLjYyLDU1LjE4LDcuNTksNzMuNzEsMTIuNjNBMTIuMTYsMTIuMTYsMCwwLDAsODM0LjcxLDIxNS44NFoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik02NTQuODcsOTAxLjVhNCw0LDAsMCwxLTYtLjExYy0xMy41Ni0xNi4yNS03NS40Ni04Ni0xODUuNzMtMTQ2LjQyQTc1Ni40NCw3NTYuNDQsMCwwLDAsMzgzLDcxN2MtMTczLjUzLTcwLjE3LTI4Mi42OS0xNDMuMy0yOTEuNDItMzM4LjF2LTYuMjJhNCw0LDAsMCwxLDcuMjEtMi4zNGM2My42MSw4NywxNDQuNjksMTM3LjksMjQzLjE2LDE4Ni43Nyw0MC4yOCwyMCw4MS4xNywzNi4zMiwxMjEuMjEsNTMuMjUsNjYuMTUsMjgsMTMwLDU3LjU0LDE4NC43MywxMDcuOCwxNi4xOCwxNC44NSwyOS4wOSwyOS4xNSwzNi44MSw1MEM2OTUuNzUsNzk4LjEzLDcwMi41NSw4NDkuMTcsNjU0Ljg3LDkwMS41WiIvPjwvc3ZnPg==") no-repeat bottom;
-            background-size: 120%;
+        .post-heading-right {
+            text-align: right;
         }
 
-        .header-logo a:after {
-            background-image: none;
+        media
+
+        (
+        max-width:
+
+        991
+        px
+
+        )
+        and
+
+        (
+        min-width:
+
+        768
+        px
+
+        )
+        .affa-feature-icon .fas, .affa-feature-icon .fal {
+            display: inline-block;
+            position: static;
+            top: auto;
+            right: auto;
         }
 
-        .flex-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .affa-feature-icon .fas, .affa-feature-icon .fal {
+            position: absolute;
+            width: 60px;
+            top: 5px;
+            right: 0px;
+            color: #CC0000;
+            font-size: 50px;
+            line-height: 60px;
             text-align: center;
         }
 
-        {% if application is not empty and application['style']['css'] is defined %}
-        {{ application['style']['css']|raw }}
-
-        html {
-            background-color: var(--footer) !important;
+        .row-custom .col-right .affa-feature-icon .fas, .row-custom .col-right .affa-feature-icon .fal {
+            right: auto;
+            left: 0px;
         }
 
-        .sf-toolbar-clearer {
-            background-color: var(--footer) !important;
+        .gekozen-trouwambtenaar {
+            border: 8px solid #449D44 !important;
         }
 
-        {% endif %}
+        /* asd */
+        .bg-blue {
+            background-color: #2A5587;
+        }
 
+        .bg-red {
+            background-color: #CC0000;
+        }
+
+        .bg-white {
+            background-color: #FFF;
+        }
+
+        .bg-yellow {
+            background-color: #ffcc00;
+        }
+
+        #footer {
+            background: url('/images/bg-footer.svg') top center no-repeat #C00;
+            background-size: cover;
+            /* height: 200px;
+            top: -40px;
+            position: relative;*/
+            z-index: -1;
+            padding-top: 40px;
+        }
+
+        /* header stuff */
         .header {
-            height: auto;
-            background-color: var(--header);
+            background: #CC0000 url(/images/base-header-overlay.png) repeat top left;
+            color: #fff;
+            width: 100%;
+            padding: 0;
+            padding-top: 90px;
+            margin: 0;
+            height: 200px;
         }
 
-        .wrapper {
-            background: var(--background);
+        .header-content {
+            position: relative;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
         }
 
-        .background--primary {
-            background: var(--primary);
-            color: var(--primary-color) !important;
-
+        .header-content h1 {
+            font-size: 4em;
+            font-weight: 500;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
         }
 
-        .background--secondary {
-            background: var(--secondary);
-            color: var(--secondary-color) !important;
-
+        .header-content h3 {
+            font-size: 4em;
+            font-weight: 100;
+            line-height: 0.6em;
+            margin-top: -5px;
+            opacity: 0.7;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
         }
 
-        .color--primary {
-            color: var(--primary-color) !important;
-
+        .header-title {
+            display: table;
         }
 
-        .modal__content {
-            color: var(--color) !important;
+        .header-icon {
+            font-size: 8em;
+            float: left;
+            margin-right: 30px;
+            margin-top: 0px;
         }
 
-        .color--secondary {
-            color: var(--secondary-color) !important;
-
+        .header-loginbar {
+            font-size: 1.5em;
         }
 
-        @media (max-width: 544px) {
-            .col-xs-hidden {
-                display: block
-            }
-        }
-
-        @media (min-width: 544px) {
-            .col-xs-hidden {
-                display: none
-            }
-        }
-
-        @media (max-width: 544px) {
-            .col-xs {
-                display: none
-            }
-        }
-
-        @media (min-width: 544px) {
-            .col-xs {
-                display: block
-            }
-        }
-
-        @media (max-width: 768px) {
-            .col-md-hidden {
-                display: block
-            }
-        }
-
-        @media (min-width: 768px) {
-            .col-md-hidden {
-                display: none
-            }
-        }
-
-        @media (max-width: 768px) {
-            .col-md {
-                display: none
-            }
-        }
-
-        @media (min-width: 768px) {
-            .col-md {
-                display: block
-            }
-        }
-
-        @media (max-width: 992px) {
-            .col-lg-hidden {
-                display: block
-            }
-        }
-
-        @media (min-width: 992px) {
-            .col-lg-hidden {
-                display: none
-            }
-        }
-
-        @media (max-width: 992px) {
-            .col-lg {
-                display: none
-            }
-        }
-
-        @media (min-width: 992px) {
-            .col-lg {
-                display: block
-            }
-        }
-
-        @media (max-width: 1200px) {
-            .col-xl-hidden {
-                display: block
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .col-xl-hidden {
-                display: none
-            }
-        }
-
-        @media (max-width: 1200px) {
-            .col-xl {
-                display: none
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .col-xl {
-                display: block
-            }
-        }
-
-        /* NL Design overwrites */
-        .footer {
-            background: var(--footer);
-            color: var(--footer-color) !important;
-        }
-
-        .footer a {
-            color: var(--footer-color) !important;
-        }
-
-        #docs-nav {
-            background: var(--menu);
-            color: var(--menu-color) !important;
-        }
-
-        .top-nav-autoresize .nav__link:hover {
-            background-color: var(--menu-over);
-        }
-
-        a:focus:not(.btn):not(.pagination__link):not(.nav__link) {
-            background: var(--menu-over);
-            outline: none;
-        }
-
-        .card__hover a:hover {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
-            transform: scale(1.02);
-        }
-
-        .card__icon {
-            margin-top: 50px;
-        }
-
-        /* ignore centering on small screens */
-        @media only screen and (max-width: 550px) {
-            .card__icon {
-                margin-top: 0px;
-                margin-left: 15px;
-            }
-
-        }
-
-        .card__readmore {
-            padding-right: 15px;
-            padding-left: 15px;
-            padding-bottom: 15px;
-            text-align: right;
-            color: var(--secondary);
-        }
-
-        .card__readmore :hover {
+        .header-loginbar a {
+            color: #fff;
             text-decoration: underline;
         }
 
-        .background--image {
-            background-size: 100% auto !important;
-            background-position: center !important;
+        .header-loginbar a :hoover {
+            color: #F2F2F2;
         }
 
-        a {
+        .header-menu {
+            position: relative;
+            margin: -100px auto 0;
+            height: 100px;
+            font-weight: 400;
+        }
+
+        .header-menu a:link {
+            color: #fff;
+        }
+
+        .header-menu a:hover {
+            color: #56c2b1;
             text-decoration: none;
         }
 
-        .noFocus:focus {
-            outline: none !important;
+        .header-menu a:visited {
+            color: #fff;
         }
 
+        .menu-logo {
+            display: none;
+            color: #fff;
+            font-size: 0.25em;
+            position: absolute;
+            margin: -7px 0 0 -82px;
+        }
 
-            /*
-            .mobile-nav-collapse {
-                background: var(--menu);
-            }
+        .mobile-header-menu .menu-logo {
+            margin: 2px 0 0 -19px;
+        }
 
-            .mobile-nav ul li {
-                color: var(--menu-color);
-            }
-            */
+        .header-menu-content {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            font-size: 1.2em;
+            padding-left: 65px;
+        }
 
+        .header-menu-content ul {
+            padding-left: 0;
+        }
 
-        /* new button icons */
-        .btn--block {
+        .header-menu-content li {
+            display: inline;
+            list-style: none;
+            padding-right: 20px;
+        }
+
+        /* flow stuff*/
+        #flow {
+            padding-bottom: 20px;
+            max-height: 180px;
+        }
+
+        .flow ul {
+            display: flex;
+            align-items: stretch; /* Default */
+            justify-content: space-between;
             width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
-        .btn--eherkenning {
-            margin-right: 50px !important;
-            margin-right: 5rem !important;
-            position: relative
+        .flow li {
+            display: block;
+            flex: 0 1 auto; /* Default */
+            list-style-type: none;
+            color: #FFF;
+            text-align: center;
+            text-transform: uppercase;
+            font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, sans-serif;
         }
 
-        .btn--eherkenning:before {
-            background-image: url("/images/eherkenning.svg");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            content: "";
-            height: 40px;
-            height: 4rem;
-            position: absolute;
-            right: -50px;
-            right: -5rem;
-            top: 4px;
-            top: .4rem;
+        .flow .fas, .flow .fal {
+            background-color: #FFF;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 100px;
+            vertical-align: middle;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .flow li a {
+            color: #2A5587;
+        }
+
+        .completed:after {
+            content: "✔";
+            background-color: #FFF;
+            color: #8BB929 !important;
+            line-height: 40px;
+            font-size: 30px;
+            display: block;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
             width: 40px;
-            idth: 4rem
-        }
-
-        .btn--idin {
-            margin-right: 50px !important;
-            margin-right: 5rem !important;
-            position: relative
-        }
-
-        .btn--idin:before {
-            background-image: url("../images/idin.png");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            content: "";
             height: 40px;
-            height: 4rem;
+            border-radius: 50%;
+            bottom: 125px;
+            left: 70px;
+            padding: 0;
+
+        }
+
+        .completed a {
+            margin-bottom: 90px;
+        }
+
+        .flow li a:hover .fas, .flow li a:hover .fal {
+            color: #CC0000;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 5px;
+            margin-top: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+
+        .completed a:hover .fas, .completed a:hover .fal {
+            color: #8BB929 !important;
+        }
+
+        .affa-form-contact select, textarea {
+            width: 100%;
+            margin-bottom: 15px;
+            height: 52px;
+            padding: 13px 16px;
+        }
+
+        .dateholder {
+            height: 52px;
+            font-family: 'Noto Sans', Arial, sans-serif;
+            color: #909090;
+            font-size: 15px;
+            font-weight: 400;
+            background-color: #f4f5f9;
+            padding: 0px 20px;
+            border: 2px solid #f4f5f9;
+            outline: none !important;
+            border-radius: 3px;
+            width: 100%;
+            margin-bottom: 15px;
+            height: 52px;
+            padding: 5px 1px;
+            text-align: left;
+        }
+
+        body {
+            background-color: #F2F2F2;
+        }
+
+        .row {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            z-index: 10;
+        }
+
+        /* overschrijven van de stijl op knoppwn*/
+        .btn {
+            border-radius: 0px;
+            padding: .5em 1em;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            border: 2px solid #2A5587;
+            background: #2A5587;
+            color: #FFF !important;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            font-weight: 700;
+        }
+
+        .btn-secondary {
+            border: 2px solid #2A5587;
+            background: #FFF;
+            color: #2A5587 !important;
+        }
+
+        .btn-login {
+            border: 2px solid #FFF;
+            background: #2A5587;
+            color: #FFF !important;
+        }
+
+        .btn-secondary:hover {
+            background: #FFF;
+            color: #2A5587 !important;
+        }
+
+        .content {
+            top: -20px;
+            position: relative;
+        }
+
+        .post-heading-left h2:after, .post-heading-center h2:after {
+            background-color: #FFCC00;
+        }
+
+        .tbl-pricing .tbl-prc-col .tbl-prc-price {
+            background-color: #ffcc00;
+        }
+
+        /* md-calendar */
+        .md-calendar-date {
+            color: #2A5587;
+        }
+
+        .md-calendar-date-disabled {
+            color: #cc0000;
+        }
+
+        /* alerts*/
+        .alert {
+            border-radius: 0px;
+            padding: .5em 1em;
+            border: 2px solid;
+            background: #FFF;
+        }
+
+        /* trouw ambtenaar avatar */
+        .affa-testimonial .testimonial-author img {
+            object-fit: cover;
+            background-color: #FFF;
+        }
+
+        .container {
+            padding-top: 15px;
+        }
+
+        /* The icon wels for the frontpage*/
+        .well-frontpage {
+            height: 300px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 0px;
+            background-color: #FFF;
+        }
+
+        .well-frontpage h4 {
+            padding-top: 15px;
+        }
+
+        .well-frontpage:hover {
+            background: #F2F2F2 !important;
+        }
+
+        .well-frontpage .btn {
             position: absolute;
-            right: -50px;
-            right: -5rem;
-            top: 4px;
-            top: .4rem;
-            width: 40px;
-            width: 4rem;
-
+            bottom: 45px;
+            left: 45px;
+            right: 45px;
+            width: calc(100% - 90px);
         }
 
-        .btn--gmail {
-            margin-right: 50px !important;
-            margin-right: 5rem !important;
-            position: relative
+        a, a:visited {
+            color: #2A5587;
         }
 
-        .btn--gmail:before {
-            background-image: url("../images/gmail.png");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            content: "";
-            height: 40px;
-            height: 4rem;
+        .container {
+            min-height: 300px;
+        }
+
+        .save-confirmation {
             position: absolute;
-            right: -50px;
-            right: -5rem;
-            top: 4px;
-            top: .4rem;
-            width: 40px;
-            width: 4rem;
-
+            top: 15px;
+            left: 0px;
+            right: 0px;
         }
-
-        .btn--eidas {
-            margin-right: 50px !important;
-            margin-right: 5rem !important;
-            position: relative
-        }
-
-        .btn--eidas:before {
-            background-image: url("../images/eidas.svg");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            content: "";
-            height: 40px;
-            height: 4rem;
-            position: absolute;
-            right: -50px;
-            right: -5rem;
-            top: 4px;
-            top: .4rem;
-            width: 40px;
-            idth: 4rem
-        }
-
-        .btn--facebook {
-            margin-right: 50px !important;
-            margin-right: 5rem !important;
-            position: relative
-        }
-
-        .btn--facebook:before {
-            background-image: url("../images/facebook.svg");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            content: "";
-            height: 40px;
-            height: 4rem;
-            position: absolute;
-            right: -50px;
-            right: -5rem;
-            top: 4px;
-            top: .4rem;
-            width: 40px;
-            idth: 4rem
-        }
-
     </style>
-
-    {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
-        <style>
-
-            /* Sticky docs-nav bar */
-
-            /* The sticky class is added to the header with JS when it reaches its scroll position */
-            .sticky-nav {
-                position: sticky;
-                top: 0px;
-                background: var(--menu) !important;
-                color: var(--menu-color) !important;
-                transition: 0.2s;
-                z-index: 1;
-            }
-
-            .sticky-transition {
-                transition: 0.5s;
-            }
-
-            .sticky-mobile-nav {
-                position: sticky;
-                top: 65px;
-                background: var(--menu) !important;
-                color: var(--menu-color) !important;
-                transition: 0.2s;
-                z-index: 1;
-            }
-
-            .sticky-mobile-transition {
-                transition: 0.5s;
-            }
-
-            .anchor {
-                margin-top: -70px;
-                position: absolute;
-            }
-
-
-
-            /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-            /*.sticky-nav + .content {*/
-            /*    padding-top: 102px;*/
-            /*}*/
-
-        </style>
-
-    {% endif %}
-
-
-
-    {% block style %}{% endblock %}
-
 </head>
-<body>
 
-<div class="wrapper">
-    <a class="skiplink" href="#content">
-        <span class="skiplink__text">{{ 'skip to content'|trans|capitalize }}</span>
-    </a>
+<body ng-app="MyApp" ng-controller="AppCtrl">
+<!-- #header -->
+<header id="header">
+    {{ include('header.html.twig') }}
+</header>
+<!-- #header end -->
+{{ include('home/flow.html.twig') }}
+<div class="content">
+    <div class="container bg-white">
 
-    {# lets be able to disable this #}
-    {% if application['defaultConfiguration']['configuration']['header'] is not defined or (application['defaultConfiguration']['configuration']['header'] is defined and application['defaultConfiguration']['configuration']['header'] == true) %}
-        {% include "header.html.twig" %}
-    {% endif %}
+        {% block body %}{% endblock %}
 
-    {% include "menu.html.twig" %}
-
-    <main class="skiplink-target main" id="content" tabindex="-1">
-
-        <div class="container">
-            <!-- the alert box -->
-            {% set flashes = [] %}
-            {% for label, messages in app.flashes() %}
+        {% set datadelay = 0 %}
+        <!-- the alert box -->
+        {% if app.session.flashbag.peekAll|length > 0 %}
+            {% for type, messages in app.session.flashbag.all %}
                 {% for message in messages %}
-                    {% if message not in flashes %}
-                        {% set flashes = flashes|merge([message]) %}
-                        <div class="notification notification--{{ label }}">
-                            <div class="notification__content">
-                                <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
-                            </div>
+                    {% set datadelay = loop.index * 3000 %}
+                    <!-- .row -->
+                    <div class="row animation save-confirmation" data-animation="animation-bounce-out" data-delay="{{ datadelay }}">
+                        <div class="post-heading-center animation" data-animation="animation-fade-in-down">
+                            <h2>{{ message|trans({}, domain|default('messages')) }}</h2>
                         </div>
-                    {% endif %}
+                        <div class="col-md-12 text-center">
+                            <i class="fas fa-check fa-6x animation" data-animation="animation-fade-in-down" ></i>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
                 {% endfor %}
             {% endfor %}
-        </div>
+        {% endif %}
+        <!-- end of the alert box -->
 
-        {% block container %}
-
-        {% endblock %}
-    </main>
-
-    {% include 'login/widgets/login_modal.html.twig' %}
-    {% include "footer.html.twig" %}
-
-    <script src="/js/highlight.pack.js"></script>
-
-
-    {#   Sticky menu script   #}
-    {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
-        <script>
-            // When the user scrolls the page, execute myFunction
-            window.onscroll = function () {
-                myFunction()
-            };
-
-            // Get the header
-            var header = document.getElementById("docs-nav");
-            var stickyMobileNav = document.getElementById("stickyMobileNav");
-
-            // Get the offset position of the navbar
-            var sticky = header.offsetTop;
-            console.log(header.offsetTop);
-
-            var sticky = stickyMobileNav.offsetTop;
-            console.log(stickyMobileNav.offsetTop);
-
-            // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-            function myFunction() {
-                if (window.pageYOffset > sticky) {
-                    header.classList.remove("sticky-transition");
-                    header.classList.add("sticky-nav");
-
-                    stickyMobileNav.classList.remove("sticky-mobile-transition");
-                    stickyMobileNav.classList.add("sticky-mobile-nav");
-                } else {
-                    header.classList.add("sticky-transition");
-                    header.classList.remove("sticky-nav");
-
-                    stickyMobileNav.classList.add("sticky-mobile-transition");
-                    stickyMobileNav.classList.remove("sticky-mobile-nav");
-                }
-            }
-        </script>
-    {% endif %}
-
-    <script>
-        // Load collapse component
-        System['import']('/uno/components/collapse/collapse.js').then(function (m) {
-
-            //gebruikt unieke id van de nav om te voorkomen dat example collapses ook automatisch geactiveerd worden.
-            new m.Collapse(document.querySelector('#search-trigger'));
-        });
-        // Load nav component
-        System.import('/uno/components/navigation/navigation.js').then(function (module) {
-            var navs = document.querySelectorAll('.top-nav-autoresize');
-            // Initialize all navs
-            for (var i = 0; i < navs.length; i++) {
-                new module.AutoResizeNavigation(navs.item(i));
-            }
-            var submenus = document.querySelectorAll('.nav--submenu');
-            // Initialize all submenus
-            for (var i = 0; i < submenus.length; i++) {
-                new module.SubMenuNavigation(submenus.item(i));
-            }
-        });
-
-        var myModal;
-        // Load modal component
-        System.import('/uno/components/modal/modal.js').then(function (module) {
-            myModal = new module.Modal(document.getElementById('myModal'));
-        });
-
-        // Called when the user clicks the button
-        function openModal() {
-            myModal.open();
-        }
-    </script>
-
-    <script>
-        // Load tooltip component
-        System.import('/uno/components/tooltip/tooltip.js').then(function (module) {
-            // Select all tooltip elements on the page
-            var tooltips = document.querySelectorAll('.example [x-uno-tooltip]');
-
-            // Initialize all tooltips
-            for (var i = 0; i < tooltips.length; i++) {
-                new module.Tooltip(tooltips.item(i));
-            }
-        });
-    </script>
-
-    {% block script %}{% endblock %}
+    </div><!-- /.container -->
 </div>
 
-{% if application['defaultConfiguration']['configuration']['hubspotId'] is defined and application['defaultConfiguration']['configuration']['hubspotId'] is not empty %}
-    <!-- Start of HubSpot Embed Code -->
-    <script type="text/javascript" id="hs-script-loader" async defer
-            src="//js.hs-scripts.com/{{ application['defaultConfiguration']['configuration']['hubspotId'] }}.js"></script>
-    <!-- End of HubSpot Embed Code -->
-{% endif %}
+{{ include('footer.html.twig') }}
+<!-- JavaScript -->
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="js/response.min.js"></script>
+<script type="text/javascript" src="js/jquery.placeholder.min.js"></script>
+<script type="text/javascript" src="js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="js/jquery.imgpreload.min.js"></script>
+<script type="text/javascript" src="js/waypoints.min.js"></script>
+<script type="text/javascript" src="js/slick.min.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel-3.0.6.pack.js"></script>
+<script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" src="js/parallax.min.js"></script>
+<script type="text/javascript" src="js/jquery.counterup.min.js"></script>
+<script type="text/javascript" src="js/isotope.pkgd.min.js"></script>
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+
+<script type="text/javascript" src="js/script.js"></script>
+
+
+<!-- Summernote text editor -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+
+<!-- Lodash-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+
+<script src="/js/angular/angular.min.js"></script>
+
+<!--Angular Moduless -->
+<script src="/js/angular/angular-ui-router.js"></script>
+<script src="/js/angular/angular-translate.min.js"></script>
+<script src="/js/angular/angular-translate-loader-static-files.min.js"></script>
+<script src="/js/angular/angular-resource.js"></script>
+<script src="/js/angular/angular-animate.js"></script>
+<script src="/js/angular/angular-touch.js"></script>
+<script src="/js/angular/angular-sanitize.js"></script>
+
+<!--Angular UI bootstrap -->
+<script src="/js/angular/ui-bootstrap.js"></script>
+
+<!--With special thanxs to https://github.com/mgonto/restangular  -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.5.1/restangular.min.js"></script>
+
+<!--With special thanxs to https://github.com/gsklee/ngStorage  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+
+<!-- let introduce angular material -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
+<script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.14/angular-material.js"></script>
+
+<!--AngularJS [ REQUIRED ]-->
+
+<script src="/js/dashboard.js"></script>
+
+<script>
+    {% block javascript %}{% endblock %}
+</script>
 
 </body>
 </html>

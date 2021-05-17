@@ -1,0 +1,43 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+            <!-- .tbl-pricing -->
+            <div class="tbl-pricing tbl-prc-recommended animation" data-animation="animation-fade-in" data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{%else%}200{% endif %}" >
+                <!-- .row -->
+                <div class="row">
+                    <div class="post-heading-center">
+                    	<h2>Hoe wilt u gaan trouwen ?</h2>
+                    </div>
+                    <form action="{{ path('app_wedding_ceremonie') }}" method="post">
+                        {% for product in products %}
+                            {% set productUrl = commonground_cleanurl({'component':'pdc', 'type':'products', 'id':product.id}) %}
+                            <div class="col-sm-6 tbl-prc-col"> <!-- 1  -->
+                                <div class="tbl-prc-wrap">
+                                    <div class="tbl-prc-heading">
+                                        <h4>
+                                            {% if request.properties.plechtigheid is defined and request.properties.plechtigheid == productUrl %}
+                                            <i class="fas fa-check"></i>
+                                            {%  endif  %}
+                                            {{ product.name }}
+                                        </h4>
+                                    </div>
+                                    <div class="tbl-prc-price bg-yellow">
+                                        <h5>&euro; {{ product.price }} </h5>
+                                    </div>
+                                    {{ product.description|raw }}
+                                    <div class="tbl-prc-footer">
+                                        <br/><br/>
+                                        <button name="ceremonie" value="{{ productUrl }}"  class="btn btn-primary btn-icon  btn-block">Ja dit wil ik!</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </form>
+                </div>
+                <!-- .row end -->
+
+            </div>
+            <!-- .tbl-pricing end -->
+{% endblock %}

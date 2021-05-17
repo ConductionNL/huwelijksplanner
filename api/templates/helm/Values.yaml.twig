@@ -29,7 +29,7 @@ settings:
   web: {{ app_web }}
   internal: {{ app_internal }}
   debug: {{ app_debug }}
-  cache: {{ app_debug }}
+  cache: {{ app_cache }}
   sessionDuration: {{ app_session_duration }}
   replicaCount: 1
   corsAllowOrigin: ['*']
@@ -67,7 +67,7 @@ php:
     jwtSecret: ""
   env: prod
   secret: ""
-  replicaCount: 2
+  replicaCount: 1
 
 nginx:
   repository: docker.io/conduction/protocomponent-nginx
@@ -149,3 +149,9 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+
+commonground:
+    eherkenning:
+        location: https://{{ app_domain }}/eherkenning
+    digispoof:
+        location: https://{{ app_domain }}/digispoof
