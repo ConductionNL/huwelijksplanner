@@ -3,10 +3,10 @@ entries:
   huwelijksplanner:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-05-17T14:21:06.1402534Z"
+    created: "2021-05-17T14:35:51.9452534Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: e07baa4f504bc361f556076ac25da7e7627851b5f9d6dc6d87aef8fa7e542b4f
+    digest: 98664de13e0c3f1ee6ac01f97b670445f0a09ee1ae2d42e5c8322ff7b6a25e67
     home: https://www.conduction.nl
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     keywords:
@@ -26,12 +26,25 @@ entries:
     urls:
     - huwelijksplanner-0.1.0.tgz
     version: 0.1.0
+  pan:
+  - apiVersion: v1
+    appVersion: V1.0
+    created: "2021-05-17T14:35:51.952817Z"
+    description: '&quot;Naast deze JSON rest API is er ook een [graphql](/graphql)
+      interface beschikbaar.&quot;'
+    digest: 7e789a3e9dfbc444e111a1a781a841cda4acaf47bb85b2823495b8a6d9e27e95
+    home: www.zuid-drecht.nl
+    icon: www.zuid-drecht.nl
+    name: pan
+    urls:
+    - pan-0.1.0.tgz
+    version: 0.1.0
   postgresql:
   - annotations:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2021-05-17T14:21:06.1709192Z"
+    created: "2021-05-17T14:35:51.9690056Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -65,7 +78,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 6.0.11
-    created: "2021-05-17T14:21:06.196656Z"
+    created: "2021-05-17T14:35:51.9897294Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -94,4 +107,4 @@ entries:
     urls:
     - charts/redis-12.7.7.tgz
     version: 12.7.7
-generated: "2021-05-17T14:21:06.1033795Z"
+generated: "2021-05-17T14:35:51.9177958Z"

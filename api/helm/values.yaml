@@ -20,7 +20,7 @@ settings:
   debug: 1
   cache: false
   type: component
-  id: 
+  id: de22599d-b139-439c-8b67-8718815622a1
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^.+$'
