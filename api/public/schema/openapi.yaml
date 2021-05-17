@@ -1,15 +1,15 @@
 openapi: 3.0.2
 info:
-  title: huwelijksplanner
+  title: ''
   version: V1.0
   description: |
     API Details
-    - Component: huwelijksplanner
+    - Component: 
     - Reference: huwelijksplanner
     - Enviroment: dev
     - Version: V1.0
     - Repository: [online](https://github.com/ConductionNL/huwelijksplanner) / [zip](https://github.com/ConductionNL/huwelijksplanner/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/huwelijksplanner-php) 
+    - Docker Image: [online]() 
     - Datamodel: [postman](/schema/huwelijksplanner.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
@@ -2391,12 +2391,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-02-17 23:04:09'
+        example: '2021-05-17 14:19:19'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-02-17 23:04:09'
+        example: '2021-05-17 14:19:19'
     required: []
   AuditTrail-write:
     properties:
@@ -2444,12 +2444,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-02-17 23:04:09'
+        example: '2021-05-17 14:19:19'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-02-17 23:04:09'
+        example: '2021-05-17 14:19:19'
     required: []
   ChangeLog-write:
     properties:

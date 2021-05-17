@@ -6,31 +6,21 @@ settings:
   registryBase: docker.io/conduction
   projectName: huwelijksplanner
   name: huwelijksplanner
-  title: huwelijksplanner
   version: V1.0
   majorVersion: v1
-  id: de22599d-b139-439c-8b67-8718815622a1
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
-  type: application
   repro: https://github.com/ConductionNL/huwelijksplanner
   demo: www.zuid-drecht.nl
-  container: https://hub.docker.com/repository/docker/conduction/huwelijksplanner-php
   domain: huwelijksplanner.online
-  subdomain: false
+  subdomain: huwelijksplanner
   subpath: 
   subpathRouting: true
-  organisationName: Conduction
-  email: info@conduction.nl
-  country: Netherlands
-  state: Noord-Holland
-  locality: Amsterdam
-  unit: Common-Ground
   env: dev
   web: false
-  internal: false
   debug: 1
   cache: false
-  sessionDuration: 900
+  type: component
+  id: 
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^.+$'
@@ -40,11 +30,9 @@ settings:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
-  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
+  # If you are running a single component on a kubernetes cluster you can just easily enable the load balancer, if not you need to set up a multi component load balancer
   loadbalancerEnabled: false
-  # If you want to enable NLX you are requered to add the appropreate certificates to you nlx-settings folder (located in the /api folder)
-  nlxInwayEnabled: false
-  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
+  # If you are running a single component on a kubernetes cluster you can just easily enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
   authorisationEnabled: false
@@ -52,12 +40,7 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "de22599d-b139-439c-8b67-8718815622a1"
-  commongroundKey: "01f0dc1a-0ce5-4ac6-b943-81650b174792"
   applicationKey: "01f0dc1a-0ce5-4ac6-b943-81650b174792"
-  userKey: "01f0dc1a-0ce5-4ac6-b943-81650b174792"
-  authorisationProviderUser: https://uc.zuid-drecht.nl
-  authorisationProviderApplication: https://openzaak.dev.zuid-drecht.nl/authorizaties/api/v1
 
 
 php:
@@ -67,7 +50,19 @@ php:
     jwtSecret: ""
   env: prod
   secret: ""
-  replicaCount: 1
+  replicaCount: 2
+
+redis:
+  cluster:
+    enabled: false
+  redisPort: 6379
+  usePassword: false
+  enabled: false
+commonground:
+  eherkenning:
+    location: https://huwelijksplanner.online/eherkenning
+  digispoof:
+    location: https://huwelijksplanner.online/digispoof
 
 nginx:
   repository: docker.io/conduction/protocomponent-nginx
@@ -94,7 +89,7 @@ postgresql:
   # Persistent Volume Storage configuration.
   # ref: https://kubernetes.io/docs/user-guide/persistent-volumes
   persistence:
-    enabled: false
+    enabled: true
   pullPolicy: IfNotPresent
 #  image:
 #    repository: postgres
@@ -110,15 +105,6 @@ mercure:
   service:
     type: NodePort
     port: 80
-
-redis:
-    port: 6379
-    version: 5.0
-    memory: 100Mi
-    cpu: 100m
-    limits:
-        memory: 200Mi
-        cpu: 250m
 
 ingress:
   annotations:
@@ -149,9 +135,3 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
-
-commonground:
-    eherkenning:
-        location: https://huwelijksplanner.online/eherkenning
-    digispoof:
-        location: https://huwelijksplanner.online/digispoof

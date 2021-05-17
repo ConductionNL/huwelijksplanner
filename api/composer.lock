@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "350458ca113bca534d644a46da50f0a7",
+    "content-hash": "e8348de2ea2f8b2f2c30055f2139d405",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -636,16 +636,16 @@
         },
         {
             "name": "conduction/commongroundbundle",
-            "version": "dev-dev-gino51",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConductionNL/CommonGroundBundle.git",
-                "reference": "247d937439cb30635ca3cf177752323fae33fed5"
+                "reference": "84f8807fddc946577cfea37cf67809d21c7b7f1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/247d937439cb30635ca3cf177752323fae33fed5",
-                "reference": "247d937439cb30635ca3cf177752323fae33fed5",
+                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/84f8807fddc946577cfea37cf67809d21c7b7f1c",
+                "reference": "84f8807fddc946577cfea37cf67809d21c7b7f1c",
                 "shasum": ""
             },
             "require": {
@@ -687,6 +687,7 @@
                 "symfony/dependency-injection": "~3.4|~4.1|~5.0",
                 "symfony/var-dumper": "^4.1.1|^5.1"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -723,7 +724,12 @@
                 "postcode",
                 "rsin"
             ],
-            "time": "2020-12-15T14:47:37+00:00"
+            "support": {
+                "email": "ruben@conduction.nl",
+                "issues": "https://github.com/ConductionNL/ConductionCommonGroundBundle/issues",
+                "source": "https://github.com/ConductionNL/ConductionCommonGroundBundle"
+            },
+            "time": "2021-05-06T09:32:27+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -10678,5 +10684,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
