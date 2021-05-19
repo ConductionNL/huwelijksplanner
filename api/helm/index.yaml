@@ -3,10 +3,10 @@ entries:
   huwelijksplanner:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-05-17T14:21:06.1402534Z"
+    created: "2021-05-18T07:35:02.3058166Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: e07baa4f504bc361f556076ac25da7e7627851b5f9d6dc6d87aef8fa7e542b4f
+    digest: 73d03b7842c355f5814fbeae256d3b5e9a561debb714de210901869f32f1417f
     home: https://www.conduction.nl
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     keywords:
@@ -31,7 +31,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2021-05-17T14:21:06.1709192Z"
+    created: "2021-05-18T07:35:02.3255077Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -65,7 +65,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 6.0.11
-    created: "2021-05-17T14:21:06.196656Z"
+    created: "2021-05-18T07:35:02.3441504Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -94,4 +94,4 @@ entries:
     urls:
     - charts/redis-12.7.7.tgz
     version: 12.7.7
-generated: "2021-05-17T14:21:06.1033795Z"
+generated: "2021-05-18T07:35:02.2379787Z"
