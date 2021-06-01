@@ -13,7 +13,7 @@ settings:
   demo: www.zuid-drecht.nl
   domain: huwelijksplanner.online
   subdomain: huwelijksplanner
-  subpath: 
+  subpath: none
   subpathRouting: true
   env: dev
   web: false
