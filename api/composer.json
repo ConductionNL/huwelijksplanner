@@ -6,11 +6,12 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.1",
-        "conduction/commongroundbundle": "dev-master",
+        "conduction/commongroundbundle": "2.x-dev",
         "dompdf/dompdf": "^0.8.5",
         "endroid/qr-code-bundle": "^3.4",
-        "phpdocumentor/reflection-docblock": "^4.3",
+        "phpdocumentor/reflection-docblock": "^5.0",
         "phpoffice/phpword": "^0.17.0",
+        "phpunit/phpunit": "^9.3",
         "sensio/framework-extra-bundle": "^5.5",
         "sensiolabs/security-checker": "^6.0",
         "symfony/asset": "5.1.*",
@@ -19,6 +20,7 @@
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "5.1.*",
         "symfony/mercure-bundle": "*",
+        "symfony/phpunit-bridge": "^5.2",
         "symfony/property-access": "5.1.*",
         "symfony/translation": "5.1.*",
         "symfony/yaml": "5.1.*",
@@ -60,7 +62,7 @@
     "extra" : {
         "symfony" : {
             "allow-contrib" : false,
-            "require" : "5.1.*"
+            "require" : "^5.1"
         }
     },
     "scripts": {

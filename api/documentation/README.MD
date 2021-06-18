@@ -1,7 +1,10 @@
+
 # huwelijksplanner
 
 Description
 ----
+
+
 Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.
 
 Additional Information
@@ -76,4 +79,3 @@ Credits
 ----
 Information about the authors of this component can be found [here](AUTHORS.md)
 
-Copyright © [Utrecht](https://www.utrecht.nl/) 2019
