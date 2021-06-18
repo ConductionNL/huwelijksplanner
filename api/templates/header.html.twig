@@ -1,0 +1,26 @@
+<!-- Header section. Update the background by changing the .header class background image. -->
+<div class="header ">
+    <div class="container fluid-container header-content content-area">
+        <a style="color: white" href="{% if requestType.stages is defined and requestType.stages is not empty %}/start-huwelijk{% else %}/{% endif %}">
+            <i class="header-icon far fa-rings-wedding"></i>
+        </a>
+        <div class="header-title">
+            {% if request.properties.type is defined and request.properties.type is not empty %}
+                <h1>{{ request.properties.type|capitalize }}</h1>
+            {% else %}
+                <h1>Trouwen of Partnerschap</h1>
+            {% endif %}
+            <h3>In Utrecht</h3>
+        </div>
+        {% if app.user is defined and app.user %}
+            <div class="header-loginbar" style="margin-right: 110px;">
+                <div class="row" style="text-align: center;">
+                    <i class="fas fa-lock-alt"></i> Beste {{ app.user.name }} u bent
+                    ingelogd over een beveiligde verbinding.
+                </div>
+                <a class="btn btn-block" style="width: 150px; margin: auto; margin-top: -17.5px"
+                   href="{{ path('app_user_logout') }}">Uitloggen</a>
+            </div>
+        {% endif %}
+    </div>
+</div>

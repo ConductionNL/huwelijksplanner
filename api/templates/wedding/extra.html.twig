@@ -1,0 +1,68 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- .row -->
+    <div class="row animation" data-animation="animation-fade-in"
+         data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{% else %}200{% endif %}">
+        <div class="post-heading-center">
+            <h2>Extra opties</h2>
+            <p>U kunt uiteraard ook extra opties kiezen voor uw huwelijk</p>
+        </div>
+        <div class="row">
+            <form action="{{ path('app_wedding_extra') }}" method="post">
+                {% for product in products %}
+                    {% if (product.audience == "public") %}
+                        {% if product.name == "Geen extra's" %}
+                        {% else %}
+                            {% set productUrl = commonground_cleanurl({'component':'pdc', 'type':'products', 'id':product.id}) %}
+                            <div class="mr-2 ml-2 col-sm-6"> <!-- 1 -->
+                                <div class="affa-team-profile">
+                                    {% if product.logo is defined and product.logo is not empty %}
+                                        <figure class="team-profile-img">
+                                            <img src="{{ product.logo }}" alt="Avatar"/>
+                                        </figure>
+                                    {% endif %}
+                                    <div class="team-profile-name">
+                                        <h4>{{ product.name }}</h4>
+                                        <p>{{ product.price }}</p>
+                                    </div>
+                                    <p style="height: 60px;display: block">{{ product.description|raw }}<br/></p>
+                                    <div class="tbl-prc-footer">
+                                        {% if request.properties.extras is defined and productUrl in request.properties.extras %}
+                                            <p>U heeft dit product al toegevoegd</p>
+                                        {% else %}
+                                            <button name="extra" value="{{ productUrl }}" class="btn btn-primary btn-icon btn-block">Ja dit wil ik!</button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+
+                {% for product in products %}
+                    {% if product.audience == "public" and product.name == "Geen extra's" %}
+                        {% if app.user is not empty %}
+                            <a href="{{ path('app_wedding_betalen') }}"
+                               class="btn btn-primary btn-icon btn-block" style="margin: 10px">Door
+                                naar volgende stap</a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+    <!-- .row end -->
+
+    </div>
+    <!-- .container end -->
+{% endblock %}

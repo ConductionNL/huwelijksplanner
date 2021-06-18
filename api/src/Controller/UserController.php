@@ -54,26 +54,24 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/auth/idvault")
+     * @Route("/auth/digispoof")
      * @Template
      */
-    public function idvaultAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function DigispoofAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        $session->set('backUrl', $request->query->get('backUrl'));
+        $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
 
-        $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
-        $provider = $providers[0];
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
+    }
 
-        $redirect = $request->getUri();
+    /**
+     * @Route("/auth/eherkenning")
+     * @Template
+     */
+    public function EherkenningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $redirect = $commonGroundService->cleanUrl(['component' => 'eh']);
 
-        if (strpos($redirect, '?') == true) {
-            $redirect = substr($redirect, 0, strpos($redirect, '?'));
-        }
-
-        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            return $this->redirect('http://id-vault.com/oauth/authorize?client_id='.$provider['configuration']['app_id'].'&response_type=code&scopes=schema.person.email+schema.person.given_name+schema.person.family_name&state=12345&redirect_uri='.$redirect);
-        } else {
-            return $this->render('500.html.twig');
-        }
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
     }
 }

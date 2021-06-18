@@ -1,0 +1,150 @@
+{# templates/home/flow.html.twig #}
+
+
+{% block body %}
+ 	<!-- #flow steps -->
+    <div id="flow" class="bg-blue" >
+        <!-- .container -->
+    	<div class="container">
+            <!-- .row -->
+            <div class="row">
+                {% if request is defined and request is not empty %}
+                    <div style="margin-left: -50px" class="col-md-12 text-center flow">
+                        <ul>
+                            {% if request.parent is defined and request.parent is not empty %}
+                                <li style="margin-top: -15px; margin-right: 15px;">
+                                    <a href="{{ path('app_default_slug',{'request': request.parent['@id'] }) }}">
+                                        <i class="fas fa-arrow-left fa-3x "></i>
+                                        <br/>
+                                        <p style="color: white;">Terug</p>
+                                    </a>
+                                </li>
+                            {% endif %}
+{#                            {% for stage in processType.stages %}#}
+{#                                <li style="margin-top: -15px; margin-right: 15px;" class="#}{# animation #}{# {% if (stage.completed  is defined and stage.completed is not empty and stage.completed == true)#}
+{#                                    or (stage.sufficient is defined and stage.sufficient is not empty and stage.sufficient == true) %}completed{% endif %}" data-animation="animation-bounce-in" data-delay="">#}
+{#                                    <a href="{{ stage.slug }}">#}
+{#                                        <i {% if stage.slug == app.request.pathinfo %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="{{ stage.icon }} fa-3x "></i>#}
+{#                                        <br/>#}
+{#                                        {% if stage.name == 'type' %}#}
+{#                                            <p style="color: white;">CEREMONIE</p>#}
+{#                                        {% elseif stage.name == 'partners' %}#}
+{#                                            <p style="color: white;">PARTNER</p>#}
+{#                                        {% elseif stage.name == 'reserveren' %}#}
+{#                                            <p style="color: white;">CHECKLIST</p>#}
+{#                                        {% elseif stage.name == 'extras' %}#}
+{#                                            <p style="color: white;">EXTRA'S</p>#}
+{#                                        {% else %}#}
+{#                                            <p style="color: white;">{{ stage.name|capitalize }}</p>#}
+{#                                        {% endif %}#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                            {% endfor %}#}
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'type' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_huwelijk') }}">
+                                    <i {% if app.request.pathinfo == '/huwelijk' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-ring fa-3x"></i>
+                                    <p style="color: white">
+                                        Huwelijk
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'partners' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_partner') }}">
+                                    <i {% if app.request.pathinfo == '/partner' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-user-friends fa-3x"></i>
+                                    <p style="color: white">
+                                        Partner
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'plechtigheid' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_ceremonie') }}">
+                                    <i {% if app.request.pathinfo == '/ceremonie' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-ring fa-3x"></i>
+                                    <p style="color: white">
+                                        Ceremonie
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'ambtenaar' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_ambtenaren') }}">
+                                    <i {% if app.request.pathinfo == '/ambtenaren' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-user-tie fa-3x"></i>
+                                    <p style="color: white">
+                                        Ambtenaar
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'locatie' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_locatie') }}">
+                                    <i {% if app.request.pathinfo == '/locatie' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-building fa-3x"></i>
+                                    <p style="color: white">
+                                        Locatie
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'datum' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_datum') }}">
+                                    <i {% if app.request.pathinfo == '/datum' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-calendar-day fa-3x"></i>
+                                    <p style="color: white">
+                                        Datum
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'getuigen' in request.properties|keys and request.properties.getuigen|length > 1  %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_getuigen') }}">
+                                    <i {% if app.request.pathinfo == '/getuigen' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-users fa-3x"></i>
+                                    <p style="color: white">
+                                        Getuigen
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'extras' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_extra') }}">
+                                    <i {% if app.request.pathinfo == '/extra' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-gift fa-3x"></i>
+                                    <p style="color: white">
+                                        Extras
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'invoice' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_betalen') }}">
+                                    <i {% if app.request.pathinfo == '/betalen' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-cash-register fa-3x"></i>
+                                    <p style="color: white">
+                                        Betalen
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'melding' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_melding') }}">
+                                    <i {% if app.request.pathinfo == '/melding' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-envelope fa-3x"></i>
+                                    <p style="color: white">
+                                        Melding
+                                    </p>
+                                </a>
+                            </li>
+                            <li style="margin-top: -15px; margin-right: 15px;" {% if request is defined and 'reservering' in request.properties|keys %} class="completed"{% endif %}>
+                                <a href="{{ path('app_wedding_reservering') }}">
+                                    <i {% if app.request.pathinfo == '/reservering' %}  style="border: 4px solid white; background: #2A5587; color: white" {% endif %} class="fas fa-calendar-check fa-3x"></i>
+                                    <p style="color: white">
+                                        Reservering
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div><!-- .col end -->
+                {% elseif not app.user %}
+                    <div class="col-md-12 text-center">
+                            <a href="https://dev.huwelijksplanner.online/digispoof?responceUrl={{ url('app_user_digispoof') }}&backUrl={{ url('app_default_index') }}" class="btn btn-login btn-lg"><span class="fas fa-sign-in-alt"></span> Log hier in om te beginnen</a>
+                    </div><!-- .col end -->
+                {% else %}
+                    <div style="margin-bottom: 20px" class="col-md-12 text-center">
+                        <a href="{{ path('app_wedding_requests') }}" class="btn btn-login btn-lg"><span class="fas fa-sign-in-alt"></span> Mijn verzoeken</a>
+                    </div><!-- .col end -->
+                    <div class="col-md-12 text-center">
+                        <a href="{{ path('app_wedding_index') }}" class="btn btn-login btn-lg"><span class="fas fa-sign-in-alt"></span> Verzoek starten</a>
+                    </div><!-- .col end -->
+
+                {% endif %}
+            </div><!-- .row end -->
+        </div><!-- .container end -->
+    </div><!-- .bg-blue end -->
+{% endblock %}
+

@@ -1,0 +1,131 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- .row -->
+    <div class="row animation" data-animation="animation-fade-in"
+         data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{% else %}200{% endif %}">
+        {% if request.properties.type is defined and request.properties.type == 'omzetten' %}
+
+            <div class="post-heading-center animation" data-animation="animation-fade-in-down">
+                <h2>U heeft gekozen voor omzetten, en heeft geen locatie nodig</h2>
+            </div>
+            <div class="col-md-12 text-center">
+                <i class="fas fa-check fa-6x " data-animation="animation-fade-in-down"></i>
+            </div><!-- /.col -->
+
+        {% else %}
+            <div class="post-heading-center">
+                <h2>Waar wilt u trouwen?</h2>
+
+                {% if request.properties.plechtigheid is defined and (commonground_resource(request.properties.plechtigheid).name == "Gratis Trouwen" or commonground_resource(request.properties.plechtigheid).name == "Eenvoudig Trouwen") %}
+                    <div
+                        style="max-width: 600px; text-align: center; margin: auto;margin-bottom: 20px;margin-top:20px; padding: 10px; border: 1px solid #2A5587; border-radius: 6px">
+                        Eenvoudige en gratis huwelijken vinden altijd plaats op het Stadskantoor.
+                    </div>
+                {% endif %}
+
+                <p>Een trouwlocatie; in Utrecht is er voor elk wat wils. De gemeente Utrecht heeft een aantal eigen
+                    trouwlocaties; het Stadhuis, het Wijkservicecentrum in Vleuten en het Stadskantoor. Een keuze voor
+                    een van deze trouwlocaties kunt u direct hier doen. </p>
+                <p>Daarnaast zijn er verschillende andere vaste trouwlocaties. Deze trouwlocaties zijn door de gemeente
+                    Utrecht al goedgekeurd. Hieronder vindt u het overzicht van deze trouwlocaties. Heeft u een keuze
+                    gemaakt uit een van de vaste trouwlocaties? Maak dan eerst een afspraak met de locatie en geef dan
+                    aan ons door waar en wanneer u wilt trouwen. </p>
+                <p class="margin-bottom30"> Maar misschien wilt u een heel andere locatie. Bijvoorbeeld het café om de
+                    hoek, bij u thuis of in uw favoriete restaurant. Zo'n locatie heet een vrije locatie. Een aanvraag
+                    voor een vrije locatie kunt u hier ook doen. </p>
+            </div>
+            {% for product in products %}
+                {% if (product.offers[0].audience == "public") %}
+                    {# Is dit de locatie balie? #}
+                    {% if product.id == "9aef22c4-0c35-4615-ab0e-251585442b55" %}
+                        {# Als het plechtigheid flitshuwelijk is laten we de locatie balie zien. #}
+                        {% if request.properties.plechtigheid is defined and request.properties.plechtigheid is not empty and (request.properties.plechtigheid == "https://pdc.dev.huwelijksplanner.online/offers/1ba1772b-cc8a-4808-ad1e-f9b3c93bdebf" or request.properties.plechtigheid == "https://pdc.huwelijksplanner.online/offers/1ba1772b-cc8a-4808-ad1e-f9b3c93bdebf") %}
+                            <div class="col-sm-6"> <!-- 4 -->
+                                    <div class="affa-testimonial">
+                                        <div class="testimonial-text">
+                                            {{ product.description|raw }}
+                                        </div>
+                                        <div class="testimonial-author">
+                                            <h4>{{ product.name|e }}</h4>
+                                            {% if  request.properties.locatie is defined and request.properties.locatie == product['@id'] %}
+                                                <h5>Door u gekozen</h5>
+                                            {% endif %}
+                                            <p>Locatie</p>
+                                            <img src="{{ product.logo }}" alt="{{ product.name|e }}"/>
+                                        </div>
+                                    </div>
+                            </div>
+                            {# Als het plechtigheid niet flitshuwelijk is laten we de locatie balie niet zien. #}
+                        {% else %}
+                        {% endif %}
+
+                        {# Als dit niet de locatie balie is laten we het locatie wat het wel is gewoon zien #}
+                    {% else %}
+                        <div class="col-sm-6"> <!-- 4 -->
+                                <div class="affa-testimonial">
+                                    <div class="testimonial-text">
+                                        {{ product.description|raw }}
+                                    </div>
+                                    <div class="testimonial-author">
+                                        <h4>{{ product.name|e }}</h4>
+                                        <p>Locatie</p>
+                                        <img src="{{ product.logo }}" alt="{{ product.name|e }}"/>
+                                    </div>
+                                </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    {#
+    <div class="row" >
+        <div class="col-sm-6">
+            <a href="{{ path('app_locatie_vooreendag') }}">
+                <div class="affa-testimonial">
+                    <div class="testimonial-text">
+                        <p>Je kan ook zelf een een trouwlocatie voor een dag aanleveren.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4>Trouwlocatie voor een dag</h4>
+                        <p>Zelf regelen</p>
+                        <img src="https://utrecht.trouwplanner.online/images/content/avatar/2.png" alt="Avatar" />
+                    </div>
+                </div>
+            </a>
+        </div>
+
+
+        <div class="col-sm-6">
+            <a href="{{ path('app_locatie_zelfstandig') }}">
+                <div class="affa-testimonial" >
+                    <div class="testimonial-text">
+                        <p>Je kan ook een trouwlocatie uit een andere gemeente regelen.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4>Zelfstandige trouwlocatie</h4>
+                        <p>Zelf regelen</p>
+                        <img src="https://utrecht.trouwplanner.online/images/content/avatar/3.png" alt="Avatar" />
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+    -->
+    <!-- .row --> #}
+        <!-- .row -->
+        <div class="row">
+            <div class="col-sm-10 col-md-7 col-lg-6 col-sm-offset-0 col-md-offset-0 col-lg-offset-1">
+                <a href="{{ path('app_default_index') }}" class="btn btn-primary btn-icon">
+                    <i class="fas fa-share-square"></i>
+                    Terug naar home
+                </a>
+            </div><!-- /.col -->
+        </div>
+        <!-- .row end -->
+
+{% endblock %}

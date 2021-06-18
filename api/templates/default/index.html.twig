@@ -1,119 +1,77 @@
-{% extends "base.html.twig" %}
+{# templates/home/index.html.twig #}
 
-{% block content %}
-    <!-- Hero -->
-    <section class="section-header pb-9 pb-lg-12 bg-primary text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <img class="navbar-brand-dark rotate-logo" src="./bundles/rocket/assets/img/brand/light.svg" height="120" alt="Logo light">
-                    <h1 class="display-1 mb-2">{{'stage-platform'|trans|capitalize}}</h1>
-                    <h2 class="h3 text-muted mb-5">{{'Lift off your career'|trans|capitalize}}</h2>
-                    <!-- Button Modal -->
-                    <div class="d-flex justify-content-center mb-6">
-                        {% if not app.user %}
-                        <a href="{{ path('app_user_idvault') }}" class="btn btn-secondary animate-up-2 mr-4"><span class="fas fa-rocket mr-2 d-none d-sm-inline"></span> {{ 'register'|trans|capitalize }}</a>
-                        <a href="{{ path('app_user_idvault') }}" class="btn btn-outline-white animate-up-2"><span class="fas fa-lock mr-2 d-none d-sm-inline"></span> {{ 'login'|trans|capitalize }}</a>
-                        {% else %}
-                        <a href="{{ path('app_dashboarduser_index') }}" class="btn btn-secondary animate-up-2 mr-4"><span class="fas fa-rocket mr-2 d-none d-sm-inline"></span> {{ 'dashboard'|trans|capitalize }}</a>
-                        {% endif %}
-                    </div>
-                    <div class="d-flex justify-content-center flex-column mb-6">
-                        <a href="https://conduction.nl" target="_blank">
-                            <img src="/images/conduction2.png" class="d-block mx-auto mb-3" alt="Conduction Logo" style="width: 100px;">
-                        </a>
-                    </div>
-                </div>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+            <!-- .row -->
+            <div class="row animation" data-animation="animation-fade-in" data-delay=" {% if app.session.flashbag.peekAll|length > 0 %}3400{%else%}200{% endif %}" >
+
+            	<a href="{{ path('app_default_ambtenaarinfo') }}" class="well-frontpage-link">
+                <div class="col-sm-6 col-md-4 text-center-sm text-center-xs">
+                	<div class="well well-lg well-frontpage">
+                		<i class="fas fa-user-tie fa-6x"></i>
+						<h4>Ambtenaren</h4>
+						<p>Kies een trouwambtenaar die bij u past</p>
+						<span class="btn btn-primary btn-block"> Lees meer</span>
+                	</div>
+                </div><!-- /.col -->
+                </a>
+
+            	<a href="{{ path('app_default_locatiesinfo') }} ">
+                <div class="col-sm-6 col-md-4 text-center-sm text-center-xs">
+                	<div class="well well-lg well-frontpage">
+                		<i class="fas fa-building fa-6x"></i>
+						<h4>Locaties</h4>
+						<p>Waar wilt u het ja-woord geven?</p>
+						<span class="btn btn-primary btn-block"> Lees meer</span>
+                	</div>
+                </div><!-- /.col -->
+                </a>
+
+            	<a href="{{ path('app_default_getuigeninfo') }}">
+                <div class="col-sm-6 col-md-4 text-center-sm text-center-xs">
+                	<div class="well well-lg well-frontpage">
+                		<i class="fas fa-users fa-6x"></i>
+						<h4>Getuigen</h4>
+						<p>Wie zijn de getuigen bij uw huwelijk?</p>
+						<span class="btn btn-primary btn-block"> Lees meer</span>
+                	</div>
+                </div><!-- /.col -->
+                </a>
+
+            	<a href="{{ path('app_default_naamsgebruikinfo') }}">
+                <div class="col-sm-6 col-md-4 text-center-sm text-center-xs">
+                	<div class="well well-lg well-frontpage">
+                		<i class="fas fa-user-friends fa-6x"></i>
+						<h4>Naamgebruik</h4>
+						<p>Met welke achternaam wilt u aangeschreven worden?</p>
+						<span class="btn btn-primary btn-block"> Lees meer</span>
+                	</div>
+                </div><!-- /.col -->
+                </a>
+
+            	<a href="{{ path('app_default_meldinginfo') }}">
+                <div class="col-sm-6 col-md-4 text-center-sm text-center-xs">
+                	<div class="well well-lg well-frontpage">
+                		<i class="fas fa-envelope fa-6x"></i>
+						<h4>Melding</h4>
+						<p>Voordat u kunt trouwen moet u melding doen van uw voorgenomen huwelijk</p>
+						<span class="btn btn-primary btn-block"> Lees meer</span>
+                	</div>
+                </div><!-- /.col -->
+                </a>
+
+            	<a href=" {{ path('app_default_ceremonieinfo') }} ">
+                <div class="col-sm-6 col-md-4 text-center-sm text-center-xs">
+                	<div class="well well-lg well-frontpage">
+                		<i class="fas fa-calendar-check fa-6x"></i>
+						<h4>Ceremonies</h4>
+						<p>Wilt u simpel of uitgebreid trouwen?</p>
+						<span class="btn btn-primary btn-block"> Lees meer</span>
+                	</div>
+                </div><!-- /.col -->
+                </a>
+
             </div>
-        </div>
-        <div class="pattern bottom"></div>
-    </section>
-
-    <div class="section pt-0">
-        <div class="container mt-n10 mt-lg-n12 z-2">
-            <div class="row">
-                <div class="col-12 col-md-6  text-center">
-                    <div class="card border-light p-4">
-                        <div class="card-header pb-0">
-                            <div class="image-md">
-                                <img src="./bundles/rocket/assets//img/icons/research.svg" alt="icon">
-                            </div>
-                            <h2 class="h4 mt-3">{{'Students'|trans|capitalize}}</h2>
-                            <p class="mb-0"> {{'Find the best internship that you can do from home'|trans|capitalize}}</p>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span>
-                                    <div style="padding-left: 1px"> {{'Find the best future internships'|trans|capitalize}}
-                                    </div></li>
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span><div>
-                                        <div style="padding-left: 10px">{{'Build and grow your knowledge with tutorials and challenges'|trans|capitalize}}</div>
-                                    </div></li>
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span><div>
-                                        <div style="padding-left: 10px"> {{'Come in contact with other students and form teams'|trans|capitalize}}</div>
-                                    </div></li>
-                            </ul>
-                        </div>
-                        <div class="card-footer pt-0">
-                            <a href="{{ path('app_user_idvault') }}" class="btn btn-block btn-primary"> {{'Join'|trans|capitalize}}<span class="icon icon-xs ml-2"><i class="fas fa-arrow-right"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6  text-center">
-                    <div class="card border-light p-4">
-                        <div class="card-header pb-0">
-                            <div class="image-md">
-                                <img src="./bundles/rocket/assets/img/icons/research.svg" alt="icon">
-                            </div>
-                            <h2 class="h4 mt-3">{{'Employers'|trans|capitalize}}</h2>
-                            <p class="mb-0">{{'Aquire next generation talent'|trans|capitalize}}</p>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span>
-                                        <div style="padding-left: 10px">{{'Find the most suitable interns for your company'|trans|capitalize}}</div>
-                                </li>
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span>
-                                    <div style="padding-left: 18px">{{'Connect with students and teams and make interesting challenges'|trans|capitalize}}</div>
-                                </li>
-                                <li class="list-group-item d-flex text-left pl-0">
-                                    <span class="list-icon"><i class="fas fa-check-circle text-success"></i></span>
-                                    <div style="padding-left: 2px">{{'Find other likeminded organizations'|trans|capitalize}}</div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-footer pt-0">
-                            <a href="{{ path('app_default_organization') }}?backUrl={{ path('app_dashboarduser_index') }}" class="btn btn-block btn-primary">{{'Join'|trans|capitalize}}<span class="icon icon-xs ml-2"><i class="fas fa-arrow-right"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% include 'widgets/positions.html.twig' %}
-
-    {% include 'widgets/tutorials.html.twig' %}
-
-    {% include 'widgets/challanges.html.twig' %}
-
-    {% include 'widgets/features.html.twig' %}
-
-    {# include 'widgets/code.html.twig' #}
-
-    {% include 'widgets/faq.html.twig' %}
-
-    {% include 'default/modals/newsletter_message_modal.html.twig' %}
-
-    <script>
-        {% if query.message is defined %}
-        $(window).on('load', function(){
-            $('#messageModal').modal('show');
-        });
-        {% endif %}
-    </script>
+            <!-- /.row -->
 {% endblock %}

@@ -28,43 +28,21 @@ class DefaultController extends AbstractController
      * @Route("/")
      * @Template
      */
-    public function indexAction(CommonGroundService $commonGroundService, MailingService $mailingService, Request $request, ParameterBagInterface $params)
+    public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
-        // On an index route we might want to filter based on user input
-        $variables['query'] = array_merge($request->query->all(), $variables['post'] = $request->request->all());
+        $variables = [];
 
-        if ($this->getUser()) {
-            $person = $commonGroundService->getResource($this->getUser()->getPerson());
-            $personUrl = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
-
-            $employees = $commonGroundService->getResourceList(['component' => 'mrc', 'type' => 'employees'], ['person' => $personUrl])['hydra:member'];
-
-            if (!count($employees) > 0) {
-                $mailingService->sendMail('mails/welcome_mail.html.twig', 'no-reply@conduction.academy', $this->getUser()->getUsername(), 'Welkom op conduction.academy');
-
-                $employee = [];
-                $employee['person'] = $personUrl;
-
-                $commonGroundService->createResource($employee, ['component' => 'mrc', 'type' => 'employees']);
-
-                $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
-                $provider = $providers[0];
-
-                $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $this->getUser()->getUsername()])['hydra:member'];
-                $user = $users[0];
-
-                $userUrl = $commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'users', 'id' => $user['id']]);
-            }
-        }
+        $session->remove('currentRequest');
+        $session->remove('partners');
 
         return $variables;
     }
 
     /**
-     * @Route("/login")
+     * @Route("/getuigeninfo")
      * @Template
      */
-    public function loginAction(CommonGroundService $commonGroundService, Request $request)
+    public function getuigenInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
 
@@ -72,10 +50,10 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/register")
+     * @Route("/meldinginfo")
      * @Template
      */
-    public function registerAction(CommonGroundService $commonGroundService, Request $request)
+    public function meldingInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
 
@@ -83,48 +61,54 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/organization")
+     * @Route("/naamsgebruik")
      * @Template
      */
-    public function organizationAction(CommonGroundService $commonGroundService, Request $request)
+    public function naamsgebruikInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-
-        if (!$this->getUser()) {
-            return $this->redirect($this->generateUrl('app_user_idvault').'?backUrl='.$request->getUri());
-        }
-
-        if ($request->query->get('backUrl')) {
-            $variables['backUrl'] = $request->query->get('backUrl');
-        }
 
         return $variables;
     }
 
     /**
-     * @Route("/newsletter")
+     * @Route("/ambtenaar")
      * @Template
      */
-    public function newsletterAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function ambtenaarInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
     {
-        // TODO: use email used in form to subscribe to the newsletter?
+        $variables = [];
 
-        $session->set('backUrl', $request->query->get('backUrl'));
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])['hydra:member'];
 
-        $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'id-vault', 'application' => $params->get('app_id')])['hydra:member'];
-        $provider = $providers[0];
 
-        $redirect = $this->generateUrl('app_default_index', ['message' => 'you have successfully signed up for the newsletter!'], UrlGeneratorInterface::ABSOLUTE_URL);
+        return $variables;
+    }
 
-        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            $dev = '';
-            if ($params->get('app_env') == 'dev') {
-                $dev = 'dev.';
-            }
+    /**
+     * @Route("/locaties")
+     * @Template
+     */
+    public function locatiesInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
 
-            return $this->redirect('http://id-vault.com/sendlist/authorize?client_id='.$provider['configuration']['app_id'].'&send_lists=8b929e53-1e16-4e59-a254-6af6b550bd08&redirect_uri='.$redirect);
-        } else {
-            return $this->render('500.html.twig');
-        }
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])['hydra:member'];
+
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/ceremonie-info")
+     * @Template
+     */
+    public function ceremonieInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+
+
+
+        return $variables;
     }
 }
