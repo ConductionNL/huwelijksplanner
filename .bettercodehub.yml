@@ -19,7 +19,3 @@ exclude:
     - /api/src/Entity/.*
     - /api/src/DataFixtures/.*
     - /api/src/Repository/.*
-    - /api/src/Kernel.php
-test:
-    include:
-        - /api/tests/TrouwServiceTest.php
