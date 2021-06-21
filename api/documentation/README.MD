@@ -1,9 +1,9 @@
-
+    
 # huwelijksplanner
 
 Description
 ----
-
+[![StyleCI](https://github.styleci.io/repos/225294897/shield?branch=master)](https://github.styleci.io/repos/225294897?branch=master) [![Docker Image CI](https://github.com/ConductionNL/huwelijksplanner/workflows/Docker%20Image%20CI/badge.svg?branch=master)](https://github.com/ConductionNL/huwelijksplanner/actions?query=workflow%3A&quot;Docker+Image+CI&quot;) [![Artifacthub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/huwelijksplanner)](https://artifacthub.io/packages/helm/huwelijksplanner/huwelijksplanner) [![BCH compliance](https://bettercodehub.com/edge/badge/ConductionNL/huwelijksplanner-ui?branch=master)](https://bettercodehub.com/) 
 
 Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.
 
