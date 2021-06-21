@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1624274450">
-  <project timestamp="1624274450">
+<coverage generated="1624275282">
+  <project timestamp="1624275282">
     <file name="/srv/api/src/Controller/ApiController.php">
       <class name="App\Controller\ApiController" namespace="global">
         <metrics complexity="18" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="0" elements="63" coveredelements="0"/>
