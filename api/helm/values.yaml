@@ -5,14 +5,15 @@
 config:
   version: V1.0
   debug: 0
-  cache: 1
+  cache: true
   internal: false
-  notification:
-  authorisation:
 
 security:
   applicationKey: "01f0dc1a-0ce5-4ac6-b943-81650b174792"
   secret: ""
+  jwt:
+    id:
+    privateKey:
 
 php:
   repository: docker.io/conduction/protocomponent-php
