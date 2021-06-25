@@ -20,7 +20,7 @@ data:
   php-service: {{ .Release.Name }}-php  
 
   {{- if .Values.redis.enabled }}
-  redis-host: {{ $redisServiceName | quote }}
+  redis-host: {{ printf "%s-headless" $redisServiceName | quote }}
   redis-port: {{ .Values.redis.redisPort | toString | quote }}
 
   {{- end }}
