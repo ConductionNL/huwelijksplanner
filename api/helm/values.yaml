@@ -4,7 +4,7 @@
 
 config:
   version: V1.0
-  debug: 0
+  debug: 1
   cache: true
   internal: false
 
@@ -14,7 +14,87 @@ security:
   jwt:
     id:
     privateKey:
-
+  dependencies:
+      arc:
+          auth: apikey
+          location: agendaservice.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      brp:
+          auth: apikey
+          location: brpservice.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      bc:
+          auth: apikey
+          location: betaalservice.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      bs:
+          auth: apikey
+          location: berichtservice.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      cc:
+          auth: apikey
+          location: contactcatalogus.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      digispoof-interface:
+          auth: apikey
+          location: digispoof-interface.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      ias:
+          auth: apikey
+          location: instemmingservice.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      irc:
+          auth: apikey
+          location: instemmingregistratiecomponent.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      lc:
+          auth: apikey
+          location: locatiecatalogus.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      ltc:
+          auth: apikey
+          location: landelijketabellencatalogus.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      mrc:
+          auth: apikey
+          location: medewerkercatalogus.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      memo:
+          auth: apikey
+          location: memocomponent.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      orc:
+          auth: apikey
+          location: orderregistratiecomponent.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      pdc:
+          auth: apikey
+          location: productenendienstencatalogus.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      ptc:
+          auth: apikey
+          location: procestypecatalogus.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      ts:
+          auth: apikey
+          location: trouw-service.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      uc:
+          auth: apikey
+          location: user-component.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      vrc:
+          auth: apikey
+          location: verzoekregistratiecomponent.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      vtc:
+          auth: apikey
+          location: verzoektypecatalogus.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      wrc:
+          auth: apikey
+          location: webresourcecatalogus.local
+          apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
 php:
   repository: docker.io/conduction/protocomponent-php
   image: docker.io/conduction/huwelijksplanner-php
