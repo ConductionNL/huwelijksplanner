@@ -18,7 +18,7 @@ data:
   trusted-proxies: {{ join "," .Values.php.trustedProxies }}
   trusted-hosts: {{ .Values.php.trustedHosts | quote }}
   php-service: {{ .Release.Name }}-php  
-
+  url: {{ printf "https://%s%s" .Values.ingress.domain .Values.ingress.path | quote }}
   {{- if .Values.redis.enabled }}
   redis-host: {{ printf "%s-headless" $redisServiceName | quote }}
   redis-port: {{ .Values.redis.redisPort | toString | quote }}
