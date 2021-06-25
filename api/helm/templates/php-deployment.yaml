@@ -100,9 +100,10 @@ spec:
                   key: redis-port
             {{- end }}
             - name: APP_URL
+              valueFrom:
                 configMapKeyRef:
-                  name: {{ template "fullname" . }}
                   key: url
+                  name: {{ template "fullname" . }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}
