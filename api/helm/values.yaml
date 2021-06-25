@@ -97,7 +97,7 @@ security:
           apiKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
 php:
   repository: docker.io/conduction/protocomponent-php
-  image: docker.io/conduction/huwelijksplanner-php
+  image: ghcr.io/conductionnl/huwelijksplanner-php
   tag: latest
   env: prod
   replicaCount: 2
@@ -119,7 +119,7 @@ redis:
 
 nginx:
   repository: docker.io/conduction/protocomponent-nginx
-  image: docker.io/conduction/huwelijksplanner-nginx
+  image: ghcr.io/conductionnl/huwelijksplanner-nginx
   tag: latest
   pullPolicy: Always
   replicaCount: 2
