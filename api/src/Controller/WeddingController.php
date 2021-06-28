@@ -46,13 +46,15 @@ class WeddingController extends AbstractController
         if ($session->get('currentRequest')) {
             $variables['request'] = $session->get('currentRequest');
         } else {
-            $variables['processType'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
-            $variables['request']['processType'] = $commonGroundService->cleanUrl(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+            $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+            $requestType = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'], ['organization' => $organization['@id'], 'name' => 'Huwelijk / Partnerschap'])['hydra:member'][0];
+            $variables['processType'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types'], ['sourceOrganization' => $organization['@id'], 'name' => 'Huwelijk / Partnerschap'])['hydra:member'][0];
+            $variables['request']['processType'] = $variables['processType']['@id'];
             $variables['request']['status'] = 'incomplete';
             $variables['request']['submitters'][0]['brp'] = $this->getUser()->getPerson();
             $variables['request']['properties'] = [];
-            $variables['request']['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
-            $variables['request']['requestType'] = $commonGroundService->cleanUrl(['component' => 'vtc', 'type' => 'request_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+            $variables['request']['organization'] = $organization['@id'];
+            $variables['request']['requestType'] = $requestType['@id'];
 
             $currentRequest = $commonGroundService->createResource($variables['request'], ['component' => 'vrc', 'type' => 'requests']);
 
@@ -82,13 +84,15 @@ class WeddingController extends AbstractController
         if ($session->get('currentRequest')) {
             $variables['request'] = $session->get('currentRequest');
         } else {
-            $variables['processType'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
-            $variables['request']['processType'] = $commonGroundService->cleanUrl(['component' => 'ptc', 'type' => 'process_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+            $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+            $requestType = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'], ['organization' => $organization['@id'], 'name' => 'Huwelijk / Partnerschap'])['hydra:member'][0];
+            $variables['processType'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types'], ['sourceOrganization' => $organization['@id'], 'name' => 'Huwelijk / Partnerschap'])['hydra:member'][0];
+            $variables['request']['processType'] = $variables['processType']['@id'];
             $variables['request']['status'] = 'incomplete';
             $variables['request']['submitters'][0]['brp'] = $this->getUser()->getPerson();
             $variables['request']['properties'] = [];
-            $variables['request']['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
-            $variables['request']['requestType'] = $commonGroundService->cleanUrl(['component' => 'vtc', 'type' => 'request_types', 'id' => '5b10c1d6-7121-4be2-b479-7523f1b625f1']);
+            $variables['request']['organization'] = $organization['@id'];
+            $variables['request']['requestType'] = $requestType['@id'];
 
             $currentRequest = $commonGroundService->createResource($variables['request'], ['component' => 'vrc', 'type' => 'requests']);
 
@@ -137,6 +141,8 @@ class WeddingController extends AbstractController
 
         $variables['partner1'] = $commonGroundService->getResource($this->getUser()->getPerson());
 
+        $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+
         if ($request->isMethod('POST') && $request->get('partner1') && !$session->get('partners')) {
             $variables['partner1Submitted'] = true;
             $partner['contact']['emails'][]['email'] = $request->get('email');
@@ -146,7 +152,7 @@ class WeddingController extends AbstractController
             $partner['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
             $partner['description'] = 'U heeft een instemmingsverzoek ontvangen als partners voor een Huwelijk/ Partnerschap.';
             $partner['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $variables['request']['id']]);
-            $partner['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+            $partner['requester'] = $organization['@id'];
             $session->set('partners', $partner);
         } elseif ($request->isMethod('POST') && $request->get('partner2') && !$session->get('partners')) {
             $variables['partner2Submitted'] = true;
@@ -157,7 +163,7 @@ class WeddingController extends AbstractController
             $partner['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
             $partner['description'] = 'U heeft een instemmingsverzoek ontvangen als partners voor een Huwelijk/ Partnerschap.';
             $partner['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $variables['request']['id']]);
-            $partner['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+            $partner['requester'] = $organization['@id'];
             $session->set('partners', $partner);
         } elseif ($request->isMethod('POST') && $session->get('partners')) {
             $currentRequest = $session->get('currentRequest');
@@ -169,7 +175,7 @@ class WeddingController extends AbstractController
             $currentRequest['properties']['partners'][1]['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
             $currentRequest['properties']['partners'][1]['description'] = 'U heeft een instemmingsverzoek ontvangen als partners voor een Huwelijk/ Partnerschap.';
             $currentRequest['properties']['partners'][1]['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $variables['request']['id']]);
-            $currentRequest['properties']['partners'][1]['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+            $currentRequest['properties']['partners'][1]['requester'] = $organization['@id'];
 
             if (!empty($currentRequest['children'])) {
                 $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
@@ -197,7 +203,8 @@ class WeddingController extends AbstractController
         }
 
         $variables['request'] = $session->get('currentRequest');
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])['hydra:member'];
+        $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Ceremonies'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -230,7 +237,8 @@ class WeddingController extends AbstractController
         }
 
         $variables['request'] = $session->get('currentRequest');
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])['hydra:member'];
+        $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Trouwambtenaren'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -264,7 +272,8 @@ class WeddingController extends AbstractController
         }
 
         $variables['request'] = $session->get('currentRequest');
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])['hydra:member'];
+        $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Trouwlocaties'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -330,6 +339,8 @@ class WeddingController extends AbstractController
     {
         $variables = [];
 
+        $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+
         if (!$this->getUser()) {
             return $this->redirect($this->generateUrl('app_default_index'));
         }
@@ -352,7 +363,7 @@ class WeddingController extends AbstractController
                 $currentRequest['properties']['getuigen'][$index]['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
                 $currentRequest['properties']['getuigen'][$index]['description'] = 'U heeft een instemmingsverzoek ontvangen als getuigen voor een Huwelijk/ Partnerschap.';
                 $currentRequest['properties']['getuigen'][$index]['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $currentRequest['id']]);
-                $currentRequest['properties']['getuigen'][$index]['requester'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
+                $currentRequest['properties']['getuigen'][$index]['requester'] = $organization['@id'];
 
                 if (!empty($currentRequest['children'])) {
                     $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
@@ -388,7 +399,8 @@ class WeddingController extends AbstractController
             return $this->redirect($this->generateUrl('app_default_index'));
         }
 
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => 'f8298a12-91eb-46d0-b8a9-e7095f81be6f'])['hydra:member'];
+        $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Extra producten'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -549,11 +561,14 @@ class WeddingController extends AbstractController
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
 
+            $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+            $requestType = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'], ['organization' => $organization['@id'], 'name' => 'Huwelijk / Partnerschap'])['hydra:member'][0];
+
             $melding['status'] = 'submitted';
             $melding['submitters'][0]['brp'] = $this->getUser()->getPerson();
             $melding['properties'] = [];
-            $melding['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '68b64145-0740-46df-a65a-9d3259c2fec8']);
-            $melding['requestType'] = $commonGroundService->cleanUrl(['component' => 'vtc', 'type' => 'request_types', 'id' => '146cb7c8-46b9-4911-8ad9-3238bab4313e']);
+            $melding['organization'] = $organization['@id'];
+            $melding['requestType'] = $requestType['@id'];
             $melding['parent'] = '/requests/'.$currentRequest['id'];
 
             if (isset($currentRequest['properties']['partners'])) {

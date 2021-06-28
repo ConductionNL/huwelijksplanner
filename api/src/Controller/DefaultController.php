@@ -28,7 +28,7 @@ class DefaultController extends AbstractController
      * @Route("/")
      * @Template
      */
-    public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function indexAction(Session $session)
     {
         $variables = [];
 
@@ -42,7 +42,7 @@ class DefaultController extends AbstractController
      * @Route("/getuigeninfo")
      * @Template
      */
-    public function getuigenInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function getuigenInfoAction()
     {
         $variables = [];
 
@@ -53,7 +53,7 @@ class DefaultController extends AbstractController
      * @Route("/meldinginfo")
      * @Template
      */
-    public function meldingInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function meldingInfoAction()
     {
         $variables = [];
 
@@ -64,7 +64,7 @@ class DefaultController extends AbstractController
      * @Route("/naamsgebruik")
      * @Template
      */
-    public function naamsgebruikInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function naamsgebruikInfoAction()
     {
         $variables = [];
 
@@ -75,11 +75,12 @@ class DefaultController extends AbstractController
      * @Route("/ambtenaar")
      * @Template
      */
-    public function ambtenaarInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function ambtenaarInfoAction(CommonGroundService $commonGroundService)
     {
         $variables = [];
 
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])['hydra:member'];
+        $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Trouwambtenaren'])['hydra:member'];
 
 
         return $variables;
@@ -89,11 +90,12 @@ class DefaultController extends AbstractController
      * @Route("/locaties")
      * @Template
      */
-    public function locatiesInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function locatiesInfoAction(CommonGroundService $commonGroundService)
     {
         $variables = [];
 
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])['hydra:member'];
+        $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Trouwlocaties'])['hydra:member'];
 
 
         return $variables;
@@ -103,11 +105,9 @@ class DefaultController extends AbstractController
      * @Route("/ceremonie-info")
      * @Template
      */
-    public function ceremonieInfoAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, string $slug = 'home')
+    public function ceremonieInfoAction()
     {
         $variables = [];
-
-
 
         return $variables;
     }
