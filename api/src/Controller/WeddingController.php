@@ -354,16 +354,16 @@ class WeddingController extends AbstractController
                 if (isset($currentRequest['properties']['getuigen'])) {
                     $index = count($currentRequest['properties']['getuigen']) + 1;
                 } else {
-                    $index = 1;
+                    $index = 0;
                 }
-                $currentRequest['properties']['getuigen'][$index]['contact']['emails'][]['email'] = $request->get('email');
-                $currentRequest['properties']['getuigen'][$index]['contact']['telephones'][]['telephone'] = $request->get('telephone');
-                $currentRequest['properties']['getuigen'][$index]['contact']['givenName'] = $request->get('givenName');
-                $currentRequest['properties']['getuigen'][$index]['contact']['familyName'] = $request->get('familyName');
-                $currentRequest['properties']['getuigen'][$index]['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
-                $currentRequest['properties']['getuigen'][$index]['description'] = 'U heeft een instemmingsverzoek ontvangen als getuigen voor een Huwelijk/ Partnerschap.';
-                $currentRequest['properties']['getuigen'][$index]['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $currentRequest['id']]);
-                $currentRequest['properties']['getuigen'][$index]['requester'] = $organization['@id'];
+                $currentRequest['properties']['getuigen'][(int)$index]['contact']['emails'][]['email'] = $request->get('email');
+                $currentRequest['properties']['getuigen'][(int)$index]['contact']['telephones'][]['telephone'] = $request->get('telephone');
+                $currentRequest['properties']['getuigen'][(int)$index]['contact']['givenName'] = $request->get('givenName');
+                $currentRequest['properties']['getuigen'][(int)$index]['contact']['familyName'] = $request->get('familyName');
+                $currentRequest['properties']['getuigen'][(int)$index]['name'] = 'Instemmingsverzoek voor Huwelijk / Partnerschap';
+                $currentRequest['properties']['getuigen'][(int)$index]['description'] = 'U heeft een instemmingsverzoek ontvangen als getuigen voor een Huwelijk/ Partnerschap.';
+                $currentRequest['properties']['getuigen'][(int)$index]['request'] = $commonGroundService->cleanUrl(['component' => 'vrc', 'type' => 'requests', 'id' => $currentRequest['id']]);
+                $currentRequest['properties']['getuigen'][(int)$index]['requester'] = $organization['@id'];
 
                 if (!empty($currentRequest['children'])) {
                     $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];
