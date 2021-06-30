@@ -80,7 +80,7 @@ class DefaultController extends AbstractController
         $variables = [];
 
         $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Trouwambtenaren'])['hydra:member'];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'groups.name' => 'Trouwambtenaren'])['hydra:member'];
 
 
         return $variables;
@@ -95,7 +95,7 @@ class DefaultController extends AbstractController
         $variables = [];
 
         $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Trouwlocaties'])['hydra:member'];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'groups.name' => 'Trouwlocaties'])['hydra:member'];
 
 
         return $variables;

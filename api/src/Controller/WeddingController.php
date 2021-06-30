@@ -204,7 +204,7 @@ class WeddingController extends AbstractController
 
         $variables['request'] = $session->get('currentRequest');
         $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Ceremonies'])['hydra:member'];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'groups.name' => 'Ceremonies'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -238,7 +238,7 @@ class WeddingController extends AbstractController
 
         $variables['request'] = $session->get('currentRequest');
         $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Trouwambtenaren'])['hydra:member'];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'groups.name' => 'Trouwambtenaren'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -273,7 +273,7 @@ class WeddingController extends AbstractController
 
         $variables['request'] = $session->get('currentRequest');
         $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Trouwlocaties'])['hydra:member'];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'groups.name' => 'Trouwlocaties'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -400,7 +400,7 @@ class WeddingController extends AbstractController
         }
 
         $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
-        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'name' => 'Extra producten'])['hydra:member'];
+        $variables['products'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'products'], ['groups.sourceOrganization' => $organization['@id'], 'groups.name' => 'Extra producten'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $currentRequest = $session->get('currentRequest');
@@ -562,7 +562,7 @@ class WeddingController extends AbstractController
             $currentRequest = $session->get('currentRequest');
 
             $organization = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['rsin' => '002220647'])['hydra:member'][0];
-            $requestType = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'], ['organization' => $organization['@id'], 'name' => 'Huwelijk / Partnerschap'])['hydra:member'][0];
+            $requestType = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'], ['organization' => $organization['@id'], 'groups.name' => 'Huwelijk / Partnerschap'])['hydra:member'][0];
 
             $melding['status'] = 'submitted';
             $melding['submitters'][0]['brp'] = $this->getUser()->getPerson();
