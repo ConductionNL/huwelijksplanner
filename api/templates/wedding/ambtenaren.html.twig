@@ -22,12 +22,15 @@
                                     </div>
                                     <div class="testimonial-author">
                                         <h4>{{ product.name|e }}</h4>
-                                        {% if request.properties.ambtenaar is defined and request.properties.ambtenaar == productUrl %}
-                                            <p>Door u gekozen</p>
-                                        {% else %}
-                                            <p>Trouwambtenaar</p>
-                                            <button name="ambtenaar" value="{{ productUrl }}" class="btn btn-primary btn-icon">Kiezen</button>
-                                        {% endif %}
+                                        {% for offer in product.offers %}
+                                            {% set offerUrl = commonground_cleanurl({'component':'pdc', 'type':'offers', 'id':offer.id}) %}
+                                            {% if request.properties.ambtenaar is defined and request.properties.ambtenaar == productUrl %}
+                                                <p>Door u gekozen</p>
+                                            {% else %}
+                                                <p>Trouwambtenaar</p>
+                                                <button name="ambtenaar" value="{{ offerUrl }}" class="btn btn-primary btn-icon">Kiezen</button>
+                                            {% endif %}
+                                        {% endfor %}
                                         <img src="{{product.logo}}" alt="{{ product.name|e }}"/>
                                     </div>
                                 </div>
