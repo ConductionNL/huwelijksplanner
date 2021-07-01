@@ -315,7 +315,7 @@ class WeddingController extends AbstractController
 
             $date = $request->get('datum');
 
-            $currentRequest['properties']['datum'] = str_replace('(Central European Standard Time)', '', $date);
+            $currentRequest['properties']['datum'] = $date;
 
             if (!empty($currentRequest['children'])) {
                 $currentRequest['children'][0] = '/requests/'.$currentRequest['children'][0]['id'];

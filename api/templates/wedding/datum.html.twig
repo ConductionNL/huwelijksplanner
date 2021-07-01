@@ -14,138 +14,18 @@
         <div class="post-heading-center ">
             <h2>Wanneer wilt u trouwen?</h2>
         </div>
-        <div class="col-sm-10 col-md-6 col-sm-offset-1 col-md-offset-0 text-center-sm text-center-xs">
-            <div class="margin-bottom40">
-                <figure class="col-img40 margin-bottom40">
-                    <img src="images/content/elements/Bank.png" alt="Image">
-                </figure>
-            </div>
-        </div>
-        <div class="col-sm-10 col-md-6 col-lg-5 col-sm-offset-1 col-md-offset-0 col-lg-offset-1">
-            <div
-                style="background: red; border-radius: 25px; width: 7.5px; height: 7.5px; display: inline-block; margin-top: -3px"></div>
-            Onbeschikbaar <br>
-            <div
-                style="background: mediumblue; border-radius: 25px; width: 7.5px; height: 7.5px; display: inline-block; margin-top: -3px"></div>
-            Beschikbaar <br><br>
+        <div class="col-sm-10 col-md-7 col-lg-7 col-sm-offset-1 col-md-offset-0 col-lg-offset-1">
             <form method="post" action="{{ path('app_wedding_datum') }}" class="affa-form-contact">
-                <div class="submit-status"></div> <!-- submit status -->
-                <div class="dateholder">
-                    <md-datepicker ng-model="defaultDate" md-placeholder="Voer datum in" md-open-on-focus=""
-                                   md-date-filter="availabledates" md-date-locale="dutchDates"
-                                   md-min-date="minDate" md-max-date="endDate"></md-datepicker>
+                <div style="overflow:hidden;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div id="datetimepicker12"></div>
+                                <input type="hidden" name="datum" id="huwelijkDate">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <select name="tijd">
-
-
-                    {% if plechtigheid is defined and plechtigheid.id == "1ba1772b-cc8a-4808-ad1e-f9b3c93bdebf" %} {# // flits huwelijk#}
-                        <option
-                            value="10:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "10:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            10:00
-                        </option>
-                        <option
-                            value="10:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "10:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            10:30
-                        </option>
-
-                    {% elseif plechtigheid is defined and  plechtigheid.id == "77f6419d-b264-4898-8229-9916d9deccee" %} {# // gratis trouwen #}
-                        <option
-                            value="10:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "10:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            10:00
-                        </option>
-                        <option
-                            value="10:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "10:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            10:30
-                        </option>
-
-                    {% elseif plechtigheid is defined and  plechtigheid.id == "2b9ba0a9-376d-45e2-aa83-809ef07fa104" %} {# // eenvoudig trouwen #}
-                        <option
-                            value="10:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "10:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            10:00
-                        </option>
-                        <option
-                            value="10:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "10:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            10:30
-                        </option>
-                        <option
-                            value="11:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "11:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            11:00
-                        </option>
-                        <option
-                            value="11:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "11:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            11:30
-                        </option>
-
-                        {# elseif plechtigheid is defined and  plechtigheid.id = "bfeb9399-fce6-49b8-a047-70928f3611f" #} {# // uitgebreid trouwen #}
-
-                    {% else %}
-                        <option
-                            value="09:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "09:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            09:00
-                        </option>
-                        <option
-                            value="09:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "09:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            09:30
-                        </option>
-                        <option
-                            value="10:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "10:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            10:00
-                        </option>
-                        <option
-                            value="10:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "10:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            10:30
-                        </option>
-                        <option
-                            value="11:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "11:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            11:00
-                        </option>
-                        <option
-                            value="11:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "11:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            11:30
-                        </option>
-                        <option
-                            value="12:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "12:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            12:00
-                        </option>
-                        <option
-                            value="12:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "12:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            112:30
-                        </option>
-                        <option
-                            value="13:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "13:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            13:00
-                        </option>
-                        <option
-                            value="13:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "13:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            13:30
-                        </option>
-                        <option
-                            value="14:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "14:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            14:00
-                        </option>
-                        <option
-                            value="14:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "14:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            14:30
-                        </option>
-                        <option
-                            value="15:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "15:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            15:00
-                        </option>
-                        <option
-                            value="15:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "15:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            15:30
-                        </option>
-                        <option
-                            value="16:00" {% if request.properties.datum is defined and request.properties.datum is not empty and "16:00" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            16:00
-                        </option>
-                        <option
-                            value="16:30" {% if request.properties.datum is defined and request.properties.datum is not empty and "16:30" == request.properties.datum|date("H:i") %} selected {% endif %}>
-                            16:30
-                        </option>
-                    {% endif %}
-
-                </select>
                 {#  if plechtigheid.id == "bfeb9399-fce6-49b8-a047-70928f3611fb" %}
                     <label for="tijd">Voer uw gewenste tijdstip in als bijvoorbeeld: "12:30"</label>
                     <input id="tijd" name="tijd"
@@ -156,75 +36,42 @@
                         class="fas fa-save"></i>
                     Sla datum op
                 </button>
-                <input type="text" name="datum" ng-model="defaultDate"
-                       style="background: transparent; border: transparent; color: transparent;">
-                <br><br>
-                <span ng-hide="defaultDate">Kies een datum om door te gaan</span>
             </form>
         </div>
+        <div class="col-sm-10 col-md-4 col-sm-offset-1 col-md-offset-0 text-center-sm text-center-xs">
+            <div class="margin-bottom40">
+                <figure class="col-img40 margin-bottom40">
+                    <img src="images/content/elements/Bank.png" alt="Image">
+                </figure>
+            </div>
+        </div>
+
     </div>
     <!-- .row end -->
-{% endblock %}
-{% block javascript %}
+    <script type="text/javascript">
+        $(function () {
+            Date.prototype.addDays = function(days) {
+                let date = new Date(this.valueOf());
+                date.setDate(date.getDate() + days);
+                return date;
+            }
 
-    angular.module('MyApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']).config(function ($mdDateLocaleProvider) {
-    $mdDateLocaleProvider.firstDayOfWeek = 1;
-    $mdDateLocaleProvider.months = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
-    $mdDateLocaleProvider.shortMonths = ['jan', 'feb', 'mar', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
-    $mdDateLocaleProvider.days = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
-    $mdDateLocaleProvider.shortDays = ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za',];
-    $mdDateLocaleProvider.minDate = '2020-01-30';
-    $mdDateLocaleProvider.formatDate = function (date) {
-    return moment(date).format('DD-MM-YYYY');
-};
-}).controller('AppCtrl', ['$mdDateLocale', '$scope', function ($mdDateLocale, $scope) {
-    $scope.today = new Date();
-    $scope.minDate = new Date(
-    $scope.today.getFullYear(),
-    $scope.today.getMonth(),
-    $scope.today.getDate() + 42
-    );
-    $scope.endDate = new Date(
-    $scope.today.getFullYear() +1,
-    $scope.today.getMonth(),
-    $scope.today.getDate()
-    );
-{% if request.properties.datum is defined and request.properties.datum is not empty %}
-$scope.defaultDate = new Date({{ request.properties.datum | date("Y, m, d") }});
-$scope.defaultDate = new Date(
-    $scope.defaultDate.getFullYear(),
-    $scope.defaultDate.getMonth()-1,
-    $scope.defaultDate.getDate()
-);
-{% endif %}
+            let now = new Date();
+            $('#datetimepicker12').datetimepicker({
+                inline: true,
+                sideBySide: true,
+                format: 'YYYYMMDDHHmm',
+                minDate: now.addDays(42),
+                maxDate: now.addDays(500),
+                stepping: 15
+            });
 
-{% if plechtigheid is defined and plechtigheid.id == "1ba1772b-cc8a-4808-ad1e-f9b3c93bdebf" %} // flits huwelijk
-$scope.availabledates = function(date) {
-    var day = date.getDay();
-    return day === 1 ;
-};
+            document.getElementById('huwelijkDate').value = $('#datetimepicker12').data().date;
 
-{% elseif plechtigheid is defined and  plechtigheid.id == "77f6419d-b264-4898-8229-9916d9deccee" %} // gratis trouwen
-$scope.availabledates = function(date) {
-    var day = date.getDay();
-    return day === 1 ;
-};
+            $('#datetimepicker12').on( "dp.change", function() {
+                document.getElementById('huwelijkDate').value = $('#datetimepicker12').data().date;
+            });
+        });
 
-{% elseif plechtigheid is defined and  plechtigheid.id == "2b9ba0a9-376d-45e2-aa83-809ef07fa104" %} // eenvoudig trouwen
-$scope.availabledates = function(date) {
-    var day = date.getDay();
-    return day === 1 || day === 2 || day === 3||   day === 5;
-};
-{% elseif plechtigheid is defined and  plechtigheid.id == "bfeb9399-fce6-49b8-a047-70928f3611f" %} // uitgebreid trouwen
-
-{% endif %}
-
-
-// Excluding dates
-}]);
-/**
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that can be foundin the LICENSE file at https://material.angularjs.org/HEAD/license.
-**/
-
+    </script>
 {% endblock %}
