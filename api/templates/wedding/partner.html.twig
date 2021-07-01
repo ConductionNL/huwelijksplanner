@@ -76,7 +76,7 @@
                                     <label for="partner_email">Email Adres <span class="required">*</span></label>
                                     <input type="text" name="email" placeholder="john@do.nl" value="{% if partner1.contactObject is defined and partner1.contactObject._embedded.emails is defined  %}{{ partner1.contactObject._embedded.emails[0].email }}{% endif %}" required/>
                                     <label for="partner_telefoonnummer">Telefoonnummer</label>
-                                    <input type="text" name="telephone" placeholder="+31 6 12345678" value="{% if partner1.contactObject is defined and  partner1.contactObject._embedded.telephones is defined  %}{{ partner1.contactObject._embedded.telephones[0].telephone }}{% endif %}"/>
+                                    <input type="text" name="telephone" placeholder="31 6 12345678" value="{% if partner1.contactObject is defined and  partner1.contactObject._embedded.telephones is defined  %}{{ partner1.contactObject._embedded.telephones[0].telephone }}{% endif %}"/>
                                     <input type="hidden" name="givenName" value="{{ partner1.naam.voornamen }}">
                                     <input type="hidden" name="familyName" value="{{ partner1.naam.geslachtsnaam }}">
                                     <button type="submit" name="partner1" value="true" class="btn btn-success btn-lg btn-block btn-icon"><i class="far fa-envelope"></i> Opslaan</button>
@@ -146,7 +146,7 @@
                                 <label for="partner_email">Email Adres <span class="required">*</span></label>
                                 <input type="email" name="email" placeholder="john@do.nl" required/>
                                 <label for="partner_telefoonnummer">Telefoonnummer</label>
-                                <input type="text" name="telephone" pattern="[0-9]{12}" placeholder="31 6 12345678"/>
+                                <input type="text" name="telephone" placeholder="31 6 12345678"/>
 
  								<button type="submit" name="partner2" value="true" class="btn btn-success btn-lg btn-block btn-icon"><i class="far fa-envelope"></i> Per bericht Uitnodigen</button>
 
