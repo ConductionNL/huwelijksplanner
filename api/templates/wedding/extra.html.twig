@@ -26,15 +26,18 @@
                                     {% endif %}
                                     <div class="team-profile-name">
                                         <h4>{{ product.name }}</h4>
-                                        <p>{{ product.price }}</p>
                                     </div>
                                     <p style="height: 60px;display: block">{{ product.description|raw }}<br/></p>
                                     <div class="tbl-prc-footer">
-                                        {% if request.properties.extras is defined and productUrl in request.properties.extras %}
-                                            <p>U heeft dit product al toegevoegd</p>
-                                        {% else %}
-                                            <button name="extra" value="{{ productUrl }}" class="btn btn-primary btn-icon btn-block">Ja dit wil ik!</button>
-                                        {% endif %}
+                                        {% for offer in product.offers %}
+                                            {% set offerUrl = commonground_cleanurl({'component':'pdc', 'type':'offers', 'id':offer.id}) %}
+                                            {% if request.properties.extras is defined and offerUrl in request.properties.extras %}
+                                                <p>U heeft dit product al toegevoegd</p>
+                                            {% else %}
+                                                <p>{{ offer.price }}</p>
+                                                <button name="extra" value="{{ offerUrl }}" class="btn btn-primary btn-icon btn-block">Ja dit wil ik!</button>
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>

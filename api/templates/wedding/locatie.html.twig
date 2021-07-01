@@ -41,12 +41,16 @@
                             </div>
                             <div class="testimonial-author">
                                 <h4>{{ product.name|e }}</h4>
-                                {% if request.properties.ambtenaar is defined and request.properties.ambtenaar == productUrl %}
+                                {% for offer in product.offers %}
+                                    {% set offerUrl = commonground_cleanurl({'component':'pdc', 'type':'offers', 'id':offer.id}) %}
+                                    {% if request.properties.locatie is defined and request.properties.locatie == productUrl %}
                                     <p>Door u gekozen</p>
-                                {% else %}
-                                    <p>Locatie</p>
-                                    <button name="locatie" value="{{ productUrl }}" class="btn btn-primary btn-icon">Kiezen</button>
-                                {% endif %}
+                                    {% else %}
+                                        <p>Locatie</p>
+                                        <button name="locatie" value="{{ offerUrl }}" class="btn btn-primary btn-icon">Kiezen</button>
+                                    {% endif %}
+
+                                {% endfor %}
                                 <img src="{{product.logo}}" alt="{{ product.name|e }}"/>
                             </div>
                         </div>

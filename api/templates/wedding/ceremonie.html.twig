@@ -29,7 +29,10 @@
                                     {{ product.description|raw }}
                                     <div class="tbl-prc-footer">
                                         <br/><br/>
-                                        <button name="ceremonie" value="{{ productUrl }}"  class="btn btn-primary btn-icon  btn-block">Ja dit wil ik!</button>
+                                        {% for offer in product.offers %}
+                                            {% set offerUrl = commonground_cleanurl({'component':'pdc', 'type':'offers', 'id':offer.id}) %}
+                                                <button name="ceremonie" value="{{ offerUrl }}" class="btn btn-primary btn-icon btn-block">Ja dit wil ik!</button>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
