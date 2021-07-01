@@ -464,9 +464,9 @@ class WeddingController extends AbstractController
             $item['priceCurrency'] = 'EUR';
 
             $invoice = [];
-            $invoice['customer'] = $requestUrl;
             $invoice['name'] = 'betaling';
             $invoice['items'][] = $item;
+            $invoice['organization'] = $requestUrl;
             $invoice['targetOrganization'] = $requestUrl;
             $invoice['price'] = strval($response['amount']['value']);
             $invoice['priceCurrency'] = 'EUR';
