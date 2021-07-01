@@ -439,7 +439,7 @@ class WeddingController extends AbstractController
             $id = $session->get('mollieId');
             $session->remove('mollieId');
             $headers = [
-                'Authorization' => 'Bearer test_WaWzFksV6TDFC9k228jguK9xgzVQkt',
+                'Authorization' => 'Bearer test_MdEVWcAwxM2VCAKcr9MP4h3yQmGUBK',
                 'Accept'        => 'application/json',
             ];
 
@@ -513,7 +513,7 @@ class WeddingController extends AbstractController
                 ];
 
                 $headers = [
-                    'Authorization' => 'Bearer test_WaWzFksV6TDFC9k228jguK9xgzVQkt',
+                    'Authorization' => 'Bearer test_MdEVWcAwxM2VCAKcr9MP4h3yQmGUBK',
                     'Accept'        => 'application/json',
                 ];
 
