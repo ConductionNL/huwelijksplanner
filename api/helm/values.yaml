@@ -39,6 +39,10 @@ security:
           auth: apikey
           location: digispoof-interface.local
           apikey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+      ds:
+          auth: apikey
+          location: digispoof-interface.local
+          apikey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
       ias:
           auth: apikey
           location: instemmingservice.local
