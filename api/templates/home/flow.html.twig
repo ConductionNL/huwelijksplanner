@@ -132,7 +132,7 @@
                     </div><!-- .col end -->
                 {% elseif not app.user %}
                     <div class="col-md-12 text-center">
-                            <a href="{{ url('app_default_index') }}/digispoof?responceUrl={{ url('app_user_digispoof') }}&backUrl={{ url('app_default_index') }}" class="btn btn-login btn-lg"><span class="fas fa-sign-in-alt"></span> Log hier in om te beginnen</a>
+                            <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ url('app_user_digispoof') }}&backUrl={{ url('app_default_index') }}" class="btn btn-login btn-lg"><span class="fas fa-sign-in-alt"></span> Log hier in om te beginnen</a>
                     </div><!-- .col end -->
                 {% else %}
                     <div style="margin-bottom: 20px" class="col-md-12 text-center">
