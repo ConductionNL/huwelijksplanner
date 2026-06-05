@@ -7,7 +7,7 @@
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.1",
         "conduction/commongroundbundle": "2.x-dev",
-        "dompdf/dompdf": "^0.8.5",
+        "dompdf/dompdf": "^2.0.4",
         "endroid/qr-code-bundle": "^3.4",
         "phpdocumentor/reflection-docblock": "^5.0",
         "phpoffice/phpword": "^0.17.0",
@@ -25,7 +25,7 @@
         "symfony/translation": "5.1.*",
         "symfony/yaml": "5.1.*",
         "tbbc/money-bundle": "^4.0",
-        "webonyx/graphql-php": "^0.13.8"
+        "webonyx/graphql-php": "^15.32.3"
     },
     "require-dev" : {
         "api-platform/schema-generator": "^2.1",
